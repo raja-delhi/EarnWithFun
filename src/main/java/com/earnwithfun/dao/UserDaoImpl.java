@@ -40,4 +40,8 @@ public class UserDaoImpl{
         return users.isEmpty() ? null : users.get(0);
     }
 
+    @Transactional
+    public void updateUser(User user) {
+        this.hibernateTemplate.update(user);
+    }
 }

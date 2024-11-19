@@ -76,4 +76,15 @@ public class MainController {
         redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
         return redirectView;
     }
+
+    @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
+    public RedirectView withdraw(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user.setWithdrawRequest('Y');
+        this.userService.updateUser(user);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/");
+        redirectAttributes.addFlashAttribute("successMessage", "Registration successfully. Please Login.");
+        redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
+        return redirectView;
+    }
 }

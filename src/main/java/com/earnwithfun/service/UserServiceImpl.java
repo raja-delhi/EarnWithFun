@@ -25,12 +25,13 @@ public class UserServiceImpl{
     }
 
     public void createUser(User user) {
-        user.setPaymentCode(getPaymentCode());
+        user.setPaymentCode("PC"+getCode());
+        user.setReferralCode("RC"+getCode());
         userDao.createUser(user);
     }
 
-    private String getPaymentCode() {
-        String paymentCodeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    private String getCode() {
+        String paymentCodeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
         StringBuilder paymentCode = new StringBuilder();
         Random rnd = new Random();
         while (paymentCode.length() < 6) {
@@ -39,5 +40,9 @@ public class UserServiceImpl{
         }
         return paymentCode.toString();
 
+    }
+
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 }

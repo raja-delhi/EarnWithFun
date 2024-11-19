@@ -15,8 +15,8 @@
         margin:10px;
     }
     .header{
-      margin:5px;
-      padding:5px;
+      margin:10px;
+      padding:10px;
     }
     #tabs{
         text-align: right;
@@ -24,20 +24,19 @@
     .tabLink {
       background-color: #555;
       color: white;
-      float: left;
+      float: right;
       border: none;
       outline: none;
       cursor: pointer;
       padding: 10px 10px;
       font-size: 17px;
-      width: 16.66%;
+      width: 20%;
     }
 
     .tabLink:hover {
       background-color: #777;
     }
 
-    /* Style the tab content (and add height:100% for full page content) */
     .tabContent {
       color: white;
       display: none;
@@ -52,7 +51,6 @@
       position: relative;
     }
 
-    /* Style navigation menu links */
     .topnav span {
       color: white;
       padding: 10px 10px;
@@ -76,7 +74,6 @@
                     <button class="tabLink" onclick="openPage('Home', this, 'gray')">Home</button>
                     <button class="tabLink" onclick="openPage('News', this, 'gray')" id="newsBtn">News</button>
                     <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Contact</button>
-                    <button class="tabLink" onclick="openPage('About', this, 'gray')">About</button>
                     <button class="tabLink" onclick="openPage('Login', this, 'gray')" id="loginBtn">Login</button>
                     <button class="tabLink" onclick="openPage('Signup', this, 'gray')" id="signUpBtn">Sign Up</button>
                 </div>

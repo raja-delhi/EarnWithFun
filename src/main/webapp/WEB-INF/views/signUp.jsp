@@ -41,7 +41,7 @@
                 <div class="form-group col-md-6">
                     <label for="phoneNumber" class="form-label">Phone Number
                     </label>
-                    <input type="phone" id="phoneNumber" name="phoneNumber" class="form-control" autocomplete="off" required>
+                    <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" autocomplete="off" required>
                 </div>
             </div>
             <div class="form-row">
@@ -54,6 +54,13 @@
                     <input type="password" id="rePassword" name="rePassword" class="form-control" autocomplete="off" required>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="referralCode" class="form-label">Referral Code</label>
+                    <input type="text" id="referralCode" name="referralCode" class="form-control" autocomplete="off" required>
+                </div>
+            </div>
+
             <button class="btn btn-primary" onclick="saveForm();" type="submit">Sign Up</button>
         </form>
 

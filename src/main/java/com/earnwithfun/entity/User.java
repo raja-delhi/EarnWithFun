@@ -18,16 +18,19 @@ public class User implements UserDetails{
     private Long id;
 
     private String username;
-
     private String password;
-
     private String rePassword;
-
     private String gender;
     private String fullName;
     private String email;
     private String phoneNumber;
     private String paymentCode;
+    private Long amount;
+    private String referralCode;
+    private String accountNo;
+    private String ifscCode;
+    private String upiId;
+    private char withdrawRequest = 'N';
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -126,5 +129,53 @@ public class User implements UserDetails{
 
     public void setPaymentCode(String paymentCode) {
         this.paymentCode = paymentCode;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public String getReferralCode() {
+        return referralCode;
+    }
+
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getIfscCode() {
+        return ifscCode;
+    }
+
+    public void setIfscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
+    }
+
+    public String getUpiId() {
+        return upiId;
+    }
+
+    public void setUpiId(String upiId) {
+        this.upiId = upiId;
+    }
+
+    public char getWithdrawRequest() {
+        return withdrawRequest;
+    }
+
+    public void setWithdrawRequest(char withdrawRequest) {
+        this.withdrawRequest = withdrawRequest;
     }
 }
