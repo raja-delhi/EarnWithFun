@@ -24,7 +24,7 @@
     .tabLink {
       background-color: #555;
       color: white;
-      float: right;
+      float: left;
       border: none;
       outline: none;
       cursor: pointer;
@@ -71,11 +71,11 @@
                   <span class="active"><h3>Welcome to Earn with Fun!</h3></span>
                 </div>
                 <div id="tabs">
-                    <button class="tabLink" onclick="openPage('Home', this, 'gray')">Home</button>
-                    <button class="tabLink" onclick="openPage('News', this, 'gray')" id="newsBtn">News</button>
-                    <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Contact</button>
+                    <button class="tabLink" onclick="openPage('Home', this, 'gray')" id="newsBtn">Home</button>
+                    <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Support</button>
                     <button class="tabLink" onclick="openPage('Login', this, 'gray')" id="loginBtn">Login</button>
                     <button class="tabLink" onclick="openPage('Signup', this, 'gray')" id="signUpBtn">Sign Up</button>
+                    <button class="tabLink" onclick="openPage('AdminLogin', this, 'gray')" id="adminLoginBtn">Admin</button>
                 </div>
         </div>
 
@@ -85,13 +85,30 @@
               <p>Home is where the heart is..</p>
             </div>
 
-            <div id="News" class="tabContent">
-              <h2>News</h2>
-              <p>Some news this fine day!</p>
+            <div id="AdminLogin" class="tabContent">
+                  <c:if test="${not empty errorMessage}">
+                      <div style="color: red; text-align:center">
+                          <strong><c:out value="${errorMessage}"/></strong>
+                      </div>
+                  </c:if>
+                  <div class="container">
+                      <form class="form-login" method="post" action="adminLogin" modalAttribute="user">
+                          <h2 class="mb-3" style="text-align:center">Admin Login</h2>
+                              <div class="mb-3">
+                                  <label for="username" class="form-label">Username</label>
+                                  <input type="text" id="username" name="username" class="form-control" autocomplete="off" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="password" class="form-label">Password</label>
+                                  <input type="password" id="password" name="password" class="form-control" autocomplete="off" required>
+                              </div>
+                          <button class="btn btn-primary" type="submit">Sign in</button>
+                      </form>
+                  </div>
             </div>
 
             <div id="Contact" class="tabContent">
-              <h2>Contact</h2>
+              <h2>Support</h2>
               <p>Get in touch, or swing by for a cup of coffee.</p>
             </div>
 

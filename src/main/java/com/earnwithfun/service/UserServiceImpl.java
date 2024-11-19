@@ -45,4 +45,8 @@ public class UserServiceImpl{
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
+
+    public User getAdminUser(User user) {
+        return userDao.getAdminUser(user);
+    }
 }

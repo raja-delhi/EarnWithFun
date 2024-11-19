@@ -31,6 +31,7 @@ public class User implements UserDetails{
     private String ifscCode;
     private String upiId;
     private char withdrawRequest = 'N';
+    private char isAdminUser = 'N';
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -177,5 +178,13 @@ public class User implements UserDetails{
 
     public void setWithdrawRequest(char withdrawRequest) {
         this.withdrawRequest = withdrawRequest;
+    }
+
+    public char getIsAdminUser() {
+        return isAdminUser;
+    }
+
+    public void setIsAdminUser(char isAdminUser) {
+        this.isAdminUser = isAdminUser;
     }
 }

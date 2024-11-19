@@ -1,0 +1,1 @@
+Welcome , <c:out value="${user.username}"/>!

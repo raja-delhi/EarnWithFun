@@ -83,8 +83,28 @@ public class MainController {
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/");
-        redirectAttributes.addFlashAttribute("successMessage", "Registration successfully. Please Login.");
+        redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
         redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
         return redirectView;
+    }
+
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+    public RedirectView adminLogin(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        User adminUser = userService.getAdminUser(user);
+        if(adminUser == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid Admin Username or password.");
+            redirectAttributes.addFlashAttribute("activeTab", "adminLoginBtn");
+            return new RedirectView(request.getContextPath() + "/");
+        }
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/adminDashboard");
+        redirectAttributes.addFlashAttribute("user", user);
+        return redirectView;
+    }
+    @RequestMapping("/adminDashboard")
+    public String adminDashboard(Model model){
+        User user = (User) model.asMap().get("user");
+        model.addAttribute("user", user);
+        return "adminDashboard";
     }
 }

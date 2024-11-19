@@ -44,4 +44,11 @@ public class UserDaoImpl{
     public void updateUser(User user) {
         this.hibernateTemplate.update(user);
     }
+
+    public User getAdminUser(User user) {
+        String query = "select u from User u where u.username = ?0 and u.password = ?1 and isAdminUser= ?2";
+        Object[] queryParam = {user.getUsername(), user.getPassword(), 'Y'};
+        List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
+        return users.isEmpty() ? null : users.get(0);
+    }
 }

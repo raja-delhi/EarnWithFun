@@ -47,6 +47,12 @@
                     width : 90%;
                     margin:20px;
                 }
+            .verticalLine{
+                width: 0;
+                border: 2px solid yellow;
+                width : 90%;
+                margin:20px;
+            }
     .container{
         text:center;
     }
@@ -103,7 +109,7 @@
                     <div class="mb-3" style="colour:green">
                         <h4>Total Amount : 2000</h4>
                     </div>
-                        <div class="vertical-line"></div>
+                        <div class="verticalLine"></div>
                     <div class="mb-3">
                         <h5 style="text-align:center">Amount Received By</h5>
                     </div>
@@ -115,7 +121,7 @@
                     <h4>Name : <c:out value="${user.fullName}"/> </h4>
                     <h4>Email : <c:out value="${user.email}"/></h4>
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
-                    <div class="vertical-line"></div>
+                    <div class="verticalLine"></div>
                     <h3 style="text-align:center">Referral Code : <c:out value="${user.referralCode}"/></h3>
 
                 </div>
