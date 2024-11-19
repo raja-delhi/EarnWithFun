@@ -78,7 +78,7 @@
                     <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Contact</button>
                     <button class="tabLink" onclick="openPage('About', this, 'gray')">About</button>
                     <button class="tabLink" onclick="openPage('Login', this, 'gray')" id="loginBtn">Login</button>
-                    <button class="tabLink" onclick="openPage('signUp', this, 'red')" id="signUpBtn">Sign Up</button>
+                    <button class="tabLink" onclick="openPage('Signup', this, 'gray')" id="signUpBtn">Sign Up</button>
                 </div>
         </div>
 
@@ -107,7 +107,7 @@
                 <%@include file="login.jsp" %>
             </div>
 
-            <div id="signUp" class="tabContent">
+            <div id="Signup" class="tabContent">
                 <%@include file="signUp.jsp" %>
             </div>
         </div>

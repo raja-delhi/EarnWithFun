@@ -58,9 +58,10 @@
             <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
         <div id="signUp">
-              Don not have an account? <button onclick="openPage('signUp', this, 'gray');" class="btn btn-primary">Sign Up</button>
+              Don not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
