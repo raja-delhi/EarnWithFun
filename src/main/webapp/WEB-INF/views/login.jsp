@@ -9,6 +9,9 @@
         body {
             background-color: #f8f9fa;
         }
+        #logon{
+            text-align:center;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +60,7 @@
             </c:choose>
             <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
-        <div id="signUp">
+        <div id="logon">
               Don not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>
         </div>
     </div>
