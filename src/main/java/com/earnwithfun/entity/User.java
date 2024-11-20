@@ -32,6 +32,8 @@ public class User implements UserDetails{
     private String upiId;
     private char withdrawRequest = 'N';
     private char isAdminUser = 'N';
+    private char referralRequest = 'N';
+    private String referredByUser;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -186,5 +188,21 @@ public class User implements UserDetails{
 
     public void setIsAdminUser(char isAdminUser) {
         this.isAdminUser = isAdminUser;
+    }
+
+    public char getReferralRequest() {
+        return referralRequest;
+    }
+
+    public void setReferralRequest(char referralRequest) {
+        this.referralRequest = referralRequest;
+    }
+
+    public String getReferredByUser() {
+        return referredByUser;
+    }
+
+    public void setReferredByUser(String referredByUser) {
+        this.referredByUser = referredByUser;
     }
 }

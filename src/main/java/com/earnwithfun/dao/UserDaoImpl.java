@@ -1,5 +1,6 @@
 package com.earnwithfun.dao;
 
+import com.earnwithfun.entity.PaymentDetail;
 import com.earnwithfun.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -50,5 +51,35 @@ public class UserDaoImpl{
         Object[] queryParam = {user.getUsername(), user.getPassword(), 'Y'};
         List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
         return users.isEmpty() ? null : users.get(0);
+    }
+
+    public List<PaymentDetail> gePaymentDetails(User user) {
+        String query = "select p from PaymentDetail p where p.username = ?0";
+        Object[] queryParam = {user.getUsername()};
+        return (List<PaymentDetail>) this.hibernateTemplate.find(query, queryParam);
+    }
+
+    public List<User> getUserRequestedForWithdraw() {
+        String query = "select u from User u where u.withdrawRequest = ?0";
+        Object[] queryParam = {'Y'};
+        return (List<User>) this.hibernateTemplate.find(query, queryParam);
+    }
+
+    public List<User> getReferredUsers() {
+        String query = "select u from User u where u.referralRequest = ?0";
+        Object[] queryParam = {'Y'};
+        return (List<User>) this.hibernateTemplate.find(query, queryParam);
+    }
+
+    public User getUserByReferralCode(String referralCode) {
+        String query = "select u from User u where u.referralCode = ?0";
+        Object[] queryParam = {referralCode};
+        List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
+        return users.isEmpty() ? null : users.get(0);
+    }
+
+    @Transactional
+    public void createPayment(PaymentDetail paymentDetail) {
+        this.hibernateTemplate.save(paymentDetail);
     }
 }

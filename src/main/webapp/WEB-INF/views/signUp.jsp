@@ -26,7 +26,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" value="${user.username}" class="form-control" autocomplete="off" autocomplete="off" required>
+                    <input type="text" id="username" name="username" class="form-control" autocomplete="off" autocomplete="off" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="email" class="form-label">Email</label>

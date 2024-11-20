@@ -1,10 +1,12 @@
 package com.earnwithfun.service;
 
 import com.earnwithfun.dao.UserDaoImpl;
+import com.earnwithfun.entity.PaymentDetail;
 import com.earnwithfun.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -48,5 +50,28 @@ public class UserServiceImpl{
 
     public User getAdminUser(User user) {
         return userDao.getAdminUser(user);
+    }
+
+    public List<PaymentDetail> getPaymentDetails(User user) {
+        return userDao.gePaymentDetails(user);
+    }
+
+    public List<User> getUserRequestedForWithdraw() {
+        return userDao.getUserRequestedForWithdraw();
+    }
+
+    public List<User> getReferredUsers() {
+        return userDao.getReferredUsers();
+    }
+
+    public User getUserByReferralCode(String referralCode) {
+        return userDao.getUserByReferralCode(referralCode);
+    }
+
+    public void createPayment(String referredByUser) {
+        PaymentDetail paymentDetail = new PaymentDetail();
+        paymentDetail.setAmount(20L);
+        paymentDetail.setUsername(referredByUser);
+        userDao.createPayment(paymentDetail);
     }
 }

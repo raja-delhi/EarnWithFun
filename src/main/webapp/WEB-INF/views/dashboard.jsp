@@ -71,7 +71,7 @@
                    <div>
                    <div class="buttons">
                        <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray')">Check Balance</button>
-                       <button class="tabLink" onclick="openPage('WithDraw', this, 'gray')">Withdraw</button>
+                       <button class="tabLink" onclick="openPage('WithDraw', this, 'gray')" id="withdrawBtn">Withdraw</button>
                        <button class="tabLink" onclick="openPage('Profile', this, 'gray')">Profile</button>
                    </div>
                </div>
@@ -132,6 +132,8 @@
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script>
+    var activeTab = <c:out value="${activeTab}"/>;
+    document.getElementById(activeTab.id).click();
     function openPage(pageName, element, color) {
           var i, tabContent, tabLinks;
           tabContent = document.getElementsByClassName("tabContent");

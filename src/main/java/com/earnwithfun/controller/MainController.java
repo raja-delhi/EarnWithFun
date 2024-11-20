@@ -1,5 +1,6 @@
 package com.earnwithfun.controller;
 
+import com.earnwithfun.entity.PaymentDetail;
 import com.earnwithfun.entity.User;
 import com.earnwithfun.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -31,7 +33,9 @@ public class MainController {
     @RequestMapping("/dashboard")
     public String dashboard(Model model){
         User user = (User) model.asMap().get("user");
+        List<PaymentDetail> paymentDetails = userService.getPaymentDetails(user);
         model.addAttribute("user", user);
+        model.addAttribute("paymentDetails", paymentDetails);
         return "dashboard";
     }
 
@@ -69,6 +73,16 @@ public class MainController {
             redirectAttributes.addFlashAttribute("user", user);
             return new RedirectView(request.getContextPath() + "/");
         }
+        User parentUser = this.userService.getUserByReferralCode(user.getReferralCode());
+        if(parentUser == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid Referral Code.");
+            redirectAttributes.addFlashAttribute("activeTab", "signUpBtn");
+            user.setPaymentCode("");
+            redirectAttributes.addFlashAttribute("user", user);
+            return new RedirectView(request.getContextPath() + "/");
+        }
+
+        user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/");
@@ -80,11 +94,14 @@ public class MainController {
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
     public RedirectView withdraw(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
         user.setWithdrawRequest('Y');
+        User userDetail = this.userService.getUserByUserName(user.getUsername());
+        Long remainingAmount = userDetail.getAmount() != null ? userDetail.getAmount() - user.getAmount() : null;
+        user.setAmount(remainingAmount);
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/");
         redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
-        redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
+        redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
         return redirectView;
     }
 
@@ -98,13 +115,46 @@ public class MainController {
         }
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/adminDashboard");
-        redirectAttributes.addFlashAttribute("user", user);
+        redirectAttributes.addFlashAttribute("user", adminUser);
         return redirectView;
     }
     @RequestMapping("/adminDashboard")
     public String adminDashboard(Model model){
         User user = (User) model.asMap().get("user");
+        List<User> withdrawRequestedUsers = userService.getUserRequestedForWithdraw();
+        List<User> referredUsers = userService.getReferredUsers();
         model.addAttribute("user", user);
+        model.addAttribute("withdrawRequestedUsers", withdrawRequestedUsers);
+        model.addAttribute("referredUsers", referredUsers);
+        model.addAttribute("activeTab", "withdrawApproveBtn");
         return "adminDashboard";
+    }
+
+
+    @RequestMapping(value = "/approveWithdrawRequest", method = RequestMethod.POST)
+    public RedirectView approveWithdrawRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user.setWithdrawRequest('N');
+        this.userService.updateUser(user);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/");
+        redirectAttributes.addFlashAttribute("successMessage", "Withdraw Approve successfully.");
+        redirectAttributes.addFlashAttribute("activeTab", "withdrawApproveBtn");
+        return redirectView;
+    }
+
+    @RequestMapping(value = "/approveReferralRequest", method = RequestMethod.POST)
+    public RedirectView approveReferralRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user.setReferralRequest('N');
+        this.userService.updateUser(user);
+        this.userService.createPayment(user.getReferredByUser());
+        User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
+        Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + 20 : null;
+        parentUser.setAmount(amount);
+        this.userService.updateUser(parentUser);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/");
+        redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
+        redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
+        return redirectView;
     }
 }
