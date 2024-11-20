@@ -4,75 +4,23 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    #body {
-            background-color: black;
-            width:100%;
-        }
-        #tabs{
-            text-align: right;
-            width:100%;
-        }
-                .tabLink {
-                  background-color: #555;
-                  color: white;
-                  float: left;
-                  border: none;
-                  outline: none;
-                  cursor: pointer;
-                  padding: 10px;
-                  font-size: 10px;
-                  width: 20%;
-                }
-        h1{
-            color:white;
-            text-align:center;
-            margin:20px;
-        }
-        .buttons{
-            text-align:right;
-            margin-top:20px;
-        }
-
-            .tabContent {
-              color: white;
-              display: none;
-              padding: 20px;
-              margin:30px;
-              overflow: hidden;
-            }
-            .vertical-line {
-                    width: 0;
-                    border: 2px solid green;
-                    width : 90%;
-                    margin:20px;
-                }
-            .verticalLine{
-                width: 0;
-                border: 2px solid yellow;
-                width : 90%;
-                margin:20px;
-            }
-    .container{
-        text:center;
-    }
-</style>
-    <title>Target Page</title>
+    <title>Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
 </head>
 <body>
-    <div id="body">
-        <div class="row header">
+    <div id="body" class="header">
+        <div class="row">
                <div id="tabs">
                    <div id="welcome">
                        <h1 class="tabLink">Welcome, <c:out value="${user.fullName}"/>!</h1>
                    <div>
                    <div class="buttons">
-                       <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray')">Check Balance</button>
-                       <button class="tabLink" onclick="openPage('WithDraw', this, 'gray')" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" onclick="openPage('Profile', this, 'gray')">Profile</button>
+                       <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray');" id="checkBalanceBtn">Check Balance</button>
+                       <button class="tabLink" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
+                       <button class="tabLink" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
                    </div>
                </div>
         </div>
@@ -107,11 +55,30 @@
                 <div id="CheckBalance" class="tabContent">
                     <h2 class="mb-3" style="text-align:center">Balance Amount</h2>
                     <div class="mb-3" style="colour:green">
-                        <h4>Total Amount : 2000</h4>
+                        <h4>Total Amount : <c:out value="${user.amount}"/></h4>
                     </div>
                         <div class="verticalLine"></div>
                     <div class="mb-3">
                         <h5 style="text-align:center">Amount Received By</h5>
+                        <table class="table table-dark table-hover table-bordered border-primary">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Username</th>
+                              <th scope="col">Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <c:forEach var="payment" items="${paymentDetails}" varStatus="i">
+                                <tr>
+                                  <th scope="row">${i.index}</th>
+                                  <td>${payment.username}</td>
+                                  <td>${payment.amount}</td>
+                                </tr>
+                            </c:forEach>
+                          </tbody>
+                        </table>
+
                     </div>
                 </div>
 
@@ -128,24 +95,9 @@
             </div>
 </body>
 </html>
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script>
+<script type="text/javascript">
     var activeTab = <c:out value="${activeTab}"/>;
-    document.getElementById(activeTab.id).click();
-    function openPage(pageName, element, color) {
-          var i, tabContent, tabLinks;
-          tabContent = document.getElementsByClassName("tabContent");
-          for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
-          }
-          tabLinks = document.getElementsByClassName("tabLink");
-          for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].style.backgroundColor = "";
-          }
-          document.getElementById(pageName).style.display = "block";
-          document.getElementById(pageName).style.backgroundColor = color;
-          element.style.backgroundColor = 'blue';
-    }
 </script>
+<script src="<c:url value="/resources/js/common.js" />"></script>

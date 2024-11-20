@@ -25,7 +25,7 @@ public class User implements UserDetails{
     private String email;
     private String phoneNumber;
     private String paymentCode;
-    private Long amount;
+    private Long amount = 0L;
     private String referralCode;
     private String accountNo;
     private String ifscCode;

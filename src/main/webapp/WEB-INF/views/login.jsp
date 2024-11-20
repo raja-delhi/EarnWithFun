@@ -1,18 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        #logon{
-            text-align:center;
-        }
-    </style>
 </head>
 <body>
     <c:if test="${not empty errorMessage}">
@@ -26,7 +15,7 @@
         </div>
     </c:if>
     <div class="container">
-        <form class="form-login" method="post" action="login" modalAttribute="user">
+        <form id="loginForm" modalAttribute="user">
             <h2 class="mb-3">Login</h2>
             <c:choose>
             <c:when test="${not empty loginUser}">
@@ -58,7 +47,7 @@
                 </div>
             </c:otherwise>
             </c:choose>
-            <button class="btn btn-primary" type="submit">Sign in</button>
+            <button id="logIn" class="btn btn-primary" type="submit">Sign in</button>
         </form>
         <div id="logon">
               Don not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>

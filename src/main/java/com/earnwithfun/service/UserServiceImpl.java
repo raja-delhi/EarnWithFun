@@ -14,12 +14,12 @@ public class UserServiceImpl{
 
     @Autowired
     private UserDaoImpl userDao;
-    public User getUserByUserNameAndPassword(User user) {
-        return userDao.getUserByUserNameAndPassword(user);
+    public User getUserByUserNameAndPassword(String username, String password) {
+        return userDao.getUserByUserNameAndPassword(username, password);
     }
 
-    public User getUserByPaymentCode(User user) {
-        return userDao.getUserByPaymentCode(user);
+    public User getUserByPaymentCode(String paymentCode) {
+        return userDao.getUserByPaymentCode(paymentCode);
     }
 
     public User getUserByUserName(String username) {

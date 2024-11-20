@@ -20,16 +20,16 @@ public class UserDaoImpl{
         this.hibernateTemplate.save(user);
     }
 
-    public User getUserByUserNameAndPassword(User user) {
+    public User getUserByUserNameAndPassword(String username, String password) {
         String query = "select u from User u where u.username = ?0 and u.password = ?1";
-        Object[] queryParam = {user.getUsername(), user.getPassword()};
+        Object[] queryParam = {username, password};
         List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public User getUserByPaymentCode(User user) {
-        String query = "select u from User u where u.paymentCode = ?0 and u.username = ?1 and u.password = ?2";
-        Object[] queryParam = {user.getPaymentCode(), user.getUsername(), user.getPassword()};
+    public User getUserByPaymentCode(String paymentCode) {
+        String query = "select u from User u where u.paymentCode = ?0";
+        Object[] queryParam = {paymentCode};
         List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
         return users.isEmpty() ? null : users.get(0);
     }

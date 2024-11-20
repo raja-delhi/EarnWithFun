@@ -16,7 +16,7 @@
         ">
 
     <tx:annotation-driven/>
-
+    <mvc:resources mapping="/resources/**" location="/resources/" />
     <context:component-scan base-package="com.earnwithfun"/>
     <mvc:annotation-driven />
     <bean
