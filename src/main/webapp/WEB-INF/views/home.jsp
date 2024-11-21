@@ -17,7 +17,7 @@
                 <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Support</button>
                 <button class="tabLink" onclick="loadJsp('Login',this)" id="loginBtn">Login</button>
                 <button class="tabLink" onclick="loadJsp('Signup',this)" id="signUpBtn">Sign Up</button>
-                <button class="tabLink" onclick="openPage('AdminLogin', this, 'gray')" id="adminLoginBtn">Admin</button>
+                <button class="tabLink" onclick="loadJsp('AdminLogin', this)" id="adminLoginBtn">Admin</button>
             </div>
     </div>
 
@@ -28,25 +28,6 @@
         </div>
 
         <div id="AdminLogin" class="tabContent">
-              <c:if test="${not empty errorMessage}">
-                  <div style="color: red; text-align:center">
-                      <strong><c:out value="${errorMessage}"/></strong>
-                  </div>
-              </c:if>
-              <div class="container">
-                  <form class="form-login" method="post" action="adminLogin" modalAttribute="user">
-                      <h2 class="mb-3" style="text-align:center">Admin Login</h2>
-                          <div class="mb-3">
-                              <label for="username" class="form-label">Username</label>
-                              <input type="text" id="username" name="username" class="form-control" autocomplete="off" required>
-                          </div>
-                          <div class="mb-3">
-                              <label for="password" class="form-label">Password</label>
-                              <input type="password" id="password" name="password" class="form-control" autocomplete="off" required>
-                          </div>
-                      <button class="btn btn-primary" type="submit">Sign in</button>
-                  </form>
-              </div>
         </div>
 
         <div id="Contact" class="tabContent">

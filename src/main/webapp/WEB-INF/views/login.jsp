@@ -30,7 +30,7 @@
             <button id="logIn" class="btn btn-primary" type="submit">Sign in</button>
         </form>
         <div id="logon">
-              Don not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>
+              Do not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>
         </div>
     </div>
 
@@ -44,7 +44,6 @@ $(document).ready(function () {
             event.preventDefault();
             let form = $("#loginForm");
             let url = "login";
-                debugger;
             $.ajax({
                 type: "POST",
                 url: url,

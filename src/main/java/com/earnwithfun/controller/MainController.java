@@ -31,6 +31,8 @@ public class MainController {
             return "login";
         }else if(Objects.equals(formId, "Signup")){
             return "signUp";
+        }else if(Objects.equals(formId, "AdminLogin")){
+            return "adminLogin";
         }else{
             return "home";
         }
@@ -118,22 +120,21 @@ public class MainController {
         return redirectView;
     }
 
-    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-    public RedirectView adminLogin(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> adminLogin(@Validated User user){
+        Map<String, Object> map = new HashMap<>();
         User adminUser = userService.getAdminUser(user);
         if(adminUser == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid Admin Username or password.");
-            redirectAttributes.addFlashAttribute("activeTab", "adminLoginBtn");
-            return new RedirectView(request.getContextPath() + "/main/");
+            map.put("errorMessage", "Invalid Admin Username or password.");
+            return map;
         }
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/adminDashboard");
-        redirectAttributes.addFlashAttribute("user", adminUser);
-        return redirectView;
+        map.put("userId", adminUser.getId());
+        return map;
     }
-    @RequestMapping("/adminDashboard")
-    public String adminDashboard(Model model){
-        User user = (User) model.asMap().get("user");
+    @RequestMapping(value = "/adminDashboard" ,method = RequestMethod.GET)
+    public String adminDashboard(@RequestParam("userId") Long userId, Model model){
+        User user = userService.getUserById(userId);
         List<User> withdrawRequestedUsers = userService.getUserRequestedForWithdraw();
         List<User> referredUsers = userService.getReferredUsers();
         model.addAttribute("user", user);
@@ -142,7 +143,6 @@ public class MainController {
         model.addAttribute("activeTab", "withdrawApproveBtn");
         return "adminDashboard";
     }
-
 
     @RequestMapping(value = "/approveWithdrawRequest", method = RequestMethod.POST)
     public RedirectView approveWithdrawRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
