@@ -21,6 +21,7 @@
                        <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray');" id="checkBalanceBtn">Check Balance</button>
                        <button class="tabLink" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
                        <button class="tabLink" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
+                       <button class="tabLink" onclick="logOut();">Logout</button>
                    </div>
                </div>
         </div>
@@ -89,7 +90,7 @@
                     <h4>Email : <c:out value="${user.email}"/></h4>
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
                     <div class="verticalLine"></div>
-                    <h3 style="text-align:center">Referral Code : <c:out value="${user.referralCode}"/></h3>
+                    <h3 style="text-align:center; background-color:blue">Referral Code : <c:out value="${user.referralCode}"/></h3>
 
                 </div>
             </div>
@@ -99,5 +100,17 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var activeTab = <c:out value="${activeTab}"/>;
+    function logOut(){
+        $.ajax({
+            url: '../main/',
+            type: 'GET',
+            success: function(response) {
+                $('body').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

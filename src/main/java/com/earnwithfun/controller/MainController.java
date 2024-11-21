@@ -38,7 +38,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     public String home(Model model){
         if(!model.containsAttribute("activeTab")){
             model.addAttribute("activeTab", "newsBtn");
