@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
         <div id="body">
@@ -28,9 +30,67 @@
         <div class="vertical-line"></div>
         <div id="ReferralApprove" class="tabContent">
             <h2 class="mb-3" style="text-align:center">Referral Approve</h2>
+            <div class="verticalLine"></div>
+            <div class="mb-3">
+                <table class="table table-dark table-hover table-bordered border-primary">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:forEach var="user" items="${referredUsers}" varStatus="i">
+                        <tr>
+                          <th scope="row"><c:out value="${i.index+1}"/></th>
+                          <td><c:out value="${user.username}"/></td>
+                          <td><c:out value="${user.phoneNumber}"/></td>
+                          <td>
+                            <form id="approveReferralRequest" action="approveReferralRequest" method = "post" modalAttribute="user">
+                              <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                              <button onclick="approveWithdraw(<c:out value="${user.id}"/>);">Approve</button>
+                            </form>
+                          </td>
+                        </tr>
+                    </c:forEach>
+                  </tbody>
+                </table>
+
+            </div>
         </div>
         <div id="WithdrawApprove" class="tabContent">
             <h2 class="mb-3" style="text-align:center">Withdraw Approve</h2>
+            <div class="verticalLine"></div>
+            <div class="mb-3">
+                <table class="table table-dark table-hover table-bordered border-primary">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Username</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:forEach var="user" items="${withdrawRequestedUsers}" varStatus="i">
+                        <tr>
+                          <th scope="row"><c:out value="${i.index+1}"/></th>
+                          <td><c:out value="${user.username}"/></td>
+                          <td><c:out value="${user.phoneNumber}"/></td>
+                          <td>
+                          <form id="approveWithdrawRequest" method="post" action="approveWithdrawRequest" modalAttribute="user">
+                            <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                            <button onclick="approveWithdraw(<c:out value="${user.id}"/>);">Approve</button>
+                          </form>
+                          </td>
+                        </tr>
+                    </c:forEach>
+                  </tbody>
+                </table>
+
+            </div>
         </div>
 </body>
 </html>

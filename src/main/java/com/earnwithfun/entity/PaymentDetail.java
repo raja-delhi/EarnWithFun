@@ -13,6 +13,7 @@ public class PaymentDetail {
 
     private String username;
     private Long amount;
+    private String referralFullName;
 
     public Long getId() {
         return id;
@@ -36,5 +37,13 @@ public class PaymentDetail {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public String getReferralFullName() {
+        return referralFullName;
+    }
+
+    public void setReferralFullName(String referralFullName) {
+        this.referralFullName = referralFullName;
     }
 }

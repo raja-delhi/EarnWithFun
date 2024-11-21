@@ -1,6 +1,5 @@
 body {
         background-color: gray;
-        margin: 0;
     }
     h3{
         color:white;
@@ -34,7 +33,6 @@ body {
       color: white;
       display: none;
       padding: 10px 10px;
-      margin:10px;
       overflow: hidden;
     }
 

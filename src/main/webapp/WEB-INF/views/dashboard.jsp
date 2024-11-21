@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
     <div id="body" class="header">
@@ -29,8 +31,18 @@
     <div class="vertical-line"></div>
     <div id="tabContentDiv">
                 <div id="WithDraw" class="tabContent">
+                   <c:if test="${not empty successMessage}">
+                       <div id="errorMessage" style="color: yellow; text-align:center">
+                           <c:out value="${successMessage}"/>
+                       </div>
+                   </c:if>
+                   <c:if test="${not empty errorMessage}">
+                       <div id="errorMessage" style="color: yellow; text-align:center">
+                           <c:out value="${errorMessage}"/>
+                       </div>
+                   </c:if>
                      <div class="container">
-                             <form class="form-login" method="post" action="withdraw" modalAttribute="user">
+                             <form class="form-login" method="post" action="withdraw?username=<c:out value="${user.username}"/>" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center">Withdraw Amount</h2>
                                     <div class="mb-3">
                                         <label for="amount" class="form-label">Enter Amount.</label>
@@ -38,15 +50,15 @@
                                     </div>
                                      <div class="mb-3">
                                          <label for="accountNo" class="form-label">Account No.</label>
-                                         <input type="text" id="accountNo" name="accountNo" class="form-control" autocomplete="off">
+                                         <input type="text" id="accountNo" name="accountNo" class="form-control" autocomplete="off" required>
                                      </div>
                                      <div class="mb-3">
                                          <label for="ifscCode" class="form-label">IFSC Code</label>
-                                         <input type="text" id="ifscCode" name="ifscCode" class="form-control" autocomplete="off">
+                                         <input type="text" id="ifscCode" name="ifscCode" class="form-control" autocomplete="off" required>
                                      </div>
                                      <div class="mb-3">
-                                         <label for="upiId" class="form-label">UPI ID</label>
-                                         <input type="text" id="upiId" name="upiId" class="form-control" autocomplete="off">
+                                         <label for="upiId" class="form-label">Phone Number</label>
+                                         <input type="number" id="upiId" name="upiId" class="form-control" autocomplete="off" required>
                                      </div>
                                  <button class="btn btn-primary" type="submit">Withdraw</button>
                              </form>
@@ -58,23 +70,23 @@
                     <div class="mb-3" style="colour:green">
                         <h4>Total Amount : <c:out value="${user.amount}"/></h4>
                     </div>
-                        <div class="verticalLine"></div>
+                    <div class="verticalLine"></div>
                     <div class="mb-3">
                         <h5 style="text-align:center">Amount Received By</h5>
                         <table class="table table-dark table-hover table-bordered border-primary">
                           <thead>
                             <tr>
                               <th scope="col">#</th>
-                              <th scope="col">Username</th>
+                              <th scope="col">Received From</th>
                               <th scope="col">Amount</th>
                             </tr>
                           </thead>
                           <tbody>
                             <c:forEach var="payment" items="${paymentDetails}" varStatus="i">
                                 <tr>
-                                  <th scope="row">${i.index}</th>
-                                  <td>${payment.username}</td>
-                                  <td>${payment.amount}</td>
+                                  <th scope="row"><c:out value="${i.index+1}"/></th>
+                                  <td><c:out value="${payment.referralFullName}"/></td>
+                                  <td><c:out value="${payment.amount}"/></td>
                                 </tr>
                             </c:forEach>
                           </tbody>

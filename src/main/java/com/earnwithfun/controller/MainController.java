@@ -92,6 +92,7 @@ public class MainController {
             map.put("errorMessage", "Invalid Referral Code.");
             return map;
         }
+        user.setReferralRequest('Y');
         user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
         map.put("successMessage", "Registration successfully. Please Login.");
@@ -99,16 +100,29 @@ public class MainController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public RedirectView withdraw(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        user.setWithdrawRequest('Y');
-        User userDetail = this.userService.getUserByUserName(user.getUsername());
-        Long remainingAmount = userDetail.getAmount() != null ? userDetail.getAmount() - user.getAmount() : null;
-        user.setAmount(remainingAmount);
-        this.userService.updateUser(user);
+    public RedirectView withdraw(@ModelAttribute User user, @RequestParam("username") String username, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        User userDetail = this.userService.getUserByUserName(username);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/");
-        redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
+        redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
         redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
+        if(userDetail.getWithdrawRequest() == 'Y'){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your Withdraw Request is pending. you can't withdraw again until your previous withdraw request approved.");
+            return redirectView;
+        }else if(userDetail.getAmount() == null || userDetail.getAmount()<user.getAmount()){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your Amount is less than 50 Rupees. Refer more friends to earn and withdraw.");
+            return redirectView;
+        }else if(user.getAmount()<50){
+            redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to 50.");
+            return redirectView;
+        }
+        userDetail.setWithdrawRequest('Y');
+        userDetail.setAccountNo(user.getAccountNo());
+        userDetail.setUpiId(user.getUpiId());
+        userDetail.setIfscCode(user.getIfscCode());
+        Long remainingAmount = userDetail.getAmount() != null ? userDetail.getAmount() - user.getAmount() : 0L;
+        userDetail.setAmount(remainingAmount);
+        this.userService.updateUser(userDetail);
+        redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
         return redirectView;
     }
 
@@ -138,10 +152,11 @@ public class MainController {
 
     @RequestMapping(value = "/approveWithdrawRequest", method = RequestMethod.POST)
     public RedirectView approveWithdrawRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user = userService.getUserById(user.getId());
         user.setWithdrawRequest('N');
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/");
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
         redirectAttributes.addFlashAttribute("successMessage", "Withdraw Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawApproveBtn");
         return redirectView;
@@ -149,15 +164,16 @@ public class MainController {
 
     @RequestMapping(value = "/approveReferralRequest", method = RequestMethod.POST)
     public RedirectView approveReferralRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user = userService.getUserById(user.getId());
         user.setReferralRequest('N');
         this.userService.updateUser(user);
-        this.userService.createPayment(user.getReferredByUser());
+        this.userService.createPayment(user.getReferredByUser(), user.getFullName());
         User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
-        Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + 20 : null;
+        Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + 20 : 20;
         parentUser.setAmount(amount);
         this.userService.updateUser(parentUser);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/");
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
         return redirectView;
