@@ -78,32 +78,24 @@ public class MainController {
         return map;
     }
 
-    @RequestMapping(value = "/signUp")
-    public RedirectView signUp(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/signUp", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> signUp(@Validated User user){
+        Map<String, Object> map = new HashMap<>();
         User userByUserName = userService.getUserByUserName(user.getUsername());
         if(userByUserName != null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Username Already Exists.");
-            redirectAttributes.addFlashAttribute("activeTab", "signUpBtn");
-            user.setPaymentCode("");
-            redirectAttributes.addFlashAttribute("user", user);
-            return new RedirectView(request.getContextPath() + "/main/");
+            map.put("errorMessage", "Username Already Exists.");
+            return map;
         }
         User parentUser = this.userService.getUserByReferralCode(user.getReferralCode());
         if(parentUser == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid Referral Code.");
-            redirectAttributes.addFlashAttribute("activeTab", "signUpBtn");
-            user.setPaymentCode("");
-            redirectAttributes.addFlashAttribute("user", user);
-            return new RedirectView(request.getContextPath() + "/main/");
+            map.put("errorMessage", "Invalid Referral Code.");
+            return map;
         }
-
         user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/");
-        redirectAttributes.addFlashAttribute("successMessage", "Registration successfully. Please Login.");
-        redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
-        return redirectView;
+        map.put("successMessage", "Registration successfully. Please Login.");
+        return map;
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)

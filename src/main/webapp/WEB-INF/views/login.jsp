@@ -4,9 +4,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-        <div id="errorMessage" style="color: yellow; text-align:center" class="hide">
-
-        </div>
+        <div id="errorMessage" style="color: yellow; text-align:center" class="hide"></div>
     <c:if test="${not empty successMessage}">
         <div style="color: green; text-align:center">
             <strong><c:out value="${successMessage}"/></strong>
