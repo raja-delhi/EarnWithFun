@@ -13,3 +13,17 @@ function openPage(pageName, element, color) {
       document.getElementById(pageName).style.backgroundColor = color;
       element.style.backgroundColor = 'blue';
 }
+function loadJsp(id, element){
+    $.ajax({
+        type: "GET",
+        url: "../main/loadJsp",
+        data: {"formId":id},
+        success: function (data) {
+            $("#"+id).html(data);
+            openPage(id, element, 'gray');
+        },
+        error: function (data) {
+            alert("Error occurred while fetching the form");
+        }
+    });
+}

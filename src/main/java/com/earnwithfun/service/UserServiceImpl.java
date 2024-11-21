@@ -74,4 +74,8 @@ public class UserServiceImpl{
         paymentDetail.setUsername(referredByUser);
         userDao.createPayment(paymentDetail);
     }
+
+    public User getUserById(Long userId) {
+        return userDao.getUserById(userId);
+    }
 }

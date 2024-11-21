@@ -15,8 +15,8 @@
             <div id="tabs">
                 <button class="tabLink" onclick="openPage('Home', this, 'gray')" id="newsBtn">Home</button>
                 <button class="tabLink" onclick="openPage('Contact', this, 'gray')">Support</button>
-                <button class="tabLink" onclick="openPage('Login', this, 'gray')" id="loginBtn">Login</button>
-                <button class="tabLink" onclick="openPage('Signup', this, 'gray')" id="signUpBtn">Sign Up</button>
+                <button class="tabLink" onclick="loadJsp('Login',this)" id="loginBtn">Login</button>
+                <button class="tabLink" onclick="loadJsp('Signup',this)" id="signUpBtn">Sign Up</button>
                 <button class="tabLink" onclick="openPage('AdminLogin', this, 'gray')" id="adminLoginBtn">Admin</button>
             </div>
     </div>
@@ -60,36 +60,15 @@
         </div>
 
         <div id="Login" class="tabContent">
-            <%@include file="login.jsp" %>
         </div>
 
         <div id="Signup" class="tabContent">
-            <%@include file="signUp.jsp" %>
         </div>
     </div>
 </body>
 </html>
 <script type="text/javascript">
     var activeTab = <c:out value="${activeTab}"/>;
-    $(document).ready(function () {
-        $("#logIn").click(function (event) {
-            event.preventDefault();
-            let form = $("#loginForm");
-            let url = "login";
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                success: function (data) {
-                    alert("Form Submitted Successfully");
-                },
-                error: function (data) {
-                    alert("Error occurred while submitting the form");
-                }
-            });
-        });
-    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

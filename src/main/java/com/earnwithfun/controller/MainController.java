@@ -6,18 +6,35 @@ import com.earnwithfun.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/main")
 public class MainController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @RequestMapping(value = "/loadJsp", method = RequestMethod.GET)
+    public String loadJsp(@RequestParam("formId") String formId, Model model){
+        model.addAttribute("user", new User());
+        if(Objects.equals(formId, "Login")){
+            return "login";
+        }else if(Objects.equals(formId, "Signup")){
+            return "signUp";
+        }else{
+            return "home";
+        }
+    }
 
     @RequestMapping("/")
     public String home(Model model){
@@ -28,9 +45,9 @@ public class MainController {
         return "home";
     }
 
-    @RequestMapping("/dashboard")
-    public String dashboard(Model model){
-        User user = (User) model.asMap().get("user");
+    @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
+    public String dashboard(@RequestParam("userId") Long userId, Model model){
+        User user = userService.getUserById(userId);
         List<PaymentDetail> paymentDetails = userService.getPaymentDetails(user);
         model.addAttribute("user", user);
         model.addAttribute("paymentDetails", paymentDetails);
@@ -40,30 +57,26 @@ public class MainController {
         return "dashboard";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public RedirectView login(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("paymentCode") String paymentCode, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        User userDetail = userService.getUserByUserNameAndPassword(username, password);
-
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> login(@Validated User user, HttpServletRequest request){
+        User userDetail = userService.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
+        Map<String, Object> map = new HashMap<>();
         if (userDetail == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password. Please try again.");
-            redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
-            return new RedirectView(request.getContextPath() + "/");
+            map.put("errorMessage", "Invalid username or password. Please try again.");
+            return map;
         }
 
-        User userByPaymentCode = userService.getUserByPaymentCode(paymentCode);
+        User userByPaymentCode = userService.getUserByPaymentCode(user.getPaymentCode());
         if (userByPaymentCode == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid Payment Code.");
-            redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
-            return new RedirectView(request.getContextPath() + "/");
+            map.put("errorMessage", "Invalid Payment Code.");
+            return map;
         }
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/dashboard");
-        userDetail.setPaymentCode("");
-        redirectAttributes.addFlashAttribute("user", userDetail);
-        return redirectView;
+        map.put("userId", userDetail.getId());
+        return map;
     }
 
-    @RequestMapping(value = "/signUp", method = RequestMethod.POST)
+    @RequestMapping(value = "/signUp")
     public RedirectView signUp(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
         User userByUserName = userService.getUserByUserName(user.getUsername());
         if(userByUserName != null){
@@ -71,7 +84,7 @@ public class MainController {
             redirectAttributes.addFlashAttribute("activeTab", "signUpBtn");
             user.setPaymentCode("");
             redirectAttributes.addFlashAttribute("user", user);
-            return new RedirectView(request.getContextPath() + "/");
+            return new RedirectView(request.getContextPath() + "/main/");
         }
         User parentUser = this.userService.getUserByReferralCode(user.getReferralCode());
         if(parentUser == null){
@@ -79,13 +92,13 @@ public class MainController {
             redirectAttributes.addFlashAttribute("activeTab", "signUpBtn");
             user.setPaymentCode("");
             redirectAttributes.addFlashAttribute("user", user);
-            return new RedirectView(request.getContextPath() + "/");
+            return new RedirectView(request.getContextPath() + "/main/");
         }
 
         user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/");
+        redirectView.setUrl(request.getContextPath()+"/main/");
         redirectAttributes.addFlashAttribute("successMessage", "Registration successfully. Please Login.");
         redirectAttributes.addFlashAttribute("activeTab", "loginBtn");
         return redirectView;
@@ -99,7 +112,7 @@ public class MainController {
         user.setAmount(remainingAmount);
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/");
+        redirectView.setUrl(request.getContextPath()+"/main/");
         redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
         return redirectView;
@@ -111,7 +124,7 @@ public class MainController {
         if(adminUser == null){
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid Admin Username or password.");
             redirectAttributes.addFlashAttribute("activeTab", "adminLoginBtn");
-            return new RedirectView(request.getContextPath() + "/");
+            return new RedirectView(request.getContextPath() + "/main/");
         }
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/adminDashboard");
@@ -136,7 +149,7 @@ public class MainController {
         user.setWithdrawRequest('N');
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/");
+        redirectView.setUrl(request.getContextPath()+"/main/");
         redirectAttributes.addFlashAttribute("successMessage", "Withdraw Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawApproveBtn");
         return redirectView;
@@ -152,7 +165,7 @@ public class MainController {
         parentUser.setAmount(amount);
         this.userService.updateUser(parentUser);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/");
+        redirectView.setUrl(request.getContextPath()+"/main/");
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
         return redirectView;

@@ -82,4 +82,8 @@ public class UserDaoImpl{
     public void createPayment(PaymentDetail paymentDetail) {
         this.hibernateTemplate.save(paymentDetail);
     }
+
+    public User getUserById(Long userId) {
+        return this.hibernateTemplate.get(User.class, userId);
+    }
 }
