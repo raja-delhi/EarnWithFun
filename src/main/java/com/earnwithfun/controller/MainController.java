@@ -78,6 +78,21 @@ public class MainController {
         return map;
     }
 
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public Map<String, Object> forgotPassword(@Validated User user, HttpServletRequest request){
+        User userDetail = userService.getUserByUserName(user.getUsername() != null ? user.getUsername().trim() : "");
+        Map<String, Object> map = new HashMap<>();
+        if (userDetail == null) {
+            map.put("errorMessage", "Invalid username. Please try again.");
+            return map;
+        }
+        userDetail.setPassword(user.getPassword());
+        userService.updateUser(userDetail);
+        map.put("successMessage", "Password Changed Successfully, Login Now!");
+        return map;
+    }
+
     @RequestMapping(value = "/signUp", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public Map<String, Object> signUp(@Validated User user){
