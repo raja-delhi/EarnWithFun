@@ -47,6 +47,7 @@
         </div>
 
         <div id="Forgot" class="tabContent">
+            <h2>Forgot Password</h2>
         </div>
     </div>
 </body>
