@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-    <div id="errorMessage" style="color: yellow; text-align:center" class="hide"></div>
+    <div id="errorMessage7" style="color: yellow; text-align:center" class="hide"></div>
     <div class="container">
         <form id="signUpForm" modalAttribute="user">
             <h2 class="mb-3">Register</h2>
@@ -41,9 +41,6 @@
             </div>
                     <button id="signUp" class="btn btn-primary" type="submit">Sign Up</button>
         </form>
-        <div id="signin">
-              Already have an account? <button onclick="openPage('Login', this, 'gray');" class="btn btn-primary">Sign In</button>
-        </div>
 
     </div>
 </body>
@@ -53,7 +50,7 @@
 <script>
     $(document).ready(function () {
             $("#signUp").click(function (event) {
-                $("#errorMessage").hide();
+                $("#errorMessage7").hide();
                     event.preventDefault();
                     let form = $("#signUpForm");
                     let url = "signUp";
@@ -63,15 +60,15 @@
                         data: form.serialize(),
                         contentType: "application/x-www-form-urlencoded",
                         dataType: "json",
-                        success: function (data) {debugger;
+                        success: function (data) {
                             if(data.errorMessage != null){
-                                $("#errorMessage").show();
-                                $("#errorMessage").html('');
-                                $("#errorMessage").html(data.errorMessage);
+                                $("#errorMessage7").show();
+                                $("#errorMessage7").html('');
+                                $("#errorMessage7").html(data.errorMessage);
                             }else{
-                                $("#errorMessage").show();
-                                $("#errorMessage").html('');
-                                $("#errorMessage").html(data.successMessage);
+                                $("#errorMessage7").show();
+                                $("#errorMessage7").html('');
+                                $("#errorMessage7").html(data.successMessage);
                                 clearAllFields();
                             }
                         },

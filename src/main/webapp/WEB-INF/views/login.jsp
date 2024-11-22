@@ -28,12 +28,10 @@
                 </div>
             <button id="logIn" class="btn btn-primary" type="submit">Sign in</button>
         </form>
+        <br>
         <div class="form-row">
-                        <div id="logon" class="form-group col-md-6">
-                            Do not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Create Account</button>
-                        </div>
                         <div id="forgotPassword" class="form-group col-md-6">
-                            Forgot password? <button onclick="openPage('Forgot', this, 'gray');" class="btn btn-primary">Forgot Password</button>
+                            <button onclick="openPage('Forgot', this, 'gray');" class="btn btn-primary">Forgot Password?</button>
                         </div>
         </div>
     </div>
