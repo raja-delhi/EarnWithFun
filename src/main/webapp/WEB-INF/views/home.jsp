@@ -45,6 +45,9 @@
 
         <div id="Signup" class="tabContent">
         </div>
+
+        <div id="Forgot" class="tabContent">
+        </div>
     </div>
 </body>
 </html>

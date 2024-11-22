@@ -2,6 +2,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
         <div id="errorMessage" style="color: yellow; text-align:center" class="hide"></div>
@@ -27,8 +28,13 @@
                 </div>
             <button id="logIn" class="btn btn-primary" type="submit">Sign in</button>
         </form>
-        <div id="logon">
-              Do not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Sign Up</button>
+        <div class="form-row">
+                        <div id="logon" class="form-group col-md-6">
+                            Do not have an account? <button onclick="openPage('Signup', this, 'gray');" class="btn btn-primary">Create Account</button>
+                        </div>
+                        <div id="forgotPassword" class="form-group col-md-6">
+                            Forgot password? <button onclick="openPage('Forgot', this, 'gray');" class="btn btn-primary">Forgot Password</button>
+                        </div>
         </div>
     </div>
 

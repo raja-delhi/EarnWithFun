@@ -13,6 +13,7 @@
 
 </head>
 <body>
+
         <div id="body">
             <div class="row header">
                    <div id="tabs">
@@ -29,6 +30,11 @@
         </div>
         <div class="vertical-line"></div>
         <div id="ReferralApprove" class="tabContent">
+            <c:if test="${not empty successMessage}">
+                <div id="errorMessage" style="color: yellow; text-align:center">
+                    <c:out value="${successMessage}"/>
+                </div>
+            </c:if>
             <h2 class="mb-3" style="text-align:center">Referral Approve</h2>
             <div class="verticalLine"></div>
             <div class="mb-3">
@@ -42,6 +48,14 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <c:when test="${empty referredUsers}">
+                     <tr>
+                         <td colspan='100%' class="txt-c_imp">
+                             <h4 style="text-align:center">No Referral request found.</h4>
+                         </td>
+                     </tr>
+                    </c:when>
+                    <c:otherwise>
                     <c:forEach var="user" items="${referredUsers}" varStatus="i">
                         <tr>
                           <th scope="row"><c:out value="${i.index+1}"/></th>
@@ -55,12 +69,19 @@
                           </td>
                         </tr>
                     </c:forEach>
+                    </c:otherwise>
+                    </c:choose>
                   </tbody>
                 </table>
 
             </div>
         </div>
         <div id="WithdrawApprove" class="tabContent">
+            <c:if test="${not empty successMessage1}">
+                <div id="errorMessage" style="color: yellow; text-align:center">
+                    <c:out value="${successMessage1}"/>
+                </div>
+            </c:if>
             <h2 class="mb-3" style="text-align:center">Withdraw Approve</h2>
             <div class="verticalLine"></div>
             <div class="mb-3">
@@ -74,19 +95,30 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <c:forEach var="user" items="${withdrawRequestedUsers}" varStatus="i">
+                  <c:choose>
+                       <c:when test="${empty withdrawRequestedUsers}">
                         <tr>
-                          <th scope="row"><c:out value="${i.index+1}"/></th>
-                          <td><c:out value="${user.username}"/></td>
-                          <td><c:out value="${user.phoneNumber}"/></td>
-                          <td>
-                          <form id="approveWithdrawRequest" method="post" action="approveWithdrawRequest" modalAttribute="user">
-                            <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
-                            <button onclick="approveWithdraw(<c:out value="${user.id}"/>);">Approve</button>
-                          </form>
-                          </td>
+                            <td colspan='100%' class="txt-c_imp">
+                                <h4 style="text-align:center">No Withdraw request found.</h4>
+                            </td>
                         </tr>
-                    </c:forEach>
+                       </c:when>
+                       <c:otherwise>
+                            <c:forEach var="user" items="${withdrawRequestedUsers}" varStatus="i">
+                                <tr>
+                                  <th scope="row"><c:out value="${i.index+1}"/></th>
+                                  <td><c:out value="${user.username}"/></td>
+                                  <td><c:out value="${user.phoneNumber}"/></td>
+                                  <td>
+                                  <form id="approveWithdrawRequest" method="post" action="approveWithdrawRequest" modalAttribute="user">
+                                    <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                                    <button onclick="approveWithdraw(<c:out value="${user.id}"/>);">Approve</button>
+                                  </form>
+                                  </td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                   </tbody>
                 </table>
 

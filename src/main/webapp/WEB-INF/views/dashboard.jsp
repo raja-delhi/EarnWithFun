@@ -82,13 +82,24 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <c:forEach var="payment" items="${paymentDetails}" varStatus="i">
-                                <tr>
-                                  <th scope="row"><c:out value="${i.index+1}"/></th>
-                                  <td><c:out value="${payment.referralFullName}"/></td>
-                                  <td><c:out value="${payment.amount}"/></td>
-                                </tr>
-                            </c:forEach>
+                              <c:choose>
+                                  <c:when test="${empty paymentDetails}">
+                                   <tr>
+                                       <td colspan='100%' class="txt-c_imp">
+                                           <h4 style="text-align:center">Payment Detail found.</h4>
+                                       </td>
+                                   </tr>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <c:forEach var="payment" items="${paymentDetails}" varStatus="i">
+                                        <tr>
+                                          <th scope="row"><c:out value="${i.index+1}"/></th>
+                                          <td><c:out value="${payment.referralFullName}"/></td>
+                                          <td><c:out value="${payment.amount}"/></td>
+                                        </tr>
+                                    </c:forEach>
+                                  </c:otherwise>
+                              </c:choose>
                           </tbody>
                         </table>
 

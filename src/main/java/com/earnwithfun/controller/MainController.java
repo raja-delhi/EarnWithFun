@@ -62,14 +62,14 @@ public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public Map<String, Object> login(@Validated User user, HttpServletRequest request){
-        User userDetail = userService.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
+        User userDetail = userService.getUserByUserNameAndPassword(user.getUsername() != null ? user.getUsername().trim() : "", user.getPassword() != null ? user.getPassword().trim() : "");
         Map<String, Object> map = new HashMap<>();
         if (userDetail == null) {
             map.put("errorMessage", "Invalid username or password. Please try again.");
             return map;
         }
 
-        User userByPaymentCode = userService.getUserByPaymentCode(user.getPaymentCode());
+        User userByPaymentCode = userService.getUserByPaymentCode(user.getPaymentCode() != null ? user.getPaymentCode().trim() : "");
         if (userByPaymentCode == null) {
             map.put("errorMessage", "Invalid Payment Code.");
             return map;
@@ -82,12 +82,12 @@ public class MainController {
     @ResponseBody
     public Map<String, Object> signUp(@Validated User user){
         Map<String, Object> map = new HashMap<>();
-        User userByUserName = userService.getUserByUserName(user.getUsername());
+        User userByUserName = userService.getUserByUserName(user.getUsername() != null ? user.getUsername().trim() : "");
         if(userByUserName != null){
             map.put("errorMessage", "Username Already Exists.");
             return map;
         }
-        User parentUser = this.userService.getUserByReferralCode(user.getReferralCode());
+        User parentUser = this.userService.getUserByReferralCode(user.getReferralCode() != null ? user.getReferralCode().trim() : "");
         if(parentUser == null){
             map.put("errorMessage", "Invalid Referral Code.");
             return map;
@@ -157,7 +157,7 @@ public class MainController {
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
-        redirectAttributes.addFlashAttribute("successMessage", "Withdraw Approve successfully.");
+        redirectAttributes.addFlashAttribute("successMessage1", "Withdraw Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawApproveBtn");
         return redirectView;
     }
