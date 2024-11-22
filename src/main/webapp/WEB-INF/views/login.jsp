@@ -64,6 +64,21 @@ $(document).ready(function () {
         });
     });
 
+    function openPage(pageName, element, color) {
+          var i, tabContent, tabLinks;
+          tabContent = document.getElementsByClassName("tabContent");
+          for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+          }
+          tabLinks = document.getElementsByClassName("tabLink");
+          for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].style.backgroundColor = "";
+          }
+          document.getElementById(pageName).style.display = "block";
+          document.getElementById(pageName).style.backgroundColor = color;
+          element.style.backgroundColor = 'blue';
+    }
+
     function loadDashboardScreen(userId){
         $.ajax({
                 url: '../main/dashboard',
