@@ -83,7 +83,7 @@
                         <h4>Total Amount : <c:out value="${user.amount}"/></h4>
                     </div>
                     <div class="verticalLine"></div>
-                    <div class="mb-3">
+                    <div class="mb-3 table-responsive">
                         <h5 style="text-align:center">Amount History</h5>
                         <table class="table table-dark table-hover table-bordered border-primary">
                           <thead>
