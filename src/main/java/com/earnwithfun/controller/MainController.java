@@ -242,15 +242,15 @@ public class MainController {
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
         redirectAttributes.addFlashAttribute("activeTab", "profileBtn");
-        if(userDetail.getPaymentPlan()>user.getNewPaymentPlan()){
-            redirectAttributes.addFlashAttribute("errorMessagePaymentPlan", "Your new Payment Plan should be greater then current Payment Plan.");
+        if(0 < userDetail.getPaymentPlan().compareTo(user.getNewPaymentPlan())){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your new Payment Plan should be greater then current Payment Plan.");
             return redirectView;
         }
         userDetail.setIsPaymentUpdateRequest('Y');
         userDetail.setNewPaymentPlan(user.getNewPaymentPlan());
-        long remainingAmount = userDetail.getNewPaymentPlan() - userDetail.getPaymentPlan();
+        long remainingAmount = user.getNewPaymentPlan() - userDetail.getPaymentPlan();
         this.userService.updateUser(userDetail);
-        redirectAttributes.addFlashAttribute("successMessagePaymentPlan", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your ne Payment Plan");
+        redirectAttributes.addFlashAttribute("successMessage", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your ne Payment Plan");
         return redirectView;
     }
 }

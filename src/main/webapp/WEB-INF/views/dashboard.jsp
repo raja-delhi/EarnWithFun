@@ -27,8 +27,8 @@
                    <div>
                    <div class="buttons">
                        <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboard();" id="checkBalanceBtn">Check Balance</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboard();" id="withdrawBtn">Withdraw</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');resetErrorDashboard();" id="profileBtn">Profile</button>
                        <button class="tabLink" style="width: 20%;" onclick="logOut();">Logout</button>
                    </div>
                </div>
@@ -36,17 +36,17 @@
     </div>
     <div class="vertical-line"></div>
     <div id="tabContentDiv">
+                    <c:if test="${not empty successMessage}">
+                           <div id="errorMessageDashboard" style="color: yellow; text-align:center">
+                               <c:out value="${successMessage}"/>
+                           </div>
+                       </c:if>
+                       <c:if test="${not empty errorMessage}">
+                           <div id="errorMessageDashboard" style="color: yellow; text-align:center" class="show">
+                               <c:out value="${errorMessage}"/>
+                           </div>
+                       </c:if>
                 <div id="WithDraw" class="tabContent">
-                   <c:if test="${not empty successMessage}">
-                       <div id="errorMessageDashboard" style="color: yellow; text-align:center">
-                           <c:out value="${successMessage}"/>
-                       </div>
-                   </c:if>
-                   <c:if test="${not empty errorMessage}">
-                       <div id="errorMessageDashboard" style="color: yellow; text-align:center" class="show">
-                           <c:out value="${errorMessage}"/>
-                       </div>
-                   </c:if>
                      <div class="container">
                              <form class="form-login" method="post" action="withdraw?username=<c:out value="${user.username}"/>" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
@@ -127,7 +127,7 @@
                           <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                           <div class="form-row">
                               <div class="form-group col-md-2">
-                                  <select id="paymentPlan" class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
+                                  <select id="paymentPlan" class="form-select form-select-sm" name="newPaymentPlan" aria-label=".form-select-sm example">
                                     <option value="50" selected>50</option>
                                     <option value="100">100</option>
                                     <option value="500">500</option>

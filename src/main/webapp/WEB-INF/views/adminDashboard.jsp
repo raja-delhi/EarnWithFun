@@ -123,7 +123,7 @@
                                     <form id="approveChangePaymentPlanRequest" action="approveChangePaymentPlanRequest" method = "post" modalAttribute="user">
                                       <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                                       <button onclick="approveChangePaymentPlan(<c:out value="${user.id}"/>);">Approve</button>
-                                    </form>6
+                                    </form>
                                   </td>
                                 </tr>
                             </c:forEach>
