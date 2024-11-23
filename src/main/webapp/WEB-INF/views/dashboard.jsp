@@ -17,13 +17,13 @@
         <div class="row">
                <div id="tabs">
                    <div id="welcome">
-                       <h1 class="tabLink">Welcome, <c:out value="${user.fullName}"/>!</h1>
+                       <h1 class="tabLink" style="width: 20%;">Welcome, <c:out value="${user.fullName}"/>!</h1>
                    <div>
                    <div class="buttons">
-                       <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray');" id="checkBalanceBtn">Check Balance</button>
-                       <button class="tabLink" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
-                       <button class="tabLink" onclick="logOut();">Logout</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');" id="checkBalanceBtn">Check Balance</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
+                       <button class="tabLink" style="width: 20%;" onclick="logOut();">Logout</button>
                    </div>
                </div>
         </div>
@@ -72,12 +72,12 @@
                     </div>
                     <div class="verticalLine"></div>
                     <div class="mb-3">
-                        <h5 style="text-align:center">Amount Received By</h5>
+                        <h5 style="text-align:center">Amount History By</h5>
                         <table class="table table-dark table-hover table-bordered border-primary">
                           <thead>
                             <tr>
                               <th scope="col">#</th>
-                              <th scope="col">Received From</th>
+                              <th scope="col">Action</th>
                               <th scope="col">Amount</th>
                             </tr>
                           </thead>

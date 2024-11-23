@@ -27,20 +27,25 @@ public class UserServiceImpl{
     }
 
     public void createUser(User user) {
-        user.setPaymentCode("PC"+getCode());
-        user.setReferralCode("RC"+getCode());
+        Object count = getUserCount();
+        user.setPaymentCode("P" + getCode() + count);
+        user.setReferralCode("R" + getCode() + count);
         userDao.createUser(user);
     }
 
+    private Object getUserCount() {
+        return userDao.getUsersCount();
+    }
+
     private String getCode() {
-        String paymentCodeString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-        StringBuilder paymentCode = new StringBuilder();
+        String codeString = "ABCDEFGHIJKLtuvwxyz12345MNOPQRSTUVWXYZabcdefghijklmnopqrs67890";
+        StringBuilder code = new StringBuilder();
         Random rnd = new Random();
-        while (paymentCode.length() < 6) {
-            int index = (int) (rnd.nextFloat() * paymentCodeString.length());
-            paymentCode.append(paymentCodeString.charAt(index));
+        while (code.length() < 4) {
+            int index = (int) (rnd.nextFloat() * codeString.length());
+            code.append(codeString.charAt(index));
         }
-        return paymentCode.toString();
+        return code.toString();
 
     }
 
@@ -68,11 +73,11 @@ public class UserServiceImpl{
         return userDao.getUserByReferralCode(referralCode);
     }
 
-    public void createPayment(String referredByUser, String fullName) {
+    public void createPayment(String referredByUser, String fullName, Long amount) {
         PaymentDetail paymentDetail = new PaymentDetail();
-        paymentDetail.setAmount(20L);
         paymentDetail.setReferralFullName(fullName);
         paymentDetail.setUsername(referredByUser);
+        paymentDetail.setAmount(amount);
         userDao.createPayment(paymentDetail);
     }
 

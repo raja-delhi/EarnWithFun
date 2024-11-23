@@ -86,4 +86,11 @@ public class UserDaoImpl{
     public User getUserById(Long userId) {
         return this.hibernateTemplate.get(User.class, userId);
     }
+
+    public Object getUsersCount() {
+        String query = "select count(1) from User";
+        Object[] queryParam = {};
+        List<?> count = this.hibernateTemplate.find(query, queryParam);
+        return count.isEmpty() ? 0 : count.get(0);
+    }
 }

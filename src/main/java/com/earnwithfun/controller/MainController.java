@@ -137,6 +137,7 @@ public class MainController {
         Long remainingAmount = userDetail.getAmount() != null ? userDetail.getAmount() - user.getAmount() : 0L;
         userDetail.setAmount(remainingAmount);
         this.userService.updateUser(userDetail);
+        userService.createPayment(userDetail.getUsername(), "Withdraw By : " + userDetail.getFullName(), user.getAmount());
         redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
         return redirectView;
     }
@@ -161,7 +162,9 @@ public class MainController {
         model.addAttribute("user", user);
         model.addAttribute("withdrawRequestedUsers", withdrawRequestedUsers);
         model.addAttribute("referredUsers", referredUsers);
-        model.addAttribute("activeTab", "withdrawApproveBtn");
+        if(!model.containsAttribute("activeTab")) {
+            model.addAttribute("activeTab", "withdrawApproveBtn");
+        }
         return "adminDashboard";
     }
 
@@ -182,7 +185,7 @@ public class MainController {
         user = userService.getUserById(user.getId());
         user.setReferralRequest('N');
         this.userService.updateUser(user);
-        this.userService.createPayment(user.getReferredByUser(), user.getFullName());
+        this.userService.createPayment(user.getReferredByUser(), "Refer To : "+user.getFullName(), 20L);
         User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
         Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + 20 : 20;
         parentUser.setAmount(amount);

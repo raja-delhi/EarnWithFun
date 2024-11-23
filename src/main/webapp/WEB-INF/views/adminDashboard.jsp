@@ -48,6 +48,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                  <c:choose>
                     <c:when test="${empty referredUsers}">
                      <tr>
                          <td colspan='100%' class="txt-c_imp">
