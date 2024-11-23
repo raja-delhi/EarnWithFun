@@ -49,7 +49,14 @@ public class MainController {
 
     @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
     public String dashboard(@Validated User user, Model model){
-        user = userService.getUserByUserName(user.getUsername());
+        if(model.containsAttribute("user")){
+            user = (User) model.getAttribute("user");
+            if (user != null && user.getId() == null) {
+                user = userService.getUserByUserName(user.getUsername());
+            }
+        }else {
+            user = userService.getUserByUserName(user.getUsername());
+        }
         List<PaymentDetail> paymentDetails = userService.getPaymentDetails(user);
         model.addAttribute("user", user);
         model.addAttribute("paymentDetails", paymentDetails);
@@ -128,7 +135,8 @@ public class MainController {
     public RedirectView withdraw(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
         User userDetail = this.userService.getUserByUserName(user.getUsername());
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
+        redirectAttributes.addFlashAttribute("user", userDetail);
+        redirectView.setUrl(request.getContextPath()+"/main/dashboard");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
         if(userDetail.getWithdrawRequest() == 'Y'){
             redirectAttributes.addFlashAttribute("errorMessage", "Your Withdraw Request is pending. you can't withdraw again until your previous withdraw request approved.");
@@ -166,7 +174,14 @@ public class MainController {
     }
     @RequestMapping(value = "/adminDashboard" ,method = RequestMethod.GET)
     public String adminDashboard(@Validated User user, Model model){
-        user = userService.getUserByUserName(user.getUsername());
+        if(model.containsAttribute("user")){
+            user = (User) model.getAttribute("user");
+            if (user != null && user.getId() == null) {
+                user = userService.getUserByUserName(user.getUsername());
+            }
+        }else {
+            user = userService.getUserByUserName(user.getUsername());
+        }
         List<User> withdrawRequestedUsers = userService.getUserRequestedForWithdraw();
         List<User> referredUsers = userService.getReferredUsers();
         List<User> paymentPlanChangeUsers = userService.getPaymentPlanChangeUsers();
@@ -186,7 +201,8 @@ public class MainController {
         user.setWithdrawRequest('N');
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("user", user);
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage1", "Withdraw Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawApproveBtn");
         return redirectView;
@@ -205,7 +221,8 @@ public class MainController {
         parentUser.setAmount(amount);
         this.userService.updateUser(parentUser);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("user", user);
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
         return redirectView;
@@ -217,7 +234,8 @@ public class MainController {
         user.setIsRejectedByAdmin('Y');
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("user", user);
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
         return redirectView;
@@ -230,7 +248,8 @@ public class MainController {
         user.setPaymentPlan(user.getNewPaymentPlan());
         this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("user", user);
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage", "Changed Payment Plan Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "changePaymentPlanApproveBtn");
         return redirectView;
@@ -240,7 +259,8 @@ public class MainController {
     public RedirectView updatePaymentPlanRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
         User userDetail = userService.getUserById(user.getId());
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
+        redirectAttributes.addFlashAttribute("user", userDetail);
+        redirectView.setUrl(request.getContextPath()+"/main/dashboard");
         redirectAttributes.addFlashAttribute("activeTab", "profileBtn");
         if(0 < userDetail.getPaymentPlan().compareTo(user.getNewPaymentPlan())){
             redirectAttributes.addFlashAttribute("errorMessage", "Your new Payment Plan should be greater then current Payment Plan.");
