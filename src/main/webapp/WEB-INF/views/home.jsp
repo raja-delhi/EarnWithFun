@@ -40,7 +40,7 @@
                 <h6>5. If your Payment Plan is 500 or more, than you will receive 50% bonus of your Payment Plan.</h6>
                 <h6>6. If your Friends Payment Plan is less then 500, then you will receive 40% bonus of your friends Payment Plan.</h6>
                 <h6>7. If your Friends Payment Plan is 500 or more, than you will receive 25% bonus of your friends Payment Plan.</h6>
-                <h6>8. For point No. 4, 5, 6,& 7, there are some regulation, if your Payment plan is less than your friends Payment Plan, then you will receive bonus according to your selected Payment Plan.<h6>
+                <h6>8. For point No. 4, 5, 6, & 7 there are some regulation, if your Payment plan is less than your friends Payment Plan, then you will receive bonus according to your selected Payment Plan.<h6>
                 <div class="verticalLine"></div>
                 <h4 style="text-align:center;color:yellow;">Still you have any doubts Contact on +91 9797317200</h4>
           </div>
