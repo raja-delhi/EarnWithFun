@@ -21,7 +21,7 @@
                        <h1 class="tabLink" style="width: 20%;">Welcome, <c:out value="${user.fullName}"/>!</h1>
                    <div>
                    <div class="buttons">
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');" id="checkBalanceBtn">Check Balance</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboard();" id="checkBalanceBtn">Check Balance</button>
                        <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');" id="withdrawBtn">Withdraw</button>
                        <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');" id="profileBtn">Profile</button>
                        <button class="tabLink" style="width: 20%;" onclick="logOut();">Logout</button>
@@ -33,12 +33,12 @@
     <div id="tabContentDiv">
                 <div id="WithDraw" class="tabContent">
                    <c:if test="${not empty successMessage}">
-                       <div id="errorMessage" style="color: yellow; text-align:center">
+                       <div id="errorMessageDashboard" style="color: yellow; text-align:center">
                            <c:out value="${successMessage}"/>
                        </div>
                    </c:if>
                    <c:if test="${not empty errorMessage}">
-                       <div id="errorMessage" style="color: yellow; text-align:center">
+                       <div id="errorMessageDashboard" style="color: yellow; text-align:center" class="show">
                            <c:out value="${errorMessage}"/>
                        </div>
                    </c:if>
@@ -136,6 +136,10 @@
                 console.log("Error: " + error);
             }
         });
+    }
+    function resetErrorDashboard(){
+        $("#errorMessageDashboard").html('');
+        $("#errorMessageDashboard").hide();
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

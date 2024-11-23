@@ -31,7 +31,7 @@
         <div class="vertical-line"></div>
         <div id="ReferralApprove" class="tabContent">
             <c:if test="${not empty successMessage}">
-                <div id="errorMessage" style="color: yellow; text-align:center">
+                <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center">
                     <c:out value="${successMessage}"/>
                 </div>
             </c:if>
@@ -83,7 +83,7 @@
         </div>
         <div id="WithdrawApprove" class="tabContent">
             <c:if test="${not empty successMessage1}">
-                <div id="errorMessage" style="color: yellow; text-align:center" class"show">
+                <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center" class"show">
                     <c:out value="${successMessage1}"/>
                 </div>
             </c:if>
@@ -148,8 +148,8 @@
             });
         }
     function resetErrorAdmin(){
-        $("#errorMessage").html('');
-        $("#errorMessage").hide();
+        $("#errorMessageAdminDashboard").html('');
+        $("#errorMessageAdminDashboard").hide();
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>
