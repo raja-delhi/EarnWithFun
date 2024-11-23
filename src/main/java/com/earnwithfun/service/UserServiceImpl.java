@@ -96,19 +96,20 @@ public class UserServiceImpl{
     public void updatePayments(User mainUser, long paymentPlanAmount) {
         User parentUser = this.getUserByUserName(mainUser.getReferredByUser());
         User adminUser = this.getAdminUserByFlag();
+
         long mainUserAmount =  0;
         long parentUserAmount = 0;
         long adminUserAmount =  0;
         long baseAmount = paymentPlanAmount / 100;
         if(mainUser.getPaymentPlan()>=500){
-            mainUserAmount = baseAmount * 60;
-            parentUserAmount = baseAmount * 20;
-            adminUserAmount = baseAmount * 20;
+            mainUserAmount = baseAmount * 50;
+            parentUserAmount = baseAmount * 25;
+            adminUserAmount = baseAmount * 25;
             this.createPayment(mainUser.getUsername(), "Your Login bonus", "+" + mainUserAmount);
             mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount() + mainUserAmount : mainUserAmount);
         }else{
-            parentUserAmount = baseAmount * 50;
-            adminUserAmount = baseAmount * 50;
+            parentUserAmount = baseAmount * 40;
+            adminUserAmount = baseAmount * 60;
         }
         this.updateUser(mainUser);
 
