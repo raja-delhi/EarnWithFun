@@ -50,10 +50,12 @@ $(document).ready(function () {
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Username is mandatory.');
+                $("#username").focus();
             }else if($("#password").val().trim() == ''){
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Password is mandatory.');
+                $("#password").focus();
             }else{
                 $.ajax({
                     type: "POST",

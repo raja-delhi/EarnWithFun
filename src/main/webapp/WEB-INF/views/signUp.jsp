@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="paymentPlan" class="form-label">Choose Payment Plan</label>
-                    <select class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
+                    <select id="paymentPlan" class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
                       <option value="50" selected>50</option>
                       <option value="100">100</option>
                       <option value="500">500</option>
@@ -67,15 +67,23 @@
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('Username is mandatory.');
+                        $("#username").focus();
                     }else if($("#password").val().trim() == ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('Password is mandatory.');
+                        $("#password").focus();
                     }else if($("#referralCode").val().trim() == ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('ReferralCode is mandatory.');
-                    }else{
+                        $("#referralCode").focus();
+                    }else if (confirm("Your Selected Payment Plan is : " + $("#paymentPlan").val() + ". You need to pay " + $("#paymentPlan").val() + " amount after registration to activate your account.") == false) {
+                       $("#errorMessageSignUp").show();
+                       $("#errorMessageSignUp").html('');
+                       $("#errorMessageSignUp").html('Change Payment Plan.');
+                       $("#paymentPlan").focus();
+                     }else{
                         $.ajax({
                             type: "POST",
                             url: url,
