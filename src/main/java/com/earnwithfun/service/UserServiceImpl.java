@@ -73,7 +73,7 @@ public class UserServiceImpl{
         return userDao.getUserByReferralCode(referralCode);
     }
 
-    public void createPayment(String referredByUser, String fullName, Long amount) {
+    public void createPayment(String referredByUser, String fullName, String amount) {
         PaymentDetail paymentDetail = new PaymentDetail();
         paymentDetail.setReferralFullName(fullName);
         paymentDetail.setUsername(referredByUser);

@@ -34,6 +34,7 @@ public class User implements UserDetails{
     private char isAdminUser = 'N';
     private char referralRequest = 'N';
     private String referredByUser;
+    private Long paymentPlan;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -204,5 +205,13 @@ public class User implements UserDetails{
 
     public void setReferredByUser(String referredByUser) {
         this.referredByUser = referredByUser;
+    }
+
+    public Long getPaymentPlan() {
+        return paymentPlan;
+    }
+
+    public void setPaymentPlan(Long paymentPlan) {
+        this.paymentPlan = paymentPlan;
     }
 }

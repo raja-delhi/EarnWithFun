@@ -10,7 +10,10 @@
 <body>
     <div class="row header">
             <div class="topnav">
-              <span class="active"><h3>Welcome to Earn with Fun!</h3></span>
+              <span class="active">
+                <h3 style="text-align:center">Welcome to Earn with Fun!</h3>
+                <h4 style="text-align:center;color:black;">Refer more earn more...</h4>
+              </span>
             </div>
             <div id="tabs">
                 <button class="tabLink" onclick="openPage('Home', this, 'gray')" id="homeBtn">Home</button>
@@ -40,7 +43,7 @@
             <div id="errorMessageForgot" style="color: yellow; text-align:center" class="hide"></div>
                 <div class="container">
                     <form id="forgotPasswordForm" modalAttribute="user">
-                        <h2 class="mb-3" style="text-align:center">Reset Password</h2>
+                        <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Reset Password</h2>
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" id="username1" name="username" class="form-control" autocomplete="off" required>

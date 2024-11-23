@@ -6,10 +6,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Dashboard</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 
 </head>
 <body>
@@ -43,7 +44,7 @@
                    </c:if>
                      <div class="container">
                              <form class="form-login" method="post" action="withdraw?username=<c:out value="${user.username}"/>" modalAttribute="user">
-                                 <h2 class="mb-3" style="text-align:center">Withdraw Amount</h2>
+                                 <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
                                     <div class="mb-3">
                                         <label for="amount" class="form-label">Enter Amount.</label>
                                         <input type="number" id="amount" name="amount" class="form-control" autocomplete="off" required>
@@ -66,7 +67,7 @@
                 </div>
 
                 <div id="CheckBalance" class="tabContent">
-                    <h2 class="mb-3" style="text-align:center">Balance Amount</h2>
+                    <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Balance Amount</h2>
                     <div class="mb-3" style="colour:green">
                         <h4>Total Amount : <c:out value="${user.amount}"/></h4>
                     </div>
@@ -107,11 +108,12 @@
                 </div>
 
                 <div id="Profile" class="tabContent">
-                    <h2 class="mb-3" style="text-align:center">Profile</h2>
+                    <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Profile</h2>
                     <h4>Username : <c:out value="${user.username}"/></h4>
                     <h4>Name : <c:out value="${user.fullName}"/> </h4>
                     <h4>Email : <c:out value="${user.email}"/></h4>
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
+                    <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
                     <div class="verticalLine"></div>
                     <h3 style="text-align:center; background-color:blue">Referral Code : <c:out value="${user.referralCode}"/></h3>
 
@@ -137,3 +139,5 @@
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+

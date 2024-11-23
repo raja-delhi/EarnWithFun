@@ -7,7 +7,7 @@
     <div id="errorMessageSignUp" style="color: yellow; text-align:center" class="hide"></div>
     <div class="container">
         <form id="signUpForm" modalAttribute="user">
-            <h2 class="mb-3" style="text-align:center">Register</h2>
+            <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Register</h2>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="username" class="form-label">Username</label>
@@ -37,6 +37,15 @@
                 <div class="form-group col-md-6">
                     <label for="referralCode" class="form-label">Referral Code</label>
                     <input type="text" id="referralCode" name="referralCode" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="paymentPlan" class="form-label">Choose Payment Plan</label>
+                    <select class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
+                      <option value="50" selected>50</option>
+                      <option value="100">100</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                    </select>
                 </div>
             </div>
                     <button id="signUp" class="btn btn-primary" type="submit">Sign Up</button>

@@ -13,7 +13,7 @@
     </c:if>
     <div class="container">
         <form id="loginForm" modalAttribute="user">
-            <h2 class="mb-3" style="text-align:center">Login</h2>
+            <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Login</h2>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" id="username" name="username" class="form-control" autocomplete="off" required>

@@ -35,7 +35,7 @@
                     <c:out value="${successMessage}"/>
                 </div>
             </c:if>
-            <h2 class="mb-3" style="text-align:center">Referral Approve</h2>
+            <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Referral Approve</h2>
             <div class="verticalLine"></div>
             <div class="mb-3">
                 <table class="table table-dark table-hover table-bordered border-primary">
@@ -65,7 +65,7 @@
                           <td>
                             <form id="approveReferralRequest" action="approveReferralRequest" method = "post" modalAttribute="user">
                               <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
-                              <button onclick="approveWithdraw(<c:out value="${user.id}"/>);">Approve</button>
+                              <button onclick="approveReferral(<c:out value="${user.id}"/>);">Approve</button>
                             </form>
                           </td>
                         </tr>
@@ -83,7 +83,7 @@
                     <c:out value="${successMessage1}"/>
                 </div>
             </c:if>
-            <h2 class="mb-3" style="text-align:center">Withdraw Approve</h2>
+            <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Approve</h2>
             <div class="verticalLine"></div>
             <div class="mb-3">
                 <table class="table table-dark table-hover table-bordered border-primary">

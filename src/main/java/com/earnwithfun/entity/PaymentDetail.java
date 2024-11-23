@@ -12,7 +12,7 @@ public class PaymentDetail {
     private Long id;
 
     private String username;
-    private Long amount;
+    private String amount;
     private String referralFullName;
 
     public Long getId() {
@@ -31,11 +31,11 @@ public class PaymentDetail {
         this.username = username;
     }
 
-    public Long getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
