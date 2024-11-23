@@ -74,6 +74,12 @@ public class MainController {
             map.put("errorMessage", "Invalid Payment Code.");
             return map;
         }
+
+        if(userDetail.getIsRejectedByAdmin() == 'Y'){
+            map.put("errorMessage", "Your Account Registration is rejected by admin. Reason, Your payment plan is : " + userDetail.getPaymentPlan() + " and you paid less then Payment plan.");
+            return map;
+        }
+
         map.put("userId", userDetail.getId());
         return map;
     }
@@ -184,6 +190,7 @@ public class MainController {
     public RedirectView approveReferralRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
         user = userService.getUserById(user.getId());
         user.setReferralRequest('N');
+        user.setIsRejectedByAdmin('N');
         this.userService.updateUser(user);
         User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
         Long paidAmount = parentUser.getPaymentPlan() / 2;
@@ -191,6 +198,18 @@ public class MainController {
         Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + paidAmount : paidAmount;
         parentUser.setAmount(amount);
         this.userService.updateUser(parentUser);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
+        redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
+        return redirectView;
+    }
+
+    @RequestMapping(value = "/rejectReferralRequest", method = RequestMethod.POST)
+    public RedirectView rejectReferralRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user = userService.getUserById(user.getId());
+        user.setIsRejectedByAdmin('Y');
+        this.userService.updateUser(user);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");

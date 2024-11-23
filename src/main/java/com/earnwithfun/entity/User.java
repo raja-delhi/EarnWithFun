@@ -35,6 +35,7 @@ public class User implements UserDetails{
     private char referralRequest = 'N';
     private String referredByUser;
     private Long paymentPlan;
+    private char isRejectedByAdmin = 'N';
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -213,5 +214,13 @@ public class User implements UserDetails{
 
     public void setPaymentPlan(Long paymentPlan) {
         this.paymentPlan = paymentPlan;
+    }
+
+    public char getIsRejectedByAdmin() {
+        return isRejectedByAdmin;
+    }
+
+    public void setIsRejectedByAdmin(char isRejectedByAdmin) {
+        this.isRejectedByAdmin = isRejectedByAdmin;
     }
 }

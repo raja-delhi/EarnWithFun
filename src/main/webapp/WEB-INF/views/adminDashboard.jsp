@@ -21,8 +21,8 @@
                            <h1 class="tabLink">Welcome, <c:out value="${user.fullName}"/>!</h1>
                        <div>
                        <div class="buttons">
-                           <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray')" id="referralApproveBtn" >Referral Approve</button>
-                           <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray')" id="withdrawApproveBtn" >Withdraw Approve</button>
+                           <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdmin();" id="referralApproveBtn" >Referral Approve</button>
+                           <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray');resetErrorAdmin();" id="withdrawApproveBtn" >Withdraw Approve</button>
                            <button class="tabLink" onclick="logOut();">Logout</button>
                        </div>
                    </div>
@@ -67,6 +67,10 @@
                               <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                               <button onclick="approveReferral(<c:out value="${user.id}"/>);">Approve</button>
                             </form>
+                            <form id="rejectReferralRequest" action="rejectReferralRequest" method = "post" modalAttribute="user">
+                              <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                              <button onclick="rejectReferral(<c:out value="${user.id}"/>);">Reject</button>
+                            </form>
                           </td>
                         </tr>
                     </c:forEach>
@@ -79,7 +83,7 @@
         </div>
         <div id="WithdrawApprove" class="tabContent">
             <c:if test="${not empty successMessage1}">
-                <div id="errorMessage" style="color: yellow; text-align:center">
+                <div id="errorMessage" style="color: yellow; text-align:center" class"show">
                     <c:out value="${successMessage1}"/>
                 </div>
             </c:if>
@@ -143,5 +147,9 @@
                 }
             });
         }
+    function resetErrorAdmin(){
+        $("#errorMessage").html('');
+        $("#errorMessage").hide();
+    }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>
