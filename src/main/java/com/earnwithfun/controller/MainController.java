@@ -69,10 +69,12 @@ public class MainController {
             return map;
         }
 
-        User userByPaymentCode = userService.getUserByPaymentCode(user.getPaymentCode() != null ? user.getPaymentCode().trim() : "");
-        if (userByPaymentCode == null) {
-            map.put("errorMessage", "Invalid Payment Code.");
-            return map;
+        if(userDetail.getIsPaymentDone() == 'N') {
+            User userByPaymentCode = userService.getUserByPaymentCode(user.getPaymentCode() != null ? user.getPaymentCode().trim() : "");
+            if (userByPaymentCode == null) {
+                map.put("errorMessage", "Invalid Payment Code.");
+                return map;
+            }
         }
 
         if(userDetail.getIsRejectedByAdmin() == 'Y'){
@@ -80,6 +82,8 @@ public class MainController {
             return map;
         }
 
+        userDetail.setIsPaymentDone('Y');
+        userService.updateUser(userDetail);
         map.put("userId", userDetail.getId());
         return map;
     }

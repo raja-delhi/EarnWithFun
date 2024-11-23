@@ -19,8 +19,6 @@ public class User implements UserDetails{
 
     private String username;
     private String password;
-    private String rePassword;
-    private String gender;
     private String fullName;
     private String email;
     private String phoneNumber;
@@ -36,6 +34,7 @@ public class User implements UserDetails{
     private String referredByUser;
     private Long paymentPlan;
     private char isRejectedByAdmin = 'N';
+    private char isPaymentDone = 'N';
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -94,22 +93,6 @@ public class User implements UserDetails{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRePassword() {
-        return rePassword;
-    }
-
-    public void setRePassword(String rePassword) {
-        this.rePassword = rePassword;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getFullName() {
@@ -222,5 +205,13 @@ public class User implements UserDetails{
 
     public void setIsRejectedByAdmin(char isRejectedByAdmin) {
         this.isRejectedByAdmin = isRejectedByAdmin;
+    }
+
+    public char getIsPaymentDone() {
+        return isPaymentDone;
+    }
+
+    public void setIsPaymentDone(char isPaymentDone) {
+        this.isPaymentDone = isPaymentDone;
     }
 }
