@@ -62,7 +62,7 @@
                     $("#errorMessageSignUp").hide();
                     event.preventDefault();
                     let form = $("#signUpForm");
-                    let url = "signUp";debugger;
+                    let url = "signUp";
                     if($("#username").val().trim() == ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
