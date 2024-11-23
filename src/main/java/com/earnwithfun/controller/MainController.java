@@ -262,7 +262,7 @@ public class MainController {
         redirectAttributes.addFlashAttribute("user", userDetail);
         redirectView.setUrl(request.getContextPath()+"/main/dashboard");
         redirectAttributes.addFlashAttribute("activeTab", "profileBtn");
-        if(0 < userDetail.getPaymentPlan().compareTo(user.getNewPaymentPlan())){
+        if(0 <= userDetail.getPaymentPlan().compareTo(user.getNewPaymentPlan())){
             redirectAttributes.addFlashAttribute("errorMessage", "Your new Payment Plan should be greater then current Payment Plan.");
             return redirectView;
         }
