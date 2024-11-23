@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-    <div id="errorMessage7" style="color: yellow; text-align:center" class="hide"></div>
+    <div id="errorMessageSignUp" style="color: yellow; text-align:center" class="hide"></div>
     <div class="container">
         <form id="signUpForm" modalAttribute="user">
-            <h2 class="mb-3">Register</h2>
+            <h2 class="mb-3" style="text-align:center">Register</h2>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="username" class="form-label">Username</label>
@@ -50,32 +50,46 @@
 <script>
     $(document).ready(function () {
             $("#signUp").click(function (event) {
-                $("#errorMessage7").hide();
+                    $("#errorMessageSignUp").hide();
                     event.preventDefault();
                     let form = $("#signUpForm");
-                    let url = "signUp";
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: form.serialize(),
-                        contentType: "application/x-www-form-urlencoded",
-                        dataType: "json",
-                        success: function (data) {
-                            if(data.errorMessage != null){
-                                $("#errorMessage7").show();
-                                $("#errorMessage7").html('');
-                                $("#errorMessage7").html(data.errorMessage);
-                            }else{
-                                $("#errorMessage7").show();
-                                $("#errorMessage7").html('');
-                                $("#errorMessage7").html(data.successMessage);
-                                clearAllFields();
+                    let url = "signUp";debugger;
+                    if($("#username").val().trim() == ''){
+                        $("#errorMessageSignUp").show();
+                        $("#errorMessageSignUp").html('');
+                        $("#errorMessageSignUp").html('Username is mandatory.');
+                    }else if($("#password").val().trim() == ''){
+                        $("#errorMessageSignUp").show();
+                        $("#errorMessageSignUp").html('');
+                        $("#errorMessageSignUp").html('Password is mandatory.');
+                    }else if($("#referralCode").val().trim() == ''){
+                        $("#errorMessageSignUp").show();
+                        $("#errorMessageSignUp").html('');
+                        $("#errorMessageSignUp").html('ReferralCode is mandatory.');
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: form.serialize(),
+                            contentType: "application/x-www-form-urlencoded",
+                            dataType: "json",
+                            success: function (data) {
+                                if(data.errorMessage != null){
+                                    $("#errorMessageSignUp").show();
+                                    $("#errorMessageSignUp").html('');
+                                    $("#errorMessageSignUp").html(data.errorMessage);
+                                }else{
+                                    $("#errorMessageSignUp").show();
+                                    $("#errorMessageSignUp").html('');
+                                    $("#errorMessageSignUp").html(data.successMessage);
+                                    clearAllFields();
+                                }
+                            },
+                            error: function (data) {
+                                alert("Error occurred while submitting the form");
                             }
-                        },
-                        error: function (data) {
-                            alert("Error occurred while submitting the form");
-                        }
-                    });
+                        });
+                    }
             });
         });
 

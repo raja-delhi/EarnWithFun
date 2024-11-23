@@ -41,7 +41,7 @@ public class MainController {
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String home(Model model){
         if(!model.containsAttribute("activeTab")){
-            model.addAttribute("activeTab", "newsBtn");
+            model.addAttribute("activeTab", "homeBtn");
         }
         model.addAttribute("user", new User());
         return "home";

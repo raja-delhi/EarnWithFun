@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-        <div id="errorMessage" style="color: yellow; text-align:center" class="hide"></div>
+        <div id="errorMessageLogIn" style="color: yellow; text-align:center" class="hide"></div>
     <c:if test="${not empty successMessage}">
         <div style="color: green; text-align:center">
             <strong><c:out value="${successMessage}"/></strong>
@@ -13,7 +13,7 @@
     </c:if>
     <div class="container">
         <form id="loginForm" modalAttribute="user">
-            <h2 class="mb-3">Login</h2>
+            <h2 class="mb-3" style="text-align:center">Login</h2>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" id="username" name="username" class="form-control" autocomplete="off" required>
@@ -31,7 +31,7 @@
         <br>
         <div class="form-row">
                         <div id="forgotPassword" class="form-group col-md-6">
-                            <button onclick="openPage('Forgot', this, 'gray');" class="btn btn-primary">Forgot Password?</button>
+                            <button onclick="openPage('Forgot', this, 'gray');resetError();" class="btn btn-primary">Forgot Password?</button>
                         </div>
         </div>
     </div>
@@ -42,32 +42,48 @@
 <script>
 $(document).ready(function () {
         $("#logIn").click(function (event) {
-            $("#errorMessage").hide();
+            $("#errorMessageLogIn").hide();
             event.preventDefault();
             let form = $("#loginForm");
             let url = "login";
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(),
-                contentType: "application/x-www-form-urlencoded",
-                dataType: "json",
-                success: function (data) {
-                    if(data.errorMessage != null){
-                        $("#errorMessage").show();
-                        $("#errorMessage").html('');
-                        $("#errorMessage").html(data.errorMessage);
-                    }else{
-                        loadDashboardScreen(data.userId);
+            if($("#username").val().trim() == ''){
+                $("#errorMessageLogIn").show();
+                $("#errorMessageLogIn").html('');
+                $("#errorMessageLogIn").html('Username is mandatory.');
+            }else if($("#password").val().trim() == ''){
+                $("#errorMessageLogIn").show();
+                $("#errorMessageLogIn").html('');
+                $("#errorMessageLogIn").html('Password is mandatory.');
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.errorMessage != null){
+                            $("#errorMessageLogIn").show();
+                            $("#errorMessageLogIn").html('');
+                            $("#errorMessageLogIn").html(data.errorMessage);
+                        }else{
+                            loadDashboardScreen(data.userId);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Error occurred while submitting the form");
                     }
-                },
-                error: function (data) {
-                    alert("Error occurred while submitting the form");
-                }
-            });
+                });
+            }
         });
     });
 
+    function resetError(){
+        $("#errorMessageForgot").html('');
+        $("#errorMessageForgot").hide();
+        $("#username1").val('');
+        $("#password1").val('');
+    }
     function openPage(pageName, element, color) {
           var i, tabContent, tabLinks;
           tabContent = document.getElementsByClassName("tabContent");
