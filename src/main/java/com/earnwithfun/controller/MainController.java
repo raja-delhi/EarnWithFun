@@ -193,7 +193,7 @@ public class MainController {
         user.setIsRejectedByAdmin('N');
         this.userService.updateUser(user);
         User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
-        Long paidAmount = parentUser.getPaymentPlan() / 2;
+        Long paidAmount = parentUser.getPaymentPlan()<user.getPaymentPlan() ? parentUser.getPaymentPlan() / 2 : user.getPaymentPlan() / 2;
         this.userService.createPayment(user.getReferredByUser(), "Refer To : "+user.getFullName(), "+" + paidAmount);
         Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + paidAmount : paidAmount;
         parentUser.setAmount(amount);
