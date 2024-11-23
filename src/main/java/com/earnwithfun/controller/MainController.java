@@ -130,10 +130,10 @@ public class MainController {
             redirectAttributes.addFlashAttribute("errorMessage", "Your Withdraw Request is pending. you can't withdraw again until your previous withdraw request approved.");
             return redirectView;
         }else if(userDetail.getAmount() == null || userDetail.getAmount()<user.getAmount()){
-            redirectAttributes.addFlashAttribute("errorMessage", "Your Amount is less than 50 Rupees. Refer more friends to earn and withdraw.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Your Amount is less than 250 Rupees. Refer more friends to earn and withdraw.");
             return redirectView;
-        }else if(user.getAmount()<50){
-            redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to 50.");
+        }else if(user.getAmount()<250){
+            redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to 250.");
             return redirectView;
         }
         userDetail.setWithdrawRequest('Y');
