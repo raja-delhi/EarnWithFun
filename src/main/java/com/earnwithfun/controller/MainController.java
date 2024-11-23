@@ -145,9 +145,12 @@ public class MainController {
             redirectAttributes.addFlashAttribute("errorMessage", "Insufficient funds. Please check your balance.");
             return redirectView;
         }
-
-        if (user.getAmount() < 250) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to 250.");
+        long eligibleAmount = 200;
+        if(userDetail.getPaymentPlan()>=500) {
+            eligibleAmount = (userDetail.getPaymentPlan() / 100) * 85;
+        }
+        if (user.getAmount() < eligibleAmount) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to " + eligibleAmount + ".");
             return redirectView;
         }
 
@@ -215,19 +218,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/approveReferralRequest", method = RequestMethod.POST)
-    public RedirectView approveReferralRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        user = userService.getUserById(user.getId());
-        user.setReferralRequest('N');
-        user.setIsRejectedByAdmin('N');
-        this.userService.updateUser(user);
-        User parentUser = this.userService.getUserByUserName(user.getReferredByUser());
-        Long paidAmount = parentUser.getPaymentPlan()<user.getPaymentPlan() ? parentUser.getPaymentPlan() / 2 : user.getPaymentPlan() / 2;
-        this.userService.createPayment(user.getReferredByUser(), "Refer To : "+user.getFullName(), "+" + paidAmount);
-        Long amount = parentUser.getAmount() != null ? parentUser.getAmount() + paidAmount : paidAmount;
-        parentUser.setAmount(amount);
-        this.userService.updateUser(parentUser);
+    public RedirectView approveReferralRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        mainUser = userService.getUserById(mainUser.getId());
+        mainUser.setReferralRequest('N');
+
+        this.userService.updatePayments(mainUser, mainUser.getPaymentPlan());
+
         RedirectView redirectView = new RedirectView();
-        redirectAttributes.addFlashAttribute("user", user);
+        redirectAttributes.addFlashAttribute("mainUser", mainUser);
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
@@ -248,18 +246,22 @@ public class MainController {
     }
 
     @RequestMapping(value = "/approveChangePaymentPlanRequest", method = RequestMethod.POST)
-    public RedirectView approveChangePaymentPlanRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        user = userService.getUserById(user.getId());
-        user.setIsPaymentUpdateRequest('N');
-        user.setPaymentPlan(user.getNewPaymentPlan());
-        this.userService.updateUser(user);
+    public RedirectView approveChangePaymentPlanRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        mainUser = userService.getUserById(mainUser.getId());
+        mainUser.setIsPaymentUpdateRequest('N');
+        long paymentPlanAmount = mainUser.getNewPaymentPlan() - mainUser.getPaymentPlan();
+        mainUser.setPaymentPlan(mainUser.getNewPaymentPlan());
+
+        this.userService.updatePayments(mainUser, paymentPlanAmount);
+
         RedirectView redirectView = new RedirectView();
-        redirectAttributes.addFlashAttribute("user", user);
+        redirectAttributes.addFlashAttribute("mainUser", mainUser);
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
         redirectAttributes.addFlashAttribute("successMessage", "Changed Payment Plan Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "changePaymentPlanApproveBtn");
         return redirectView;
     }
+
 
     @RequestMapping(value = "/updatePaymentPlanRequest", method = RequestMethod.POST)
     public RedirectView updatePaymentPlanRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
@@ -276,7 +278,7 @@ public class MainController {
         userDetail.setNewPaymentPlan(user.getNewPaymentPlan());
         long remainingAmount = user.getNewPaymentPlan() - userDetail.getPaymentPlan();
         this.userService.updateUser(userDetail);
-        redirectAttributes.addFlashAttribute("successMessage", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your ne Payment Plan");
+        redirectAttributes.addFlashAttribute("successMessage", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your new Payment Plan");
         return redirectView;
     }
 }

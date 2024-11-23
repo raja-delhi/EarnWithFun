@@ -88,4 +88,36 @@ public class UserServiceImpl{
     public List<User> getPaymentPlanChangeUsers() {
         return userDao.getPaymentPlanChangeUsers();
     }
+
+    public User getAdminUserByFlag() {
+        return userDao.getAdminUserByFlag();
+    }
+
+    public void updatePayments(User mainUser, long paymentPlanAmount) {
+        User parentUser = this.getUserByUserName(mainUser.getReferredByUser());
+        User adminUser = this.getAdminUserByFlag();
+        long mainUserAmount =  0;
+        long parentUserAmount = 0;
+        long adminUserAmount =  0;
+        long baseAmount = paymentPlanAmount / 100;
+        if(mainUser.getPaymentPlan()>=500){
+            mainUserAmount = baseAmount * 60;
+            parentUserAmount = baseAmount * 20;
+            adminUserAmount = baseAmount * 20;
+            this.createPayment(mainUser.getUsername(), "Your Login bonus", "+" + mainUserAmount);
+            mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount() + mainUserAmount : mainUserAmount);
+        }else{
+            parentUserAmount = baseAmount * 50;
+            adminUserAmount = baseAmount * 50;
+        }
+        this.updateUser(mainUser);
+
+        this.createPayment(parentUser.getUsername(), "Refer To : " + mainUser.getFullName(), "+" + parentUserAmount);
+        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount() + parentUserAmount : parentUserAmount);
+        this.updateUser(parentUser);
+
+        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount() + adminUserAmount : adminUserAmount);
+        this.createPayment(adminUser.getUsername(), "Bonus from To : " + mainUser.getFullName(), "+" + adminUserAmount);
+        this.updateUser(adminUser);
+    }
 }

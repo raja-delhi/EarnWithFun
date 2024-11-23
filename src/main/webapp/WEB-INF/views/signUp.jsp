@@ -65,17 +65,17 @@
                     event.preventDefault();
                     let form = $("#signUpForm");
                     let url = "signUp";
-                    if($("#username").val().trim() == ''){
+                    if($("#username").val().trim() === ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('Username is mandatory.');
                         $("#username").focus();
-                    }else if($("#password").val().trim() == ''){
+                    }else if($("#password").val().trim() === ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('Password is mandatory.');
                         $("#password").focus();
-                    }else if($("#referralCode").val().trim() == ''){
+                    }else if($("#referralCode").val().trim() === ''){
                         $("#errorMessageSignUp").show();
                         $("#errorMessageSignUp").html('');
                         $("#errorMessageSignUp").html('ReferralCode is mandatory.');

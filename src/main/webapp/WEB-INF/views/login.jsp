@@ -46,12 +46,12 @@ $(document).ready(function () {
             event.preventDefault();
             let form = $("#loginForm");
             let url = "login";
-            if($("#username").val().trim() == ''){
+            if($("#username").val().trim() === ''){
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Username is mandatory.');
                 $("#username").focus();
-            }else if($("#password").val().trim() == ''){
+            }else if($("#password").val().trim() === ''){
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Password is mandatory.');

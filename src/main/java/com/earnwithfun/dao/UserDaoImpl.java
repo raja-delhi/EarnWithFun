@@ -99,4 +99,11 @@ public class UserDaoImpl{
         Object[] queryParam = {'Y'};
         return (List<User>) this.hibernateTemplate.find(query, queryParam);
     }
+
+    public User getAdminUserByFlag() {
+        String query = "select u from User u where u.isAdminUser= ?0";
+        Object[] queryParam = {'Y'};
+        List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
+        return users.isEmpty() ? null : users.get(0);
+    }
 }
