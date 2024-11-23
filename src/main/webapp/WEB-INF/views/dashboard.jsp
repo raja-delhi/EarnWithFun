@@ -26,9 +26,9 @@
                        <h1 class="tabLink" style="width: 20%;">Welcome, <c:out value="${user.fullName}"/>!</h1>
                    <div>
                    <div class="buttons">
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboard();" id="checkBalanceBtn">Check Balance</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboard();" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');resetErrorDashboard();" id="profileBtn">Profile</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardProfile();" id="checkBalanceBtn">Check Balance</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboardProfile();" id="withdrawBtn">Withdraw</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();" id="profileBtn">Profile</button>
                        <button class="tabLink" style="width: 20%;" onclick="logOut();">Logout</button>
                    </div>
                </div>
@@ -36,17 +36,17 @@
     </div>
     <div class="vertical-line"></div>
     <div id="tabContentDiv">
+                <div id="WithDraw" class="tabContent">
                     <c:if test="${not empty successMessage}">
-                           <div id="errorMessageDashboard" style="color: yellow; text-align:center">
+                           <div id="errorMessageDashboardWithdraw" class="errorMessageDashboard" style="color: yellow; text-align:center">
                                <c:out value="${successMessage}"/>
                            </div>
                        </c:if>
                        <c:if test="${not empty errorMessage}">
-                           <div id="errorMessageDashboard" style="color: yellow; text-align:center" class="show">
+                           <div id="errorMessageDashboardWithdraw" class="errorMessageDashboard"  style="color: yellow; text-align:center" class="show">
                                <c:out value="${errorMessage}"/>
                            </div>
                        </c:if>
-                <div id="WithDraw" class="tabContent">
                      <div class="container">
                              <form class="form-login" method="post" action="withdraw?username=<c:out value="${user.username}"/>" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
@@ -113,6 +113,16 @@
                 </div>
 
                 <div id="Profile" class="tabContent">
+                    <c:if test="${not empty successMessage}">
+                           <div id="errorMessageDashboardProfile" class="errorMessageDashboard" style="color: yellow; text-align:center">
+                               <c:out value="${successMessage}"/>
+                           </div>
+                       </c:if>
+                       <c:if test="${not empty errorMessage}">
+                           <div id="errorMessageDashboardProfile" class="errorMessageDashboard" style="color: yellow; text-align:center" class="show">
+                               <c:out value="${errorMessage}"/>
+                           </div>
+                       </c:if>
                     <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Profile</h2>
                     <h4>Username : <c:out value="${user.username}"/></h4>
                     <h4>Name : <c:out value="${user.fullName}"/> </h4>
@@ -173,9 +183,13 @@
             }
         });
     }
-    function resetErrorDashboard(){
-        $("#errorMessageDashboard").html('');
-        $("#errorMessageDashboard").hide();
+    function resetErrorDashboardWithdraw(){
+        $("#errorMessageDashboardWithdraw").html('');
+        $("#errorMessageDashboardWithdraw").hide();
+    }
+    function resetErrorDashboardProfile(){
+        $("#errorMessageDashboardProfile").html('');
+        $("#errorMessageDashboardProfile").hide();
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

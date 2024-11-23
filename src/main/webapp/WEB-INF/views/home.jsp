@@ -17,10 +17,10 @@
               </span>
             </div>
             <div id="tabs">
-                <button class="tabLink" onclick="openPage('Home', this, 'gray')" id="homeBtn">Home</button>
-                <button class="tabLink" onclick="loadJsp('Login',this)" id="loginBtn">Login</button>
-                <button class="tabLink" onclick="loadJsp('Signup',this)" id="signUpBtn">Sign Up</button>
-                <button class="tabLink" onclick="loadJsp('AdminLogin', this)" id="adminLoginBtn">Admin</button>
+                <button class="tabLink" onclick="openPage('Home', this, 'gray');resetErrorOnForgot();" id="homeBtn">Home</button>
+                <button class="tabLink" onclick="loadJsp('Login',this);resetErrorOnForgot();" id="loginBtn">Login</button>
+                <button class="tabLink" onclick="loadJsp('Signup',this);resetErrorOnForgot();" id="signUpBtn">Sign Up</button>
+                <button class="tabLink" onclick="loadJsp('AdminLogin', this);resetErrorOnForgot();" id="adminLoginBtn">Admin</button>
             </div>
     </div>
 
@@ -105,6 +105,10 @@
                 });
             });
         });
+    function resetErrorOnForgot(){
+        $("#errorMessageForgot").hide();
+        $("#errorMessageForgot").html('');
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

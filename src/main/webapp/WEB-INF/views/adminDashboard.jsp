@@ -21,9 +21,9 @@
                            <h1 class="tabLink">Welcome, <c:out value="${user.fullName}"/>!</h1>
                        <div>
                        <div class="buttons">
-                           <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdmin();" id="referralApproveBtn" >Referral Approve</button>
-                           <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray');resetErrorAdmin();" id="withdrawApproveBtn" >Withdraw Approve</button>
-                           <button class="tabLink" onclick="openPage('ChangePaymentPlanApprove', this, 'gray');resetErrorAdmin();" id="changePaymentPlanApproveBtn" >Referral Approve</button>
+                           <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdminWithdraw();resetErrorAdminPayment();" id="referralApproveBtn" >Referral Approve</button>
+                           <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray');resetErrorAdminReferral();resetErrorAdminPayment();" id="withdrawApproveBtn" >Withdraw Approve</button>
+                           <button class="tabLink" onclick="openPage('ChangePaymentPlanApprove', this, 'gray');resetErrorAdminReferral();resetErrorAdminWithdraw();" id="changePaymentPlanApproveBtn" >Payment Plan Approve</button>
                            <button class="tabLink" onclick="logOut();">Logout</button>
                        </div>
                    </div>
@@ -32,7 +32,7 @@
         <div class="vertical-line"></div>
         <div id="ReferralApprove" class="tabContent">
             <c:if test="${not empty successMessage}">
-                <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center">
+                <div id="errorMessageAdminDashboardReferral" style="color: yellow; text-align:center">
                     <c:out value="${successMessage}"/>
                 </div>
             </c:if>
@@ -86,7 +86,7 @@
         </div>
                 <div id="ChangePaymentPlanApprove" class="tabContent">
                     <c:if test="${not empty successMessage}">
-                        <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center">
+                        <div id="errorMessageAdminDashboardPayment" style="color: yellow; text-align:center">
                             <c:out value="${successMessage}"/>
                         </div>
                     </c:if>
@@ -135,9 +135,9 @@
                     </div>
                 </div>
         <div id="WithdrawApprove" class="tabContent">
-            <c:if test="${not empty successMessage1}">
-                <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center" class"show">
-                    <c:out value="${successMessage1}"/>
+            <c:if test="${not empty successMessage}">
+                <div id="errorMessageAdminDashboardWithdraw" style="color: yellow; text-align:center" class"show">
+                    <c:out value="${successMessage}"/>
                 </div>
             </c:if>
             <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Approve</h2>
@@ -200,9 +200,17 @@
                 }
             });
         }
-    function resetErrorAdmin(){
-        $("#errorMessageAdminDashboard").html('');
-        $("#errorMessageAdminDashboard").hide();
+    function resetErrorAdminReferral(){
+        $("#errorMessageAdminDashboardReferral").html('');
+        $("#errorMessageAdminDashboardReferral").hide();
+    }
+    function resetErrorAdminWithdraw(){
+        $("#errorMessageAdminDashboardWithdraw").html('');
+        $("#errorMessageAdminDashboardWithdraw").hide();
+    }
+    function resetErrorAdminPayment(){
+        $("#errorMessageAdminDashboardPayment").html('');
+        $("#errorMessageAdminDashboardPayment").hide();
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>
