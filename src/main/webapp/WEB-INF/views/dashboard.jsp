@@ -72,7 +72,7 @@
                     </div>
                     <div class="verticalLine"></div>
                     <div class="mb-3">
-                        <h5 style="text-align:center">Amount History By</h5>
+                        <h5 style="text-align:center">Amount History</h5>
                         <table class="table table-dark table-hover table-bordered border-primary">
                           <thead>
                             <tr>
@@ -86,7 +86,7 @@
                                   <c:when test="${empty paymentDetails}">
                                    <tr>
                                        <td colspan='100%' class="txt-c_imp">
-                                           <h4 style="text-align:center">Payment Detail found.</h4>
+                                           <h4 style="text-align:center">Payment Detail not found.</h4>
                                        </td>
                                    </tr>
                                   </c:when>
