@@ -50,23 +50,28 @@
                      <div class="container">
                              <form class="form-login" method="post" action="withdraw" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
-                                    <input type="hidden" id="username" name="id" value="<c:out value="${user.username}"/>" class="form-control" autocomplete="off">
-                                    <div class="mb-3">
-                                        <label for="amount" class="form-label">Enter Amount.</label>
-                                        <input type="number" id="amount" name="amount" class="form-control" autocomplete="off" required>
-                                    </div>
-                                     <div class="mb-3">
-                                         <label for="accountNo" class="form-label">Account No.</label>
-                                         <input type="text" id="accountNo" name="accountNo" class="form-control" autocomplete="off" required>
-                                     </div>
-                                     <div class="mb-3">
-                                         <label for="ifscCode" class="form-label">IFSC Code</label>
-                                         <input type="text" id="ifscCode" name="ifscCode" class="form-control" autocomplete="off" required>
-                                     </div>
-                                     <div class="mb-3">
-                                         <label for="upiId" class="form-label">Phone Number</label>
-                                         <input type="number" id="upiId" name="upiId" class="form-control" autocomplete="off" required>
-                                     </div>
+                                 <input type="hidden" id="username" name="username" value="<c:out value="${user.username}"/>" class="form-control" autocomplete="off">
+
+                                 <div class="mb-3">
+                                     <label for="amount" class="form-label">Enter Amount.</label>
+                                     <input type="number" id="amount" name="amount" class="form-control" autocomplete="off" required>
+                                 </div>
+
+                                 <div class="mb-3">
+                                     <label for="accountNo" class="form-label">Account No.</label>
+                                     <input type="text" id="accountNo" name="accountNo" class="form-control" autocomplete="off" required>
+                                 </div>
+
+                                 <div class="mb-3">
+                                     <label for="ifscCode" class="form-label">IFSC Code</label>
+                                     <input type="text" id="ifscCode" name="ifscCode" class="form-control" autocomplete="off" required>
+                                 </div>
+
+                                 <div class="mb-3">
+                                     <label for="upiId" class="form-label">Phone Number</label>
+                                     <input type="tel" id="upiId" name="upiId" class="form-control" autocomplete="off" required>
+                                 </div>
+
                                  <button class="btn btn-primary" type="submit">Withdraw</button>
                              </form>
                        </div>

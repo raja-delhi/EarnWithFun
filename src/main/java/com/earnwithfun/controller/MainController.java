@@ -12,10 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/main")
@@ -136,27 +133,36 @@ public class MainController {
         User userDetail = this.userService.getUserByUserName(user.getUsername());
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("user", userDetail);
-        redirectView.setUrl(request.getContextPath()+"/main/dashboard");
+        redirectView.setUrl(request.getContextPath() + "/main/dashboard");
         redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
-        if(userDetail.getWithdrawRequest() == 'Y'){
-            redirectAttributes.addFlashAttribute("errorMessage", "Your Withdraw Request is pending. you can't withdraw again until your previous withdraw request approved.");
+
+        if (userDetail.getWithdrawRequest() == 'Y') {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your Withdraw Request is pending. You can't withdraw again until your previous withdrawal request is approved.");
             return redirectView;
-        }else if(userDetail.getAmount() == null || userDetail.getAmount()<user.getAmount()){
-            redirectAttributes.addFlashAttribute("errorMessage", "Your Amount is less than 250 Rupees. Refer more friends to earn and withdraw.");
+        }
+
+        if (userDetail.getAmount() == null || userDetail.getAmount() < user.getAmount()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Insufficient funds. Please check your balance.");
             return redirectView;
-        }else if(user.getAmount()<250){
+        }
+
+        if (user.getAmount() < 250) {
             redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to 250.");
             return redirectView;
         }
+
         userDetail.setWithdrawRequest('Y');
         userDetail.setAccountNo(user.getAccountNo());
         userDetail.setUpiId(user.getUpiId());
         userDetail.setIfscCode(user.getIfscCode());
-        Long remainingAmount = userDetail.getAmount() != null ? userDetail.getAmount() - user.getAmount() : 0L;
+
+        Long remainingAmount = Optional.ofNullable(userDetail.getAmount()).orElse(0L) - user.getAmount();
         userDetail.setAmount(remainingAmount);
+
         this.userService.updateUser(userDetail);
-        userService.createPayment(userDetail.getUsername(), "Withdraw By : " + userDetail.getFullName(), "-" + user.getAmount());
-        redirectAttributes.addFlashAttribute("successMessage", "Withdraw successfully. Your money will be Credit to your account within 24 hours.");
+        userService.createPayment(userDetail.getUsername(), "Withdraw By: " + userDetail.getFullName(), "-" + user.getAmount());
+
+        redirectAttributes.addFlashAttribute("successMessage", "Withdraw successful. Your money will be credited to your account within 24 hours.");
         return redirectView;
     }
 
@@ -236,7 +242,7 @@ public class MainController {
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("user", user);
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
-        redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
+        redirectAttributes.addFlashAttribute("successMessage", "Referral Reject successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
         return redirectView;
     }
