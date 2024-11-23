@@ -136,7 +136,7 @@
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
                     <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
                     <label for="changePaymentPlan">
-                        <h4>You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h4>
+                        <h5>You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h5>
                     </label>
                     <div id="updatePaymentPlanFormDiv" class="hide">
                         <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
@@ -148,6 +148,8 @@
                                     <option value="100">100</option>
                                     <option value="500">500</option>
                                     <option value="1000">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="5000">5000</option>
                                   </select>
                               </div>
                               <div class="form-group col-md-6">
