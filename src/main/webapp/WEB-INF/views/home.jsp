@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
     <div class="row header">
@@ -25,8 +26,20 @@
 
     <div id="tabContentDiv">
         <div id="Home" class="tabContent">
-          <h2>Home</h2>
-          <p>Home is where the heart is..</p>
+          <div id="homeContent">
+                <h4 style="color:orange;text-decoration: underline;"><b>Below are some steps to Create account and Login process.</b></h4>
+                <h6>1. First you need to go Sign up page to create account. and while creation account you need a referral code. if you don not have Referral Code. contact person who gave this link to you. else contact on Contact No. +91 9797317200.</h6>
+                <h6>2. After Registration Successfully you need to do payment, Payment amount should be equal to Payment Plan which you selected at the time of Account Creation. For payment you need share your username on +91 9797317200 Whatsapp.</h6>
+                <h6>3. After your Payment done you get a Payment Code to Your Whatsapp or SMS.</h6>
+                <h6>4. After Payment Code Received, then only you will be able to login from Login Page.</h6>
+                <h4 style="color:orange;text-decoration: underline;"><b>How we Earn from This App?</b></h4>
+                <h6>1. You Need share this link to your friend with your Referral Code. And tell them to do the above Process.</h6>
+                <h6>2. Once your friend done with above process. then you will receive the 50% of theres selected Payment plan.</h6>
+                <h6>3. Try to convince your friend to Choose Higher Payment Plan. So, you will get more Money.</h6>
+                <h6>4. For point No. 3, there are some regulation, if your Payment plan is less than your friends Payment Plan, then you will receive only 50% of your selected Payment Plan.<h6>
+                <div class="verticalLine"></div>
+                <h4 style="text-align:center;color:yellow;">Still you have any doubts Contact on +91 9797317200</h4>
+          </div>
         </div>
 
         <div id="AdminLogin" class="tabContent">

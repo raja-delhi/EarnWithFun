@@ -54,3 +54,15 @@ body {
       background-color: #04AA6D;
       color: white;
     }
+    .vertical-line {
+            width: 0;
+            border: 2px solid green;
+            width : 90%;
+            margin:20px;
+        }
+    .verticalLine{
+        width: 0;
+        border: 2px solid red;
+        width : 90%;
+        margin:20px;
+    }
