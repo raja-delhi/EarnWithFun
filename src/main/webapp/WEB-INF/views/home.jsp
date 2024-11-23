@@ -27,7 +27,7 @@
     <div id="tabContentDiv">
         <div id="Home" class="tabContent">
           <div id="homeContent">
-                <h4 style="color:orange;text-decoration: underline;"><b>Below are some steps to Create account and Login process.</b></h4>
+                <h4 style="color:orange;text-decoration: underline;"><b>Steps to Create account and Login.</b></h4>
                 <h6>1. First you need to go Sign up page to create account. and while creation account you need a referral code. if you don not have Referral Code. contact person who gave this link to you. else contact on Contact No. +91 9797317200.</h6>
                 <h6>2. After Registration Successfully you need to do payment, Payment amount should be equal to Payment Plan which you selected at the time of Account Creation. For payment you need share your username on +91 9797317200 Whatsapp.</h6>
                 <h6>3. After your Payment done you get a Payment Code to Your Whatsapp or SMS.</h6>
