@@ -66,9 +66,9 @@ public class UserDaoImpl{
     }
 
     public List<User> getReferredUsers() {
-        String query = "select u from User u where u.referralRequest = ?0";
-        Object[] queryParam = {'Y'};
-        return (List<User>) this.hibernateTemplate.find(query, queryParam);
+            String query = "select u from User u where u.referralRequest = ?0";
+            Object[] queryParam = {'Y'};
+            return (List<User>) this.hibernateTemplate.find(query, queryParam);
     }
 
     public User getUserByReferralCode(String referralCode) {
@@ -92,5 +92,11 @@ public class UserDaoImpl{
         Object[] queryParam = {};
         List<?> count = this.hibernateTemplate.find(query, queryParam);
         return count.isEmpty() ? 0 : count.get(0);
+    }
+
+    public List<User> getPaymentPlanChangeUsers() {
+        String query = "select u from User u where u.isPaymentUpdateRequest = ?0";
+        Object[] queryParam = {'Y'};
+        return (List<User>) this.hibernateTemplate.find(query, queryParam);
     }
 }

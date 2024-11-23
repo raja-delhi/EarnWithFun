@@ -23,6 +23,7 @@
                        <div class="buttons">
                            <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdmin();" id="referralApproveBtn" >Referral Approve</button>
                            <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray');resetErrorAdmin();" id="withdrawApproveBtn" >Withdraw Approve</button>
+                           <button class="tabLink" onclick="openPage('ChangePaymentPlanApprove', this, 'gray');resetErrorAdmin();" id="changePaymentPlanApproveBtn" >Referral Approve</button>
                            <button class="tabLink" onclick="logOut();">Logout</button>
                        </div>
                    </div>
@@ -83,6 +84,56 @@
 
             </div>
         </div>
+                <div id="ChangePaymentPlanApprove" class="tabContent">
+                    <c:if test="${not empty successMessage}">
+                        <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center">
+                            <c:out value="${successMessage}"/>
+                        </div>
+                    </c:if>
+                    <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Payment Plan Approve</h2>
+                    <div class="verticalLine"></div>
+                    <div class="mb-3">
+                        <table class="table table-dark table-hover table-bordered border-primary">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Username</th>
+                              <th scope="col">Payment Plan</th>
+                              <th scope="col">Updated Payment Plan</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <c:choose>
+                            <c:when test="${empty paymentPlanChangeUsers}">
+                             <tr>
+                                 <td colspan='100%' class="txt-c_imp">
+                                     <h4 style="text-align:center">No Change Payment Plan request found.</h4>
+                                 </td>
+                             </tr>
+                            </c:when>
+                            <c:otherwise>
+                            <c:forEach var="user" items="${paymentPlanChangeUsers}" varStatus="i">
+                                <tr>
+                                  <th scope="row"><c:out value="${i.index+1}"/></th>
+                                  <td><c:out value="${user.username}"/></td>
+                                  <td><c:out value="${user.paymentPlan}"/></td>
+                                   <td><c:out value="${user.newPaymentPlan}"/></td>
+                                  <td>
+                                    <form id="approveChangePaymentPlanRequest" action="approveChangePaymentPlanRequest" method = "post" modalAttribute="user">
+                                      <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                                      <button onclick="approveChangePaymentPlan(<c:out value="${user.id}"/>);">Approve</button>
+                                    </form>6
+                                  </td>
+                                </tr>
+                            </c:forEach>
+                            </c:otherwise>
+                            </c:choose>
+                          </tbody>
+                        </table>
+
+                    </div>
+                </div>
         <div id="WithdrawApprove" class="tabContent">
             <c:if test="${not empty successMessage1}">
                 <div id="errorMessageAdminDashboard" style="color: yellow; text-align:center" class"show">

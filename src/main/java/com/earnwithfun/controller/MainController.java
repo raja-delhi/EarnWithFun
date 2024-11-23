@@ -169,7 +169,9 @@ public class MainController {
         User user = userService.getUserById(userId);
         List<User> withdrawRequestedUsers = userService.getUserRequestedForWithdraw();
         List<User> referredUsers = userService.getReferredUsers();
+        List<User> paymentPlanChangeUsers = userService.getPaymentPlanChangeUsers();
         model.addAttribute("user", user);
+        model.addAttribute("paymentPlanChangeUsers", paymentPlanChangeUsers);
         model.addAttribute("withdrawRequestedUsers", withdrawRequestedUsers);
         model.addAttribute("referredUsers", referredUsers);
         if(!model.containsAttribute("activeTab")) {
@@ -218,6 +220,37 @@ public class MainController {
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
         redirectAttributes.addFlashAttribute("successMessage", "Referral Approve successfully.");
         redirectAttributes.addFlashAttribute("activeTab", "referralApproveBtn");
+        return redirectView;
+    }
+
+    @RequestMapping(value = "/approveChangePaymentPlanRequest", method = RequestMethod.POST)
+    public RedirectView approveChangePaymentPlanRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        user = userService.getUserById(user.getId());
+        user.setIsPaymentUpdateRequest('N');
+        user.setPaymentPlan(user.getNewPaymentPlan());
+        this.userService.updateUser(user);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/main/adminDashboard?userId="+user.getId());
+        redirectAttributes.addFlashAttribute("successMessage", "Changed Payment Plan Approve successfully.");
+        redirectAttributes.addFlashAttribute("activeTab", "changePaymentPlanApproveBtn");
+        return redirectView;
+    }
+
+    @RequestMapping(value = "/updatePaymentPlanRequest", method = RequestMethod.POST)
+    public RedirectView updatePaymentPlanRequest(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        User userDetail = userService.getUserById(user.getId());
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
+        redirectAttributes.addFlashAttribute("activeTab", "profileBtn");
+        if(userDetail.getPaymentPlan()>user.getNewPaymentPlan()){
+            redirectAttributes.addFlashAttribute("errorMessagePaymentPlan", "Your new Payment Plan should be greater then current Payment Plan.");
+            return redirectView;
+        }
+        userDetail.setIsPaymentUpdateRequest('Y');
+        userDetail.setNewPaymentPlan(user.getNewPaymentPlan());
+        long remainingAmount = userDetail.getNewPaymentPlan() - userDetail.getPaymentPlan();
+        this.userService.updateUser(userDetail);
+        redirectAttributes.addFlashAttribute("successMessagePaymentPlan", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your ne Payment Plan");
         return redirectView;
     }
 }

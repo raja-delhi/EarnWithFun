@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        #updatePaymentPlanFormDiv{
+           display:none;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Dashboard</title>
     <meta charset="utf-8">
@@ -114,9 +119,29 @@
                     <h4>Email : <c:out value="${user.email}"/></h4>
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
                     <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
+                    <label for="changePaymentPlan">
+                        <h4>You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h4>
+                    </label>
+                    <div id="updatePaymentPlanFormDiv" class="hide">
+                        <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
+                          <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                          <div class="form-row">
+                              <div class="form-group col-md-2">
+                                  <select id="paymentPlan" class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
+                                  </select>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <button onclick="updatePaymentPlan(<c:out value="${user.id}"/>);">Update Payment Plan</button>
+                              </div>
+                          </div>
+                        </form>
+                    </div>
                     <div class="verticalLine"></div>
                     <h3 style="text-align:center; background-color:blue">Referral Code : <c:out value="${user.referralCode}"/></h3>
-
                 </div>
             </div>
 </body>
@@ -125,6 +150,17 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript">
     var activeTab = <c:out value="${activeTab}"/>;
+
+    document.getElementById('changePaymentPlan').addEventListener('change', function() {
+            var div = document.getElementById('updatePaymentPlanFormDiv');
+
+            if (this.checked) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+
     function logOut(){
         $.ajax({
             url: '../main/',

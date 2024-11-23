@@ -84,4 +84,8 @@ public class UserServiceImpl{
     public User getUserById(Long userId) {
         return userDao.getUserById(userId);
     }
+
+    public List<User> getPaymentPlanChangeUsers() {
+        return userDao.getPaymentPlanChangeUsers();
+    }
 }

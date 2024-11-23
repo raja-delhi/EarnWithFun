@@ -35,7 +35,8 @@ public class User implements UserDetails{
     private Long paymentPlan;
     private char isRejectedByAdmin = 'N';
     private char isPaymentDone = 'N';
-
+    private char isPaymentUpdateRequest = 'N';
+    private Long newPaymentPlan;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
@@ -213,5 +214,21 @@ public class User implements UserDetails{
 
     public void setIsPaymentDone(char isPaymentDone) {
         this.isPaymentDone = isPaymentDone;
+    }
+
+    public char getIsPaymentUpdateRequest() {
+        return isPaymentUpdateRequest;
+    }
+
+    public void setIsPaymentUpdateRequest(char isPaymentUpdateRequest) {
+        this.isPaymentUpdateRequest = isPaymentUpdateRequest;
+    }
+
+    public Long getNewPaymentPlan() {
+        return newPaymentPlan;
+    }
+
+    public void setNewPaymentPlan(Long newPaymentPlan) {
+        this.newPaymentPlan = newPaymentPlan;
     }
 }
