@@ -69,7 +69,7 @@ $(document).ready(function () {
                             $("#errorMessageLogIn").html('');
                             $("#errorMessageLogIn").html(data.errorMessage);
                         }else{
-                            loadDashboardScreen(data.userId);
+                            loadDashboardScreen(form);
                         }
                     },
                     error: function (data) {
@@ -101,11 +101,11 @@ $(document).ready(function () {
           element.style.backgroundColor = 'blue';
     }
 
-    function loadDashboardScreen(userId){
+    function loadDashboardScreen(form){
         $.ajax({
                 url: '../main/dashboard',
                 type: 'GET',
-                data:{"userId":userId},
+                data: form.serialize(),
                 success: function(response) {
                     $('body').html(response);
                 },

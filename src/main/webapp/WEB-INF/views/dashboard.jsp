@@ -48,8 +48,9 @@
                            </div>
                        </c:if>
                      <div class="container">
-                             <form class="form-login" method="post" action="withdraw?username=<c:out value="${user.username}"/>" modalAttribute="user">
+                             <form class="form-login" method="post" action="withdraw" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
+                                    <input type="hidden" id="username" name="id" value="<c:out value="${user.username}"/>" class="form-control" autocomplete="off">
                                     <div class="mb-3">
                                         <label for="amount" class="form-label">Enter Amount.</label>
                                         <input type="number" id="amount" name="amount" class="form-control" autocomplete="off" required>

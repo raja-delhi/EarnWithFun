@@ -48,8 +48,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
-    public String dashboard(@RequestParam("userId") Long userId, Model model){
-        User user = userService.getUserById(userId);
+    public String dashboard(@Validated User user, Model model){
+        user = userService.getUserByUserName(user.getUsername());
         List<PaymentDetail> paymentDetails = userService.getPaymentDetails(user);
         model.addAttribute("user", user);
         model.addAttribute("paymentDetails", paymentDetails);
@@ -125,8 +125,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public RedirectView withdraw(@ModelAttribute User user, @RequestParam("username") String username, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        User userDetail = this.userService.getUserByUserName(username);
+    public RedirectView withdraw(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        User userDetail = this.userService.getUserByUserName(user.getUsername());
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(request.getContextPath()+"/main/dashboard?userId="+userDetail.getId());
         redirectAttributes.addFlashAttribute("activeTab", "withdrawBtn");
@@ -165,8 +165,8 @@ public class MainController {
         return map;
     }
     @RequestMapping(value = "/adminDashboard" ,method = RequestMethod.GET)
-    public String adminDashboard(@RequestParam("userId") Long userId, Model model){
-        User user = userService.getUserById(userId);
+    public String adminDashboard(@Validated User user, Model model){
+        user = userService.getUserByUserName(user.getUsername());
         List<User> withdrawRequestedUsers = userService.getUserRequestedForWithdraw();
         List<User> referredUsers = userService.getReferredUsers();
         List<User> paymentPlanChangeUsers = userService.getPaymentPlanChangeUsers();

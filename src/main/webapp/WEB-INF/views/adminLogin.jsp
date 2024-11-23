@@ -43,7 +43,7 @@ $(document).ready(function () {
                         $("#errorMessage").html('');
                         $("#errorMessage").html(data.errorMessage);
                     }else{
-                        loadDashboardScreen(data.userId);
+                        loadDashboardScreen(form);
                     }
                 },
                 error: function (data) {
@@ -53,11 +53,11 @@ $(document).ready(function () {
         });
     });
 
-    function loadDashboardScreen(userId){
+    function loadDashboardScreen(form){
         $.ajax({
                 url: '../main/adminDashboard',
                 type: 'GET',
-                data:{"userId":userId},
+                data: form.serialize(),
                 success: function(response) {
                     $('body').html(response);
                 },
