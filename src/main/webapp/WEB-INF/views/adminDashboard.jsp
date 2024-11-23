@@ -44,6 +44,7 @@
                       <th scope="col">#</th>
                       <th scope="col">Username</th>
                       <th scope="col">Phone</th>
+                      <th scope="col">Payment Code</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -62,6 +63,7 @@
                           <th scope="row"><c:out value="${i.index+1}"/></th>
                           <td><c:out value="${user.username}"/></td>
                           <td><c:out value="${user.phoneNumber}"/></td>
+                           <td><c:out value="${user.paymentCode}"/></td>
                           <td>
                             <form id="approveReferralRequest" action="approveReferralRequest" method = "post" modalAttribute="user">
                               <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
