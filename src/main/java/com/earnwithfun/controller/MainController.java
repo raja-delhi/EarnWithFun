@@ -124,7 +124,7 @@ public class MainController {
         user.setReferralRequest('Y');
         user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
-        map.put("successMessage", "Registration successfully. Please Login.");
+        map.put("successMessage", "Registration successfully. Do Payment and get Payment Code to Your Whatsapp or SMS. and then Login.");
         return map;
     }
 
