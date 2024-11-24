@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,7 +24,7 @@ public class User implements UserDetails{
     private String email;
     private String phoneNumber;
     private String paymentCode;
-    private Long amount = 0L;
+    private BigDecimal amount = BigDecimal.ZERO;
     private String referralCode;
     private String accountNo;
     private String ifscCode;
@@ -32,11 +33,11 @@ public class User implements UserDetails{
     private char isAdminUser = 'N';
     private char referralRequest = 'N';
     private String referredByUser;
-    private Long paymentPlan;
+    private BigDecimal paymentPlan;
     private char isRejectedByAdmin = 'N';
     private char isPaymentDone = 'N';
     private char isPaymentUpdateRequest = 'N';
-    private Long newPaymentPlan;
+    private BigDecimal newPaymentPlan;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
@@ -120,11 +121,11 @@ public class User implements UserDetails{
         this.paymentCode = paymentCode;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -192,11 +193,11 @@ public class User implements UserDetails{
         this.referredByUser = referredByUser;
     }
 
-    public Long getPaymentPlan() {
+    public BigDecimal getPaymentPlan() {
         return paymentPlan;
     }
 
-    public void setPaymentPlan(Long paymentPlan) {
+    public void setPaymentPlan(BigDecimal paymentPlan) {
         this.paymentPlan = paymentPlan;
     }
 
@@ -224,11 +225,11 @@ public class User implements UserDetails{
         this.isPaymentUpdateRequest = isPaymentUpdateRequest;
     }
 
-    public Long getNewPaymentPlan() {
+    public BigDecimal getNewPaymentPlan() {
         return newPaymentPlan;
     }
 
-    public void setNewPaymentPlan(Long newPaymentPlan) {
+    public void setNewPaymentPlan(BigDecimal newPaymentPlan) {
         this.newPaymentPlan = newPaymentPlan;
     }
 }

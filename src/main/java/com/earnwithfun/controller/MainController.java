@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Controller
@@ -141,15 +143,15 @@ public class MainController {
             return redirectView;
         }
 
-        if (userDetail.getAmount() == null || userDetail.getAmount() < user.getAmount()) {
+        if (userDetail.getAmount() == null || 0 > userDetail.getAmount().compareTo(user.getAmount())) {
             redirectAttributes.addFlashAttribute("errorMessage", "Insufficient funds. Please check your balance.");
             return redirectView;
         }
-        long eligibleAmount = 200;
-        if(userDetail.getPaymentPlan()>=500) {
-            eligibleAmount = (userDetail.getPaymentPlan() / 100) * 85;
+        BigDecimal eligibleAmount = new BigDecimal(200);
+        if(0 <= userDetail.getPaymentPlan().compareTo(new BigDecimal(500))) {
+            eligibleAmount = (userDetail.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(85));
         }
-        if (user.getAmount() < eligibleAmount) {
+        if (0 > user.getAmount().compareTo(eligibleAmount)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to " + eligibleAmount + ".");
             return redirectView;
         }
@@ -159,7 +161,7 @@ public class MainController {
         userDetail.setUpiId(user.getUpiId());
         userDetail.setIfscCode(user.getIfscCode());
 
-        Long remainingAmount = Optional.ofNullable(userDetail.getAmount()).orElse(0L) - user.getAmount();
+        BigDecimal remainingAmount =  userDetail.getAmount().subtract(user.getAmount());
         userDetail.setAmount(remainingAmount);
 
         this.userService.updateUser(userDetail);
@@ -222,7 +224,7 @@ public class MainController {
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setReferralRequest('N');
 
-        this.userService.updatePayments(mainUser, mainUser.getPaymentPlan());
+        this.userService.updatePayments(mainUser, "Login bonus");
 
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
@@ -249,10 +251,8 @@ public class MainController {
     public RedirectView approveChangePaymentPlanRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setIsPaymentUpdateRequest('N');
-        long paymentPlanAmount = mainUser.getNewPaymentPlan() - mainUser.getPaymentPlan();
         mainUser.setPaymentPlan(mainUser.getNewPaymentPlan());
-
-        this.userService.updatePayments(mainUser, paymentPlanAmount);
+        this.userService.updatePayments(mainUser, "Payment Plan update bonus");
 
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
@@ -276,7 +276,7 @@ public class MainController {
         }
         userDetail.setIsPaymentUpdateRequest('Y');
         userDetail.setNewPaymentPlan(user.getNewPaymentPlan());
-        long remainingAmount = user.getNewPaymentPlan() - userDetail.getPaymentPlan();
+        BigDecimal remainingAmount = user.getNewPaymentPlan().subtract(userDetail.getPaymentPlan());
         this.userService.updateUser(userDetail);
         redirectAttributes.addFlashAttribute("successMessage", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your new Payment Plan");
         return redirectView;

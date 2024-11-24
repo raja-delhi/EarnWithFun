@@ -6,6 +6,8 @@ import com.earnwithfun.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -94,65 +96,96 @@ public class UserServiceImpl{
         return userDao.getAdminUserByFlag();
     }
 
-    public void updatePayments(User mainUser, long paymentPlanAmount) {
+    public void updatePayments(User mainUser, String bonusMsg) {
         User parentUser = this.getUserByUserName(mainUser.getReferredByUser());
         User adminUser = this.getAdminUserByFlag();
 
-        long mainUserAmount =  0;
-        long parentUserAmount = 0;
-        long parentsParentUserAmount = 0;
-        long baseAmount = paymentPlanAmount / 100;
-        if(mainUser.getPaymentPlan()>=500){
-            mainUserAmount = baseAmount * 50;
+        BigDecimal mainUserAmount =  BigDecimal.ZERO;
+        BigDecimal parentUserAmount;
+        BigDecimal parentsParentUserAmount = BigDecimal.ZERO;
+        BigDecimal baseAmount = (mainUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
+        if(0 <= mainUser.getPaymentPlan().compareTo(new BigDecimal(500))){
+            mainUserAmount = baseAmount .multiply(new BigDecimal(50));
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")){
                 parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
             parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
-            this.createPayment(mainUser.getUsername(), "Login bonus ", "+" + mainUserAmount);
-            mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount() + mainUserAmount : mainUserAmount);
+            this.createPayment(mainUser.getUsername(), bonusMsg, "+" + mainUserAmount);
+            mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount().add(mainUserAmount) : mainUserAmount);
         }else{
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
                 parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
             parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
         }
-        updateAndCreatePaymentForUsers(mainUser, paymentPlanAmount, parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
+        updateAndCreatePaymentForUsers(mainUser, mainUser.getPaymentPlan(), parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
     }
 
-    private void updateAndCreatePaymentForUsers(User mainUser, long paymentPlanAmount, User parentUser, long parentUserAmount, long mainUserAmount, long parentsParentUserAmount, User adminUser) {
-        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount() + parentUserAmount : parentUserAmount);
-        long adminUserAmount = paymentPlanAmount - (mainUserAmount + parentUserAmount + parentsParentUserAmount);
-        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount() + adminUserAmount : adminUserAmount);
+    private void updateAndCreatePaymentForUsers(User mainUser, BigDecimal paymentPlanAmount, User parentUser, BigDecimal parentUserAmount, BigDecimal mainUserAmount, BigDecimal parentsParentUserAmount, User adminUser) {
+        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount().add(parentUserAmount) : parentUserAmount);
+        BigDecimal adminUserAmount = paymentPlanAmount.subtract(mainUserAmount.add(parentUserAmount).add(parentsParentUserAmount));
+        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount().add(adminUserAmount) : adminUserAmount);
 
-        this.createPayment(parentUser.getUsername(), "Refer Bonus To : " + mainUser.getFullName(), "+" + parentUserAmount);
+        this.createPayment(parentUser.getUsername(), "Refer Bonus from : " + mainUser.getFullName(), "+" + parentUserAmount);
         this.createPayment(adminUser.getUsername(), "Bonus from : " + mainUser.getFullName(), "+" + adminUserAmount);
 
+        User parentsParentUser = null;
+        if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
+            parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
+        }
         this.updateUser(mainUser);
-        this.updateUser(parentUser);
-        this.updateUser(adminUser);
+
+        BigDecimal finalAdminAmount;
+        if(parentsParentUser != null){
+            if(adminUser.getUsername().equals(parentUser.getUsername()) && adminUser.getUsername().equals(parentsParentUser.getUsername())){
+                finalAdminAmount = adminUserAmount.add(parentUserAmount).add(parentsParentUserAmount);
+                adminUser.setAmount(finalAdminAmount);
+                this.updateUser(adminUser);
+            }else if(adminUser.getUsername().equals(parentUser.getUsername())){
+                finalAdminAmount = adminUserAmount.add(parentUserAmount);
+                adminUser.setAmount(finalAdminAmount);
+                this.updateUser(adminUser);
+                parentsParentUser.setAmount(parentsParentUserAmount);
+                this.updateUser(parentsParentUser);
+            }else if(adminUser.getUsername().equals(parentsParentUser.getUsername())){
+                finalAdminAmount = adminUserAmount.add(parentsParentUserAmount);
+                adminUser.setAmount(finalAdminAmount);
+                this.updateUser(adminUser);
+                parentUser.setAmount(parentUserAmount);
+                this.updateUser(parentUser);
+            }
+        }else{
+            if(parentUser.getUsername().equals(adminUser.getUsername())){
+                finalAdminAmount = adminUserAmount.add(parentUserAmount);
+                adminUser.setAmount(finalAdminAmount);
+                this.updateUser(adminUser);
+            }else {
+                this.updateUser(parentUser);
+                this.updateUser(adminUser);
+            }
+
+        }
     }
 
-    private static long prepareParentUserAmount(User mainUser, User parentUser, long baseAmount) {
-        long parentUserAmount;
-        if (parentUser.getPaymentPlan() >= mainUser.getPaymentPlan()) {
-            parentUserAmount = baseAmount * 30;
+    private static BigDecimal prepareParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount) {
+        BigDecimal parentUserAmount;
+        if (0 <= parentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())) {
+            parentUserAmount = baseAmount.multiply(new BigDecimal(30));
         } else {
-            parentUserAmount = (parentUser.getPaymentPlan() / 100) * 30;
+            parentUserAmount = (parentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(30));
         }
         return parentUserAmount;
     }
 
-    private long prepareAndUpdateParentsParentUserAmount(User mainUser, User parentUser, long baseAmount) {
-        long parentsParentUserAmount;
+    private BigDecimal prepareAndUpdateParentsParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount) {
+        BigDecimal parentsParentUserAmount;
         User parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
-        if(parentsParentUser.getPaymentPlan() >= mainUser.getPaymentPlan()){
-            parentsParentUserAmount = baseAmount * 5;
+        if(0 <= parentsParentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())){
+            parentsParentUserAmount = baseAmount.multiply(new BigDecimal(5));
         }else{
-            parentsParentUserAmount = (parentsParentUser.getPaymentPlan() / 100) * 5;
+            parentsParentUserAmount = (parentsParentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(5));
         }
         this.createPayment(parentsParentUser.getUsername(), "Your Referral's Referral bonus", "+" + parentsParentUserAmount);
-        parentsParentUser.setAmount(parentsParentUser.getAmount() != null ? parentsParentUser.getAmount() + parentsParentUserAmount : parentsParentUserAmount);
-        this.updateUser(parentsParentUser);
         return parentsParentUserAmount;
     }
 }
