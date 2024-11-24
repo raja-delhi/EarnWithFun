@@ -96,7 +96,7 @@ public class UserServiceImpl{
         return userDao.getAdminUserByFlag();
     }
 
-    public void updatePayments(User mainUser, String bonusMsg) {
+    public void updatePayments(User mainUser, BigDecimal paymentPlan, String bonusMsg) {
         User parentUser = this.getUserByUserName(mainUser.getReferredByUser());
         User adminUser = this.getAdminUserByFlag();
 

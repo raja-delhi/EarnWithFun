@@ -224,7 +224,7 @@ public class MainController {
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setReferralRequest('N');
 
-        this.userService.updatePayments(mainUser, "Login bonus");
+        this.userService.updatePayments(mainUser, mainUser.getPaymentPlan(), "Login bonus");
 
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
@@ -252,7 +252,7 @@ public class MainController {
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setIsPaymentUpdateRequest('N');
         mainUser.setPaymentPlan(mainUser.getNewPaymentPlan());
-        this.userService.updatePayments(mainUser, "Payment Plan update bonus");
+        this.userService.updatePayments(mainUser, mainUser.getNewPaymentPlan(), "Payment Plan update bonus");
 
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
