@@ -33,7 +33,7 @@
                 <h6>3. After your Payment done you will get a Payment Code to Your Whatsapp or SMS.</h6>
                 <h6>4. After Payment Code Received, then only you will be able to login from Login Page.</h6>
                 <h4 style="color:orange;text-decoration: underline;"><b>How we Earn from This App?</b></h4>
-                <h6>1. You Need to share this link to your friends with your Referral Code. And tell them to do the above Process.</h6>
+                <h6>1. You Need to share this link to your friends with your Referral Code(Your Referral Code will be available in your profile section). And tell them to do the above Process.</h6>
                 <h6>2. Try to convince your friends to Choose Higher Payment Plan. So, you will get more Money.</h6>
                 <h6>3. You can change your payment plan from your profile section.</h6>
                 <h6>4. If your Payment Plan is less then 500, than you will not get any bonus of your Payment Plan.</h6>
