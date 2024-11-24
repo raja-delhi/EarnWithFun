@@ -104,19 +104,19 @@ public class UserServiceImpl{
         BigDecimal parentUserAmount;
         BigDecimal parentsParentUserAmount = BigDecimal.ZERO;
         BigDecimal baseAmount = (paymentPlan.divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
-        if(0 <= mainUser.getPaymentPlan().compareTo(new BigDecimal(200))){
-            mainUserAmount = baseAmount .multiply(new BigDecimal(50));
+        if(0 < mainUser.getPaymentPlan().compareTo(new BigDecimal(250))){
+            mainUserAmount = baseAmount.multiply(new BigDecimal(40));
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")){
                 parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
-            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
+            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount, new BigDecimal(25));
             this.createPayment(mainUser.getUsername(), bonusMsg, "+" + mainUserAmount);
             mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount().add(mainUserAmount) : mainUserAmount);
         }else{
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
                 parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
-            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
+            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount, new BigDecimal(30));
         }
         updateAndCreatePaymentForUsers(mainUser, paymentPlan, parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
     }
@@ -140,15 +140,14 @@ public class UserServiceImpl{
             this.updateUser(parentsParentUser);
         }
         this.updateUser(mainUser);
-
     }
 
-    private static BigDecimal prepareParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount) {
+    private static BigDecimal prepareParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount, BigDecimal shareAmount) {
         BigDecimal parentUserAmount;
         if (0 <= parentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())) {
-            parentUserAmount = baseAmount.multiply(new BigDecimal(30));
+            parentUserAmount = baseAmount.multiply(shareAmount);
         } else {
-            parentUserAmount = (parentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(30));
+            parentUserAmount = (parentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(shareAmount);
         }
         return parentUserAmount;
     }
@@ -159,9 +158,22 @@ public class UserServiceImpl{
         if(0 <= parentsParentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())){
             parentsParentUserAmount = baseAmount.multiply(new BigDecimal(10));
         }else{
-            parentsParentUserAmount = (parentsParentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(5));
+            parentsParentUserAmount = (parentsParentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(10));
         }
         this.createPayment(parentsParentUser.getUsername(), "Your Referral's Referral bonus", "+" + parentsParentUserAmount);
         return parentsParentUserAmount;
+    }
+
+    public void updateReferralRewardPoints(User mainUser){
+        User parentUser = this.getUserByUserName(mainUser.getReferredByUser());
+        BigDecimal rewardAmount;
+        if (0 <= parentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())) {
+            rewardAmount = (mainUser.getPaymentPlan().divide(new BigDecimal(10), 2, RoundingMode.HALF_UP));
+        }else{
+            rewardAmount = (parentUser.getPaymentPlan().divide(new BigDecimal(10), 2, RoundingMode.HALF_UP));
+        }
+        parentUser.setRewardsPoint(parentUser.getRewardsPoint() != null ? parentUser.getRewardsPoint().add(rewardAmount) : rewardAmount);
+        parentUser.setReferralCount(parentUser.getReferralCount()+1);
+        this.updateUser(parentUser);
     }
 }

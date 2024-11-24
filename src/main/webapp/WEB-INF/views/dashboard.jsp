@@ -27,8 +27,8 @@
                    <div>
                    <div class="buttons">
                        <button class="tabLink" style="width: 20%;" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardProfile();" id="checkBalanceBtn">Check Balance</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboardProfile();" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();" id="profileBtn">Profile</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboardProfile();resetErrorDashboardCheckBalance();" id="withdrawBtn">Withdraw</button>
+                       <button class="tabLink" style="width: 20%;" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardCheckBalance();" id="profileBtn">Profile</button>
                        <button class="tabLink" style="width: 20%;" onclick="logOut();">Logout</button>
                    </div>
                </div>
@@ -78,9 +78,31 @@
                 </div>
 
                 <div id="CheckBalance" class="tabContent">
+                    <c:if test="${not empty successMessage}">
+                           <div id="errorMessageDashboardCheckBalance" class="errorMessageDashboard" style="color: yellow; text-align:center">
+                               <c:out value="${successMessage}"/>
+                           </div>
+                       </c:if>
+                       <c:if test="${not empty errorMessage}">
+                           <div id="errorMessageDashboardCheckBalance" class="errorMessageDashboard"  style="color: yellow; text-align:center" class="show">
+                               <c:out value="${errorMessage}"/>
+                           </div>
+                       </c:if>
+
                     <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Balance Amount</h2>
                     <div class="mb-3" style="colour:green">
-                        <h4>Total Amount : <c:out value="${user.amount}"/></h4>
+                        <div class="form-row">
+                             <div class="form-group col-md-6">
+                                <h4 style="text-align:left">Total Amount : <c:out value="${user.amount}"/></h4>
+                             </div>
+                             <div class="form-group col-md-6" style="text-align:right">
+                                <h4>Referral Count : <c:out value="${user.referralCount}"/> || Reward Points : <c:out value="${user.rewardsPoint}"/></h4>
+                                <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
+                                     <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                                     <button onclick="claimRewardPoints(<c:out value="${user.id}"/>);">Claim Reward Points</button>
+                                </form>
+                             </div>
+                        </div>
                     </div>
                     <div class="verticalLine"></div>
                     <div class="mb-3 table-responsive">
@@ -144,13 +166,16 @@
                           <div class="form-row">
                               <div class="form-group col-md-2">
                                   <select id="paymentPlan" class="form-select form-select-sm" name="newPaymentPlan" aria-label=".form-select-sm example">
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                    <option value="200">200</option>
-                                    <option value="500">500</option>
-                                    <option value="1000">1000</option>
-                                    <option value="2000">2000</option>
-                                    <option value="5000">5000</option>
+                                      <option value="50" selected>50</option>
+                                      <option value="100">100</option>
+                                      <option value="150">150</option>
+                                      <option value="200">200</option>
+                                      <option value="250">250</option>
+                                      <option value="300">300</option>
+                                      <option value="500">500</option>
+                                      <option value="1000">1000</option>
+                                      <option value="2000">2000</option>
+                                      <option value="5000">5000</option>
                                   </select>
                               </div>
                               <div class="form-group col-md-6">
@@ -199,6 +224,10 @@
     function resetErrorDashboardProfile(){
         $("#errorMessageDashboardProfile").html('');
         $("#errorMessageDashboardProfile").hide();
+    }
+    function resetErrorDashboardCheckBalance(){
+        $("#errorMessageDashboardCheckBalance").html('');
+        $("#errorMessageDashboardCheckBalance").hide();
     }
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>

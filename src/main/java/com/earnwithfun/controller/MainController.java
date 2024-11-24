@@ -148,22 +148,19 @@ public class MainController {
             return redirectView;
         }
         BigDecimal eligibleAmount = new BigDecimal(150);
-        if(0 <= userDetail.getPaymentPlan().compareTo(new BigDecimal(200))) {
+        if(0 < userDetail.getPaymentPlan().compareTo(new BigDecimal(250))) {
             eligibleAmount = (userDetail.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(85));
         }
         if (0 > user.getAmount().compareTo(eligibleAmount)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Withdraw amount should be greater than or equal to " + eligibleAmount + ".");
             return redirectView;
         }
-
         userDetail.setWithdrawRequest('Y');
         userDetail.setAccountNo(user.getAccountNo());
         userDetail.setUpiId(user.getUpiId());
         userDetail.setIfscCode(user.getIfscCode());
-
         BigDecimal remainingAmount =  userDetail.getAmount().subtract(user.getAmount());
         userDetail.setAmount(remainingAmount);
-
         this.userService.updateUser(userDetail);
         userService.createPayment(userDetail.getUsername(), "Withdraw By: " + userDetail.getFullName(), "-" + user.getAmount());
 
@@ -223,9 +220,8 @@ public class MainController {
     public RedirectView approveReferralRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setReferralRequest('N');
-
         this.userService.updatePayments(mainUser, mainUser.getPaymentPlan(), "Login bonus");
-
+        this.userService.updateReferralRewardPoints(mainUser);
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
         redirectView.setUrl(request.getContextPath()+"/main/adminDashboard");
@@ -280,6 +276,26 @@ public class MainController {
         BigDecimal remainingAmount = user.getNewPaymentPlan().subtract(userDetail.getPaymentPlan());
         this.userService.updateUser(userDetail);
         redirectAttributes.addFlashAttribute("successMessage", "Payment Plan Update request Generated Successfully. Make Payment of " + remainingAmount + " amount to activate your new Payment Plan");
+        return redirectView;
+    }
+
+    @RequestMapping(value = "/claimRewardPoints", method = RequestMethod.POST)
+    public RedirectView claimRewardPoints(@ModelAttribute User user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        User userDetail = userService.getUserById(user.getId());
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl(request.getContextPath()+"/main/dashboard");
+        redirectAttributes.addFlashAttribute("user", userDetail);
+        redirectAttributes.addFlashAttribute("activeTab", "checkBalanceBtn");
+        if(userDetail.getReferralCount()<5){
+            redirectAttributes.addFlashAttribute("errorMessage", "Your can not claim your rewards point, because your Referral count is less then 5.");
+            return redirectView;
+        }
+        userDetail.setAmount(userDetail.getAmount() != null ? userDetail.getAmount().add(userDetail.getRewardsPoint()): userDetail.getRewardsPoint());
+        redirectAttributes.addFlashAttribute("successMessage", "Your Reward point : " + userDetail.getRewardsPoint() + " claimed successfully.");
+        this.userService.createPayment(userDetail.getUsername(), "Reward Points Claimed", "+" + userDetail.getRewardsPoint());
+        userDetail.setRewardsPoint(BigDecimal.ZERO);
+        this.userService.updateUser(userDetail);
+        redirectAttributes.addFlashAttribute("user", userDetail);
         return redirectView;
     }
 }

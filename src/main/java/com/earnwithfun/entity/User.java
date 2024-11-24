@@ -38,6 +38,8 @@ public class User implements UserDetails{
     private char isPaymentDone = 'N';
     private char isPaymentUpdateRequest = 'N';
     private BigDecimal newPaymentPlan;
+    private BigDecimal rewardsPoint = BigDecimal.ZERO;
+    private int referralCount = 0;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
@@ -231,5 +233,21 @@ public class User implements UserDetails{
 
     public void setNewPaymentPlan(BigDecimal newPaymentPlan) {
         this.newPaymentPlan = newPaymentPlan;
+    }
+
+    public BigDecimal getRewardsPoint() {
+        return rewardsPoint;
+    }
+
+    public void setRewardsPoint(BigDecimal rewardsPoint) {
+        this.rewardsPoint = rewardsPoint;
+    }
+
+    public int getReferralCount() {
+        return referralCount;
+    }
+
+    public void setReferralCount(int referralCount) {
+        this.referralCount = referralCount;
     }
 }
