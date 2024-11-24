@@ -84,10 +84,7 @@
                            <div id="errorMessageDashboardCheckBalance" class="errorMessageDashboard"  style="color: yellow; text-align:center" class="show">
                                <c:out value="${errorMessage}"/>
                            </div>
-                       </c:if>
-
-                    <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Balance Amount</h2>
-                    <div class="mb-3" style="colour:green">
+                       </c:if                    <div class="mb-3" style="colour:green">
                         <div class="form-row">
                              <div class="form-group col-md-6">
                                 <h4 style="text-align:left">Total Amount : <c:out value="${user.amount}"/></h4>
@@ -148,16 +145,30 @@
                                <c:out value="${errorMessage}"/>
                            </div>
                        </c:if>
-                    <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Profile</h2>
-                    <h4>Username : <c:out value="${user.username}"/></h4>
-                    <h4>Name : <c:out value="${user.fullName}"/> </h4>
-                    <h4>Email : <c:out value="${user.email}"/></h4>
-                    <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
-                    <h4>Payment Code : <c:out value="${user.paymentCode}"/></h4>
-                    <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
-                    <label for="changePaymentPlan">
-                        <h5>You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h5>
-                    </label>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <h4>Username : <c:out value="${user.username}"/></h4>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h4>Name : <c:out value="${user.fullName}"/> </h4>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h4>Email : <c:out value="${user.email}"/></h4>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h4>Payment Code : <c:out value="${user.paymentCode}"/></h4>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
+                        </div>
+                    </div>
+                    <br>
+                            <label for="changePaymentPlan">
+                                <h5 style="color:black">You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h5>
+                            </label>
                     <div id="updatePaymentPlanFormDiv" class="hide">
                         <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
                           <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
@@ -183,7 +194,7 @@
                         </form>
                     </div>
                     <div class="verticalLine"></div>
-                    <h3 style="text-align:center; background-color:blue">Referral Code : <c:out value="${user.referralCode}"/></h3>
+                    <h3 style="text-align:center; color:orange">Referral Code : <c:out value="${user.referralCode}"/></h3>
                 </div>
             </div>
 </body>
