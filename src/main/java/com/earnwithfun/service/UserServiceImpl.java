@@ -129,42 +129,18 @@ public class UserServiceImpl{
         this.createPayment(parentUser.getUsername(), "Refer Bonus from : " + mainUser.getFullName(), "+" + parentUserAmount);
         this.createPayment(adminUser.getUsername(), "Bonus from : " + mainUser.getFullName(), "+" + adminUserAmount);
 
-        User parentsParentUser = null;
         if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
-            parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
+            User parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
+            parentsParentUser.setAmount(parentsParentUser.getAmount() != null ? parentsParentUser.getAmount().add(parentsParentUserAmount) : parentsParentUserAmount);
+            this.updateUser(parentsParentUser);
         }
         this.updateUser(mainUser);
 
-        BigDecimal finalAdminAmount;
-        if(parentsParentUser != null){
-            if(adminUser.getUsername().equals(parentUser.getUsername()) && adminUser.getUsername().equals(parentsParentUser.getUsername())){
-                finalAdminAmount = adminUserAmount.add(parentUserAmount).add(parentsParentUserAmount);
-                adminUser.setAmount(finalAdminAmount);
-                this.updateUser(adminUser);
-            }else if(adminUser.getUsername().equals(parentUser.getUsername())){
-                finalAdminAmount = adminUserAmount.add(parentUserAmount);
-                adminUser.setAmount(finalAdminAmount);
-                this.updateUser(adminUser);
-                parentsParentUser.setAmount(parentsParentUserAmount);
-                this.updateUser(parentsParentUser);
-            }else if(adminUser.getUsername().equals(parentsParentUser.getUsername())){
-                finalAdminAmount = adminUserAmount.add(parentsParentUserAmount);
-                adminUser.setAmount(finalAdminAmount);
-                this.updateUser(adminUser);
-                parentUser.setAmount(parentUserAmount);
-                this.updateUser(parentUser);
-            }
-        }else{
-            if(parentUser.getUsername().equals(adminUser.getUsername())){
-                finalAdminAmount = adminUserAmount.add(parentUserAmount);
-                adminUser.setAmount(finalAdminAmount);
-                this.updateUser(adminUser);
-            }else {
-                this.updateUser(parentUser);
-                this.updateUser(adminUser);
-            }
+        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount().add(adminUserAmount) : adminUserAmount);
+        this.updateUser(adminUser);
 
-        }
+        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount().add(parentUserAmount) : parentUserAmount);
+        this.updateUser(parentUser);
     }
 
     private static BigDecimal prepareParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount) {
