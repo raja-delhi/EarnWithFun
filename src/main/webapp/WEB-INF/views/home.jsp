@@ -27,7 +27,7 @@
     <div id="tabContentDiv">
         <div id="Home" class="tabContent">
           <div id="homeContent">
-                <h4 style="color:orange;text-decoration: underline;"><b>Steps to Create account and Login.</b></h4>
+                <h4 style="color:orange;text-decoration: underline;"><b>Steps to Create Account and Login.</b></h4>
                 <h6>1. First you need to go Sign up page to create account. and while creation account you need a referral code. if you don not have Referral Code. contact person who gave this link to you. else contact on Contact No. +91 9797317200.</h6>
                 <h6>2. After Registration Successfully you need to do payment, Payment amount should be equal to Payment Plan which you selected at the time of Account Creation. For payment you need to share your username on +91 9797317200 Whatsapp or call on this Number. then you will receive a bar code for payment from this number.</h6>
                 <h6>3. After your Payment done you will get a Payment Code to Your Whatsapp or SMS.</h6>
@@ -41,7 +41,7 @@
                 <h6>6. You will get 30% of Your Immediate Referral Friends Payment Plan.<h6>
                 <h6>7. When your referral Friend refer to his friend then you will get 5% of your referrals referral Payment Plan.</h6>
                 <h6>8. For point No. 4, 5, 6, & 7 there are some regulation, if your Payment plan is less than your friends or friends referral Payment Plan, then you will receive bonus according to your selected Payment Plan.<h6>
-                <h4 style="color:orange;text-decoration: underline;"><b>How we Withdraw our money?</b></h4>
+                <h4 style="color:orange;text-decoration: underline;"><b>How we Withdraw our Money?</b></h4>
                 <h6>1. You can withdraw your money from withdraw page.</h6>
                 <h6>2. Make sure while you withdraw your entered information should be correct.</h6>
                 <h6>3. Your withdrawal amount should be minimum 85% of your payment Plan if your payment plan is 200 or more.</h6>
