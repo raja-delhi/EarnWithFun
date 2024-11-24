@@ -220,6 +220,7 @@ public class MainController {
     public RedirectView approveReferralRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setReferralRequest('N');
+        mainUser.setIsRejectedByAdmin('Y');
         this.userService.updatePayments(mainUser, mainUser.getPaymentPlan(), "Login bonus");
         this.userService.updateReferralRewardPoints(mainUser);
         RedirectView redirectView = new RedirectView();
