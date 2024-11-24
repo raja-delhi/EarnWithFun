@@ -122,12 +122,17 @@ public class UserServiceImpl{
     }
 
     private void updateAndCreatePaymentForUsers(User mainUser, BigDecimal paymentPlanAmount, User parentUser, BigDecimal parentUserAmount, BigDecimal mainUserAmount, BigDecimal parentsParentUserAmount, User adminUser) {
-        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount().add(parentUserAmount) : parentUserAmount);
         BigDecimal adminUserAmount = paymentPlanAmount.subtract(mainUserAmount.add(parentUserAmount).add(parentsParentUserAmount));
-        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount().add(adminUserAmount) : adminUserAmount);
 
         this.createPayment(parentUser.getUsername(), "Refer Bonus from : " + mainUser.getFullName(), "+" + parentUserAmount);
         this.createPayment(adminUser.getUsername(), "Bonus from : " + mainUser.getFullName(), "+" + adminUserAmount);
+
+        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount().add(adminUserAmount) : adminUserAmount);
+        this.updateUser(adminUser);
+
+        parentUser = this.getUserById(parentUser.getId());
+        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount().add(parentUserAmount) : parentUserAmount);
+        this.updateUser(parentUser);
 
         if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
             User parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
@@ -136,11 +141,6 @@ public class UserServiceImpl{
         }
         this.updateUser(mainUser);
 
-        adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount().add(adminUserAmount) : adminUserAmount);
-        this.updateUser(adminUser);
-
-        parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount().add(parentUserAmount) : parentUserAmount);
-        this.updateUser(parentUser);
     }
 
     private static BigDecimal prepareParentUserAmount(User mainUser, User parentUser, BigDecimal baseAmount) {

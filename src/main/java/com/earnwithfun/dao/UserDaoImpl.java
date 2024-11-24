@@ -15,7 +15,7 @@ public class UserDaoImpl{
     @Autowired
     private HibernateTemplate hibernateTemplate;
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void createUser(User user) {
         this.hibernateTemplate.save(user);
     }
@@ -41,7 +41,7 @@ public class UserDaoImpl{
         return users.isEmpty() ? null : users.get(0);
     }
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void updateUser(User user) {
         this.hibernateTemplate.update(user);
     }
@@ -78,7 +78,7 @@ public class UserDaoImpl{
         return users.isEmpty() ? null : users.get(0);
     }
 
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void createPayment(PaymentDetail paymentDetail) {
         this.hibernateTemplate.save(paymentDetail);
     }
