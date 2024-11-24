@@ -157,7 +157,7 @@ public class UserServiceImpl{
         BigDecimal parentsParentUserAmount;
         User parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
         if(0 <= parentsParentUser.getPaymentPlan().compareTo(mainUser.getPaymentPlan())){
-            parentsParentUserAmount = baseAmount.multiply(new BigDecimal(5));
+            parentsParentUserAmount = baseAmount.multiply(new BigDecimal(10));
         }else{
             parentsParentUserAmount = (parentsParentUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(5));
         }
