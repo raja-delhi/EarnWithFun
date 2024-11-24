@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -99,33 +100,59 @@ public class UserServiceImpl{
 
         long mainUserAmount =  0;
         long parentUserAmount = 0;
-        long adminUserAmount =  0;
+        long parentsParentUserAmount = 0;
         long baseAmount = paymentPlanAmount / 100;
         if(mainUser.getPaymentPlan()>=500){
             mainUserAmount = baseAmount * 50;
-            if(parentUser.getPaymentPlan()>=mainUser.getPaymentPlan()) {
-                parentUserAmount = baseAmount * 25;
-            }else{
-                parentUserAmount = (parentUser.getPaymentPlan() / 100) * 25;
+            if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")){
+                parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
-            this.createPayment(mainUser.getUsername(), "Your Login bonus", "+" + mainUserAmount);
+            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
+            this.createPayment(mainUser.getUsername(), "Login bonus ", "+" + mainUserAmount);
             mainUser.setAmount(mainUser.getAmount() != null ? mainUser.getAmount() + mainUserAmount : mainUserAmount);
         }else{
-            if(parentUser.getPaymentPlan()>=mainUser.getPaymentPlan()) {
-                parentUserAmount = baseAmount * 40;
-            }else{
-                parentUserAmount = (parentUser.getPaymentPlan() / 100) * 40;
+            if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")) {
+                parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
             }
+            parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
         }
-        adminUserAmount = paymentPlanAmount - (mainUserAmount + parentUserAmount);
-        this.updateUser(mainUser);
+        updateAndCreatePaymentForUsers(mainUser, paymentPlanAmount, parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
+    }
 
-        this.createPayment(parentUser.getUsername(), "Refer To : " + mainUser.getFullName(), "+" + parentUserAmount);
+    private void updateAndCreatePaymentForUsers(User mainUser, long paymentPlanAmount, User parentUser, long parentUserAmount, long mainUserAmount, long parentsParentUserAmount, User adminUser) {
         parentUser.setAmount(parentUser.getAmount() != null ? parentUser.getAmount() + parentUserAmount : parentUserAmount);
-        this.updateUser(parentUser);
-
+        long adminUserAmount = paymentPlanAmount - (mainUserAmount + parentUserAmount + parentsParentUserAmount);
         adminUser.setAmount(adminUser.getAmount() != null ? adminUser.getAmount() + adminUserAmount : adminUserAmount);
-        this.createPayment(adminUser.getUsername(), "Bonus from To : " + mainUser.getFullName(), "+" + adminUserAmount);
+
+        this.createPayment(parentUser.getUsername(), "Refer Bonus To : " + mainUser.getFullName(), "+" + parentUserAmount);
+        this.createPayment(adminUser.getUsername(), "Bonus from : " + mainUser.getFullName(), "+" + adminUserAmount);
+
+        this.updateUser(mainUser);
+        this.updateUser(parentUser);
         this.updateUser(adminUser);
+    }
+
+    private static long prepareParentUserAmount(User mainUser, User parentUser, long baseAmount) {
+        long parentUserAmount;
+        if (parentUser.getPaymentPlan() >= mainUser.getPaymentPlan()) {
+            parentUserAmount = baseAmount * 30;
+        } else {
+            parentUserAmount = (parentUser.getPaymentPlan() / 100) * 30;
+        }
+        return parentUserAmount;
+    }
+
+    private long prepareAndUpdateParentsParentUserAmount(User mainUser, User parentUser, long baseAmount) {
+        long parentsParentUserAmount;
+        User parentsParentUser = this.getUserByUserName(parentUser.getReferredByUser());
+        if(parentsParentUser.getPaymentPlan() >= mainUser.getPaymentPlan()){
+            parentsParentUserAmount = baseAmount * 5;
+        }else{
+            parentsParentUserAmount = (parentsParentUser.getPaymentPlan() / 100) * 5;
+        }
+        this.createPayment(parentsParentUser.getUsername(), "Your Referral's Referral bonus", "+" + parentsParentUserAmount);
+        parentsParentUser.setAmount(parentsParentUser.getAmount() != null ? parentsParentUser.getAmount() + parentsParentUserAmount : parentsParentUserAmount);
+        this.updateUser(parentsParentUser);
+        return parentsParentUserAmount;
     }
 }

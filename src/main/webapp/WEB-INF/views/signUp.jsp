@@ -43,6 +43,7 @@
                     <select id="paymentPlan" class="form-select form-select-sm" name="paymentPlan" aria-label=".form-select-sm example">
                       <option value="50" selected>50</option>
                       <option value="100">100</option>
+                      <option value="200">200</option>
                       <option value="500">500</option>
                       <option value="1000">1000</option>
                       <option value="2000">2000</option>
