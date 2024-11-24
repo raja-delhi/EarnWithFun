@@ -44,6 +44,7 @@
                                <c:out value="${errorMessage}"/>
                            </div>
                        </c:if>
+                       <br>
                      <div class="container">
                              <form class="form-login" method="post" action="withdraw" modalAttribute="user">
                                  <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Withdraw Amount</h2>
@@ -75,7 +76,7 @@
                 </div>
 
                 <div id="CheckBalance" class="tabContent">
-                    <c:if test="${not empty successMessage}">
+                        <c:if test="${not empty successMessage}">
                            <div id="errorMessageDashboardCheckBalance" class="errorMessageDashboard" style="color: yellow; text-align:center">
                                <c:out value="${successMessage}"/>
                            </div>
@@ -84,7 +85,9 @@
                            <div id="errorMessageDashboardCheckBalance" class="errorMessageDashboard"  style="color: yellow; text-align:center" class="show">
                                <c:out value="${errorMessage}"/>
                            </div>
-                       </c:if                    <div class="mb-3" style="colour:green">
+                       </c:if>
+                       <br>
+                       <div class="mb-3" style="colour:green">
                         <div class="form-row">
                              <div class="form-group col-md-6">
                                 <h4 style="text-align:left">Total Amount : <c:out value="${user.amount}"/></h4>
@@ -145,6 +148,7 @@
                                <c:out value="${errorMessage}"/>
                            </div>
                        </c:if>
+                       <br>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <h4>Username : <c:out value="${user.username}"/></h4>
@@ -164,34 +168,40 @@
                         <div class="form-group col-md-6">
                             <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
                         </div>
-                    </div>
-                    <br>
+                        <div class="form-group col-md-6">
                             <label for="changePaymentPlan">
                                 <h5 style="color:black">You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h5>
                             </label>
-                    <div id="updatePaymentPlanFormDiv" class="hide">
-                        <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
-                          <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
-                          <div class="form-row">
-                              <div class="form-group col-md-2">
-                                  <select id="paymentPlan" class="form-select form-select-sm" name="newPaymentPlan" aria-label=".form-select-sm example">
-                                      <option value="50" selected>50</option>
-                                      <option value="100">100</option>
-                                      <option value="150">150</option>
-                                      <option value="200">200</option>
-                                      <option value="250">250</option>
-                                      <option value="300">300</option>
-                                      <option value="500">500</option>
-                                      <option value="1000">1000</option>
-                                      <option value="2000">2000</option>
-                                      <option value="5000">5000</option>
-                                  </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                <button onclick="updatePaymentPlan(<c:out value="${user.id}"/>);">Update Payment Plan</button>
-                              </div>
-                          </div>
-                        </form>
+                            <div id="updatePaymentPlanFormDiv" class="hide">
+                                <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
+                                  <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                                  <div class="form-row">
+                                      <div class="form-group col-md-2">
+                                          <select id="paymentPlan" class="form-select form-select-sm" name="newPaymentPlan" aria-label=".form-select-sm example">
+                                              <option value="50" selected>50</option>
+                                              <option value="100">100</option>
+                                              <option value="150">150</option>
+                                              <option value="200">200</option>
+                                              <option value="250">250</option>
+                                              <option value="300">300</option>
+                                              <option value="500">500</option>
+                                              <option value="1000">1000</option>
+                                              <option value="2000">2000</option>
+                                              <option value="5000">5000</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                        <button onclick="updatePaymentPlan(<c:out value="${user.id}"/>);">Update Payment Plan</button>
+                                      </div>
+                                  </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#instructions">
+                              Read Instruction
+                            </button>
+                        </div>
                     </div>
                     <div class="verticalLine"></div>
                     <h3 style="text-align:center; color:orange">Referral Code : <c:out value="${user.referralCode}"/></h3>
