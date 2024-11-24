@@ -147,8 +147,8 @@ public class MainController {
             redirectAttributes.addFlashAttribute("errorMessage", "Insufficient funds. Please check your balance.");
             return redirectView;
         }
-        BigDecimal eligibleAmount = new BigDecimal(200);
-        if(0 <= userDetail.getPaymentPlan().compareTo(new BigDecimal(500))) {
+        BigDecimal eligibleAmount = new BigDecimal(150);
+        if(0 <= userDetail.getPaymentPlan().compareTo(new BigDecimal(200))) {
             eligibleAmount = (userDetail.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP)).multiply(new BigDecimal(85));
         }
         if (0 > user.getAmount().compareTo(eligibleAmount)) {

@@ -36,11 +36,16 @@
                 <h6>1. You Need to share this link to your friends with your Referral Code(Your Referral Code will be available in your profile section). And tell them to do the above Process.</h6>
                 <h6>2. Try to convince your friends to Choose Higher Payment Plan. So, you will get more Money.</h6>
                 <h6>3. You can change your payment plan from your profile section.</h6>
-                <h6>4. If your Payment Plan is less then 500, than you will not get any bonus of your Payment Plan.</h6>
-                <h6>5. If your Payment Plan is 500 or more, than you will receive 50% bonus of your Payment Plan.</h6>
+                <h6>4. If your Payment Plan is less then 200, than you will not get any bonus of your Payment Plan.</h6>
+                <h6>5. If your Payment Plan is 200 or more, than you will receive 50% bonus of your Payment Plan.</h6>
                 <h6>6. You will get 30% of Your Immediate Referral Friends Payment Plan.<h6>
                 <h6>7. When your referral Friend refer to his friend then you will get 5% of your referrals referral Payment Plan.</h6>
                 <h6>8. For point No. 4, 5, 6, & 7 there are some regulation, if your Payment plan is less than your friends or friends referral Payment Plan, then you will receive bonus according to your selected Payment Plan.<h6>
+                <h4 style="color:orange;text-decoration: underline;"><b>How we Withdraw our money?</b></h4>
+                <h6>1. You can withdraw your money from withdraw page.</h6>
+                <h6>2. Make sure while you withdraw your entered information should be correct.</h6>
+                <h6>3. Your withdrawal amount should be minimum 85% of your payment Plan if your payment plan is 200 or more.</h6>
+                <h6>4. Your withdrawal amount should be minimum 150 if your payment plan is less then 200.</h6>
                 <div class="verticalLine"></div>
                 <h4 style="text-align:center;color:yellow;">Still you have any doubts Contact on +91 9797317200</h4>
           </div>

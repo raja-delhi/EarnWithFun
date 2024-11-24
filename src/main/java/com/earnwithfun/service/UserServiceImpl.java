@@ -104,7 +104,7 @@ public class UserServiceImpl{
         BigDecimal parentUserAmount;
         BigDecimal parentsParentUserAmount = BigDecimal.ZERO;
         BigDecimal baseAmount = (paymentPlan.divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
-        if(0 <= mainUser.getPaymentPlan().compareTo(new BigDecimal(500))){
+        if(0 <= mainUser.getPaymentPlan().compareTo(new BigDecimal(200))){
             mainUserAmount = baseAmount .multiply(new BigDecimal(50));
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")){
                 parentsParentUserAmount = prepareAndUpdateParentsParentUserAmount(mainUser, parentUser, baseAmount);
