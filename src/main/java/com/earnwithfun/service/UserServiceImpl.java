@@ -103,7 +103,7 @@ public class UserServiceImpl{
         BigDecimal mainUserAmount =  BigDecimal.ZERO;
         BigDecimal parentUserAmount;
         BigDecimal parentsParentUserAmount = BigDecimal.ZERO;
-        BigDecimal baseAmount = (mainUser.getPaymentPlan().divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
+        BigDecimal baseAmount = (paymentPlan.divide(new BigDecimal(100), 2, RoundingMode.HALF_UP));
         if(0 <= mainUser.getPaymentPlan().compareTo(new BigDecimal(500))){
             mainUserAmount = baseAmount .multiply(new BigDecimal(50));
             if(parentUser.getReferredByUser() != null && !Objects.equals(parentUser.getReferredByUser(), "")){
@@ -118,7 +118,7 @@ public class UserServiceImpl{
             }
             parentUserAmount = prepareParentUserAmount(mainUser, parentUser, baseAmount);
         }
-        updateAndCreatePaymentForUsers(mainUser, mainUser.getPaymentPlan(), parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
+        updateAndCreatePaymentForUsers(mainUser, paymentPlan, parentUser, parentUserAmount, mainUserAmount, parentsParentUserAmount, adminUser);
     }
 
     private void updateAndCreatePaymentForUsers(User mainUser, BigDecimal paymentPlanAmount, User parentUser, BigDecimal parentUserAmount, BigDecimal mainUserAmount, BigDecimal parentsParentUserAmount, User adminUser) {

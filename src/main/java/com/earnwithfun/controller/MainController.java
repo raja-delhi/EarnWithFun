@@ -251,8 +251,9 @@ public class MainController {
     public RedirectView approveChangePaymentPlanRequest(@ModelAttribute User mainUser, HttpServletRequest request, RedirectAttributes redirectAttributes){
         mainUser = userService.getUserById(mainUser.getId());
         mainUser.setIsPaymentUpdateRequest('N');
+        BigDecimal paymentPlan = mainUser.getNewPaymentPlan().subtract(mainUser.getPaymentPlan());
         mainUser.setPaymentPlan(mainUser.getNewPaymentPlan());
-        this.userService.updatePayments(mainUser, mainUser.getNewPaymentPlan(), "Payment Plan update bonus");
+        this.userService.updatePayments(mainUser, paymentPlan, "Payment Plan update bonus");
 
         RedirectView redirectView = new RedirectView();
         redirectAttributes.addFlashAttribute("mainUser", mainUser);
