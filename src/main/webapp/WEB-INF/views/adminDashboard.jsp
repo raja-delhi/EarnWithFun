@@ -4,7 +4,7 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>adminDashboard</title>
+    <title>Admin Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -17,9 +17,6 @@
         <div id="body">
             <div class="row header">
                    <div id="tabs">
-                       <div id="welcome">
-                           <h1>Welcome, <c:out value="${user.fullName}"/>!</h1>
-                       <div>
                        <div class="buttons">
                            <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdminWithdraw();resetErrorAdminPayment();" id="referralApproveBtn" >Referral Approve</button>
                            <button class="tabLink" onclick="openPage('WithdrawApprove', this, 'gray');resetErrorAdminReferral();resetErrorAdminPayment();" id="withdrawApproveBtn" >Withdraw Approve</button>

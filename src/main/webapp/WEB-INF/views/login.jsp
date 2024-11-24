@@ -1,11 +1,12 @@
 <html>
 <head>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-        <div id="errorMessageLogIn" style="color: yellow; text-align:center" class="hide"></div>
+    <div id="errorMessageLogIn" style="color: yellow; text-align:center" class="hide"></div>
     <c:if test="${not empty successMessage}">
         <div style="color: green; text-align:center">
             <strong><c:out value="${successMessage}"/></strong>

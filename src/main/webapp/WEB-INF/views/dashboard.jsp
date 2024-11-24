@@ -22,13 +22,10 @@
     <div id="body" class="header">
         <div class="row">
                <div id="tabs">
-                   <div id="welcome">
-                       <h1>Welcome, <c:out value="${user.fullName}"/>!</h1>
-                   <div>
                    <div class="buttons">
+                       <button class="tabLink" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardCheckBalance();" id="profileBtn">Profile</button>
                        <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardProfile();" id="checkBalanceBtn">Check Balance</button>
                        <button class="tabLink" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboardProfile();resetErrorDashboardCheckBalance();" id="withdrawBtn">Withdraw</button>
-                       <button class="tabLink" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardCheckBalance();" id="profileBtn">Profile</button>
                        <button class="tabLink" onclick="logOut();">Logout</button>
                    </div>
                </div>

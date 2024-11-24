@@ -60,7 +60,7 @@ public class MainController {
         model.addAttribute("user", user);
         model.addAttribute("paymentDetails", paymentDetails);
         if(!model.containsAttribute("activeTab")){
-            model.addAttribute("activeTab", "checkBalanceBtn");
+            model.addAttribute("activeTab", "profileBtn");
         }
         return "dashboard";
     }
