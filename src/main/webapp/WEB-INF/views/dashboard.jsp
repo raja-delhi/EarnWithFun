@@ -153,6 +153,7 @@
                     <h4>Name : <c:out value="${user.fullName}"/> </h4>
                     <h4>Email : <c:out value="${user.email}"/></h4>
                     <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
+                    <h4>Payment Code : <c:out value="${user.paymentCode}"/></h4>
                     <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
                     <label for="changePaymentPlan">
                         <h5>You want to change Payment Plan? <input type="checkbox" id="changePaymentPlan"></h5>
