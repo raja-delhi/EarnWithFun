@@ -198,7 +198,7 @@ public class MainController {
         model.addAttribute("withdrawRequestedUsers", withdrawRequestedUsers);
         model.addAttribute("referredUsers", referredUsers);
         if(!model.containsAttribute("activeTab")) {
-            model.addAttribute("activeTab", "withdrawApproveBtn");
+            model.addAttribute("activeTab", "referralApproveBtn");
         }
         return "adminDashboard";
     }
@@ -288,6 +288,10 @@ public class MainController {
         redirectAttributes.addFlashAttribute("activeTab", "checkBalanceBtn");
         if(userDetail.getReferralCount()<5){
             redirectAttributes.addFlashAttribute("errorMessage", "Your can not claim your rewards point, because your Referral count is less then 5.");
+            return redirectView;
+        }
+        if(0 <= userDetail.getRewardsPoint().compareTo(BigDecimal.ZERO)){
+            redirectAttributes.addFlashAttribute("errorMessage", "Insufficient Reward Points.");
             return redirectView;
         }
         userDetail.setAmount(userDetail.getAmount() != null ? userDetail.getAmount().add(userDetail.getRewardsPoint()): userDetail.getRewardsPoint());

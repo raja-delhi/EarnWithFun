@@ -18,7 +18,7 @@
             <div class="row header">
                    <div id="tabs">
                        <div id="welcome">
-                           <h1 class="tabLink">Welcome, <c:out value="${user.fullName}"/>!</h1>
+                           <h1>Welcome, <c:out value="${user.fullName}"/>!</h1>
                        <div>
                        <div class="buttons">
                            <button class="tabLink" onclick="openPage('ReferralApprove', this, 'gray');resetErrorAdminWithdraw();resetErrorAdminPayment();" id="referralApproveBtn" >Referral Approve</button>
