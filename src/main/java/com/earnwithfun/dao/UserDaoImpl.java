@@ -54,7 +54,7 @@ public class UserDaoImpl{
     }
 
     public List<PaymentDetail> gePaymentDetails(User user) {
-        String query = "select p from PaymentDetail p where p.username = ?0";
+        String query = "select p from PaymentDetail p where p.username = ?0 order by id desc";
         Object[] queryParam = {user.getUsername()};
         return (List<PaymentDetail>) this.hibernateTemplate.find(query, queryParam);
     }

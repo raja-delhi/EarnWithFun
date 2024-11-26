@@ -87,21 +87,28 @@
                        <br>
                        <div class="mb-3" style="colour:green">
                         <div class="form-row">
-                             <div class="form-group col-md-6">
-                                <h4 style="text-align:left">Total Amount : <c:out value="${user.amount}"/></h4>
+                             <div class="form-group col-md-3" style="text-align:left">
+                                <h5>Balance : <c:out value="${user.amount}"/></h5>
                              </div>
-                             <div class="form-group col-md-6" style="text-align:right">
-                                <h4>Referral Count : <c:out value="${user.referralCount}"/> || Reward Points : <c:out value="${user.rewardsPoint}"/></h4>
-                                <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
-                                     <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
-                                     <button onclick="claimRewardPoints(<c:out value="${user.id}"/>);">Claim Reward Points</button>
-                                </form>
+                             <div class="form-group col-md-3" style="text-align:right">
+                                <h5>Referral Count : <c:out value="${user.referralCount}"/></h5>
                              </div>
+                             <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
+                                  <div class="form-row">
+                                    <div class="form-group col-md-3" style="text-align:left">
+                                        <h5>Reward Points : <c:out value="${user.rewardsPoint}"/></h5>
+                                    </div>
+                                    <div class="form-group col-md-3" style="text-align:right">
+                                        <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
+                                        <button onclick="claimRewardPoints(<c:out value="${user.id}"/>);">Claim Reward Points</button>
+                                    </div>
+                                  </div>
+                             </form>
                         </div>
                     </div>
                     <div class="verticalLine"></div>
                     <div class="mb-3 table-responsive">
-                        <h5 style="text-align:center">Amount History</h5>
+                        <h5 style="text-align:center">Payment History</h5>
                         <table class="table table-dark table-hover table-bordered border-primary">
                           <thead>
                             <tr>
