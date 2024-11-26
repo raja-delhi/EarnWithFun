@@ -16,7 +16,6 @@
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
-<body>
     <div id="body" class="header">
         <div class="row">
                <div id="tabs">
@@ -24,6 +23,9 @@
                        <button class="tabLink" onclick="openPage('Profile', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardCheckBalance();" id="profileBtn">Profile</button>
                        <button class="tabLink" onclick="openPage('CheckBalance', this, 'gray');resetErrorDashboardWithdraw();resetErrorDashboardProfile();" id="checkBalanceBtn">Check Balance</button>
                        <button class="tabLink" onclick="openPage('WithDraw', this, 'gray');resetErrorDashboardProfile();resetErrorDashboardCheckBalance();" id="withdrawBtn">Withdraw</button>
+                       <c:if test="${isAdmin}">
+                        <button class="tabLink" onclick="loadJsp('AdminLogin', this);resetErrorOnForgot();" id="adminLoginBtn">Admin</button>
+                       </c:if>
                        <button class="tabLink" onclick="logOut();">Logout</button>
                    </div>
                </div>
@@ -31,6 +33,8 @@
     </div>
     <div class="vertical-line"></div>
     <div id="tabContentDiv">
+                <div id="AdminLogin" class="tabContent">
+                </div>
                 <div id="WithDraw" class="tabContent">
                     <c:if test="${not empty successMessage}">
                            <div id="errorMessageDashboardWithdraw" class="errorMessageDashboard" style="color: yellow; text-align:center">
@@ -87,18 +91,18 @@
                        <br>
                        <div class="mb-3" style="colour:green">
                         <div class="form-row">
-                             <div class="form-group col-md-3">
-                                <h5>Balance : <c:out value="${user.amount}"/></h5>
+                             <div class="form-group col-md-6">
+                                <h4>Balance : </h4><h5><c:out value="${user.amount}"/></h5>
                              </div>
-                             <div class="form-group col-md-3">
-                                <h5>Referral Count : <c:out value="${user.referralCount}"/></h5>
+                             <div class="form-group col-md-6">
+                                <h4>Referral Count : </h4><h5><c:out value="${user.referralCount}"/></h5>
                              </div>
                              <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
                                   <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <h5>Reward Points : <c:out value="${user.rewardsPoint}"/></h5>
+                                    <div class="form-group col-md-6">
+                                        <h4>Reward Points : </h4><h5><c:out value="${user.rewardsPoint}"/></h5>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-6">
                                         <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                                         <button onclick="claimRewardPoints(<c:out value="${user.id}"/>);">Claim Reward Points</button>
                                     </div>
@@ -156,22 +160,22 @@
                        <br>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <h4>Username : <c:out value="${user.username}"/></h4>
+                            <h4>Username : </h4><h5><c:out value="${user.username}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Name : <c:out value="${user.fullName}"/> </h4>
+                            <h4>Name : </h4><h5><c:out value="${user.fullName}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Email : <c:out value="${user.email}"/></h4>
+                            <h4>Email : </h4><h5><c:out value="${user.email}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Phone Number : <c:out value="${user.phoneNumber}"/></h4>
+                            <h4>Phone Number : </h4><h5><c:out value="${user.phoneNumber}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Payment Code : <c:out value="${user.paymentCode}"/></h4>
+                            <h4>Payment Code : </h4><h5><c:out value="${user.paymentCode}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h4>
+                            <h4>Your Payment Plan : </h4><h5><c:out value="${user.paymentPlan}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="changePaymentPlan">
@@ -181,7 +185,7 @@
                                 <form id="updatePaymentPlanRequest" action="updatePaymentPlanRequest" method = "post" modalAttribute="user">
                                   <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                                   <div class="form-row">
-                                      <div class="form-group col-md-1">
+                                      <div class="form-group col-md-3">
                                           <select id="paymentPlan" class="form-select form-select-sm" name="newPaymentPlan" aria-label=".form-select-sm example">
                                               <option value="50" selected>50</option>
                                               <option value="100">100</option>
@@ -209,7 +213,7 @@
                         </div>
                     </div>
                     <div class="verticalLine"></div>
-                    <h3 style="text-align:center; color:orange">Referral Code : <c:out value="${user.referralCode}"/></h3>
+                    <h5 style="text-align:center; color:orange">Referral Code : <c:out value="${user.referralCode}"/></h5>
                 </div>
             </div>
     <div class="modal fade" id="instructions" tabindex="-1" role="dialog" aria-labelledby="Instructions" aria-hidden="true">

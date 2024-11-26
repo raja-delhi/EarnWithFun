@@ -21,8 +21,8 @@ public class UserDaoImpl{
     }
 
     public User getUserByUserNameAndPassword(String username, String password) {
-        String query = "select u from User u where u.username = ?0 and u.password = ?1 and isAdminUser= ?2";
-        Object[] queryParam = {username, password, 'N'};
+        String query = "select u from User u where u.username = ?0 and u.password = ?1";
+        Object[] queryParam = {username, password};
         List<User> users = (List<User>) this.hibernateTemplate.find(query, queryParam);
         return users.isEmpty() ? null : users.get(0);
     }

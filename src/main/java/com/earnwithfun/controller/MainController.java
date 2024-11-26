@@ -56,6 +56,8 @@ public class MainController {
         }else {
             user = userService.getUserByUserName(user.getUsername());
         }
+        assert user != null;
+        model.addAttribute("isAdmin", "ROLE_ADMIN".equals(user.getRole()));
         List<PaymentDetail> paymentDetails = userService.getPaymentDetails(user);
         model.addAttribute("user", user);
         model.addAttribute("paymentDetails", paymentDetails);
@@ -87,7 +89,6 @@ public class MainController {
             map.put("errorMessage", "Your Account Registration is rejected by admin. Reason, Your payment plan is : " + userDetail.getPaymentPlan() + " and you paid less then Payment plan.");
             return map;
         }
-
         userDetail.setIsPaymentDone('Y');
         userService.updateUser(userDetail);
         map.put("userId", userDetail.getId());
@@ -126,7 +127,7 @@ public class MainController {
         user.setReferralRequest('Y');
         user.setReferredByUser(parentUser.getUsername());
         this.userService.createUser(user);
-        map.put("successMessage", "Registration successfully. Do Payment and get Payment Code to Your Whatsapp or SMS. and then Login.");
+        map.put("successMessage", "Registration successfully. Do " + user.getAmount() + " Payment and get Payment Code to Your Whatsapp or SMS. and then Login.");
         return map;
     }
 

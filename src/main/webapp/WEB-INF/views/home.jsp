@@ -21,32 +21,22 @@
               </span>
             </div>
             <div id="tabs">
-                <button class="tabLink" onclick="openPage('Home', this, 'gray');resetErrorOnForgot();" id="homeBtn">Home</button>
-                <button class="tabLink" onclick="loadJsp('Login',this);resetErrorOnForgot();" id="loginBtn">Login</button>
-                <button class="tabLink" onclick="loadJsp('Signup',this);resetErrorOnForgot();" id="signUpBtn">Sign Up</button>
-                <button class="tabLink" onclick="loadJsp('AdminLogin', this);resetErrorOnForgot();" id="adminLoginBtn">Admin</button>
+                <button class="tabLink" style="width:33%" onclick="openPage('Home', this, 'gray');resetErrorOnForgot();" id="homeBtn">Home</button>
+                <button class="tabLink" style="width:33%" onclick="loadJsp('Login',this);resetErrorOnForgot();" id="loginBtn">Login</button>
+                <button class="tabLink" style="width:33%" onclick="loadJsp('Signup',this);resetErrorOnForgot();" id="signUpBtn">Sign Up</button>
             </div>
     </div>
 
     <div id="tabContentDiv">
         <div id="Home" class="tabContent">
-          <div class="form-group col-md-6">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#instructions">
-                Read Instruction
-              </button>
-          </div>
-        </div>
-
-        <div id="AdminLogin" class="tabContent">
+            <%@include file="instruction.jsp" %>
         </div>
 
         <div id="Login" class="tabContent">
         </div>
 
         <div id="Signup" class="tabContent">
-
         </div>
-
         <div id="Forgot" class="tabContent">
             <div id="errorMessageForgot" style="color: yellow; text-align:center" class="hide"></div>
                 <div class="container">
@@ -75,7 +65,7 @@
                </button>
              </div>
              <div class="modal-body">
-               <%@include file="instruction.jsp" %>
+
              </div>
              <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
