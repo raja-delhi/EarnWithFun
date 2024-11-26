@@ -87,18 +87,18 @@
                        <br>
                        <div class="mb-3" style="colour:green">
                         <div class="form-row">
-                             <div class="form-group col-md-3" style="text-align:left">
+                             <div class="form-group col-md-3">
                                 <h5>Balance : <c:out value="${user.amount}"/></h5>
                              </div>
-                             <div class="form-group col-md-3" style="text-align:right">
+                             <div class="form-group col-md-3">
                                 <h5>Referral Count : <c:out value="${user.referralCount}"/></h5>
                              </div>
                              <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
                                   <div class="form-row">
-                                    <div class="form-group col-md-3" style="text-align:left">
+                                    <div class="form-group col-md-3">
                                         <h5>Reward Points : <c:out value="${user.rewardsPoint}"/></h5>
                                     </div>
-                                    <div class="form-group col-md-3" style="text-align:right">
+                                    <div class="form-group col-md-3">
                                         <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
                                         <button onclick="claimRewardPoints(<c:out value="${user.id}"/>);">Claim Reward Points</button>
                                     </div>
@@ -274,4 +274,5 @@
 </script>
 <script src="<c:url value="/resources/js/common.js" />"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
