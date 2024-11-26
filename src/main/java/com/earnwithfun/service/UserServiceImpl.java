@@ -4,6 +4,8 @@ import com.earnwithfun.dao.UserDaoImpl;
 import com.earnwithfun.entity.PaymentDetail;
 import com.earnwithfun.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +35,7 @@ public class UserServiceImpl{
         Object count = getUserCount();
         user.setPaymentCode("P" + getCode() + count);
         user.setReferralCode("R" + getCode() + count);
+        user.setRole("ROLE_USER");
         userDao.createUser(user);
     }
 
@@ -41,10 +44,10 @@ public class UserServiceImpl{
     }
 
     private String getCode() {
-        String codeString = "ABCDEFGHIJKLtuvwxyz12345MNOPQRSTUVWXYZabcdefghijklmnopqrs67890";
+        String codeString = "ABCDEFGHIJKLtuvwxyz12345MNOPQRXYZabcdefghSTUVWijklmnopqrs67890";
         StringBuilder code = new StringBuilder();
         Random rnd = new Random();
-        while (code.length() < 4) {
+        while (code.length() < 5) {
             int index = (int) (rnd.nextFloat() * codeString.length());
             code.append(codeString.charAt(index));
         }

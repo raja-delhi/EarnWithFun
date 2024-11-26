@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-public class User implements UserDetails{
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,39 +40,22 @@ public class User implements UserDetails{
     private BigDecimal newPaymentPlan;
     private BigDecimal rewardsPoint = BigDecimal.ZERO;
     private int referralCount = 0;
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+    private String role;
+
+    public String getRole() {
+        return role;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
+    public String getPassword() {
+        return password;
     }
 
     public Long getId() {
