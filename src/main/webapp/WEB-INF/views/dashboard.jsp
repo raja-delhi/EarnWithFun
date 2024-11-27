@@ -16,6 +16,12 @@
     <link href="<c:url value="/resources/css/common.css" />" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
+   <div class="topnav">
+     <span class="active">
+       <h5 style="text-align:center">Welcome to Earn with Fun!</h5>
+       <h5 style="text-align:center;color:black;">Refer more earn more...</h5>
+     </span>
+   </div>
     <div id="body" class="header">
         <div class="row">
                <div id="tabs">
@@ -92,15 +98,15 @@
                        <div class="mb-3" style="colour:green">
                         <div class="form-row">
                              <div class="form-group col-md-6">
-                                <h4>Balance : </h4><h5><c:out value="${user.amount}"/></h5>
+                                <h5>Balance : <c:out value="${user.amount}"/></h5>
                              </div>
                              <div class="form-group col-md-6">
-                                <h4>Referral Count : </h4><h5><c:out value="${user.referralCount}"/></h5>
+                                <h5>Referral Count : <c:out value="${user.referralCount}"/></h5>
                              </div>
                              <form id="claimRewardPoints" action="claimRewardPoints" method = "post" modalAttribute="user">
                                   <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <h4>Reward Points : </h4><h5><c:out value="${user.rewardsPoint}"/></h5>
+                                        <h5>Reward Points : <c:out value="${user.rewardsPoint}"/></h5>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <input type="hidden" id="username" name="id" value="<c:out value="${user.id}"/>" class="form-control" autocomplete="off">
@@ -126,7 +132,7 @@
                                   <c:when test="${empty paymentDetails}">
                                    <tr>
                                        <td colspan='100%' class="txt-c_imp">
-                                           <h4 style="text-align:center">Payment Detail not found.</h4>
+                                           <h5 style="text-align:center">Payment Detail not found.</h5>
                                        </td>
                                    </tr>
                                   </c:when>
@@ -160,22 +166,22 @@
                        <br>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <h4>Username : </h4><h5><c:out value="${user.username}"/></h5>
+                            <h5>Username : <c:out value="${user.username}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Name : </h4><h5><c:out value="${user.fullName}"/></h5>
+                            <h5>Name : <c:out value="${user.fullName}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Email : </h4><h5><c:out value="${user.email}"/></h5>
+                            <h5>Email : <c:out value="${user.email}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Phone Number : </h4><h5><c:out value="${user.phoneNumber}"/></h5>
+                            <h5>Phone Number : <c:out value="${user.phoneNumber}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Payment Code : </h4><h5><c:out value="${user.paymentCode}"/></h5>
+                            <h5>Payment Code : <c:out value="${user.paymentCode}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
-                            <h4>Your Payment Plan : </h4><h5><c:out value="${user.paymentPlan}"/></h5>
+                            <h5>Your Payment Plan : <c:out value="${user.paymentPlan}"/></h5>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="changePaymentPlan">
