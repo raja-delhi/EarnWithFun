@@ -13,7 +13,12 @@
 
 </head>
 <body>
-
+   <div class="topnav">
+     <span class="active">
+       <h5 style="text-align:center">Welcome to Earn with Fun!</h5>
+       <h5 style="text-align:center;color:black;">Refer more earn more...</h5>
+     </span>
+   </div>
         <div id="body">
             <div class="row header">
                    <div id="tabs">
