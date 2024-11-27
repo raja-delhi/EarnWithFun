@@ -17,11 +17,11 @@
             <h2 class="mb-3" style="text-align:center;text-decoration: underline;">Login</h2>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" autocomplete="off" required>
+                    <input type="text" id="usernameLogin" name="username" class="form-control" autocomplete="off" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" autocomplete="off" required>
+                    <input type="password" id="passwordLogin" name="password" class="form-control" autocomplete="off" required>
                 </div>
                 <div class="mb-3">
                     <label for="paymentCode" class="form-label">Payment Code</label>
@@ -47,16 +47,16 @@ $(document).ready(function () {
             event.preventDefault();
             let form = $("#loginForm");
             let url = "login";
-            if($("#username").val().trim() === ''){
+            if($("#usernameLogin").val().trim() === ''){
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Username is mandatory.');
-                $("#username").focus();
-            }else if($("#password").val().trim() === ''){
+                $("#usernameLogin").focus();
+            }else if($("#passwordLogin").val().trim() === ''){
                 $("#errorMessageLogIn").show();
                 $("#errorMessageLogIn").html('');
                 $("#errorMessageLogIn").html('Password is mandatory.');
-                $("#password").focus();
+                $("#passwordLogin").focus();
             }else{
                 $.ajax({
                     type: "POST",
