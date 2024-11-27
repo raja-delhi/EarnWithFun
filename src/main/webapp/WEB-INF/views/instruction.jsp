@@ -21,7 +21,7 @@
      <h6>7. You will get 25% bonus of Your Immediate Referral Friends Payment Plan if your friends Payment Plan is greater then 250.<h6>
      <h6>8. When your referral Friend refer to his friend then you will get 10% of your referrals referral Payment Plan.</h6>
      <h6>9. When you Refer to your friend then you will get 10% reward points of your Referral friends Payment Plan. </h6>
-     <h6>10. For point No. 4, 5, 6, 7, 8 & 9 there are some regulation, if your Payment plan is less than your friends or friends referral Payment Plan, then you will receive bonus and reward point according to your selected Payment Plan.<h6>
+     <h6>10. For point No. 4, 5, 6, 7, 8 & 9 there are some regulations, if your Payment plan is less than your friends or friends referral Payment Plan, then you will receive bonus and reward point according to your selected Payment Plan.<h6>
      <h4 style="color:orange;text-decoration: underline;"><b>How we Withdraw our Money?</b></h4>
      <h6>1. You can withdraw your money from withdraw page.</h6>
      <h6>2. Make sure while you withdraw your entered information should be correct.</h6>
