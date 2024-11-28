@@ -9,7 +9,7 @@
         /* Custom Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5; /* Light background for better contrast */
+            background-color: gray /* Light background for better contrast */
             color: #333;
             padding-top: 20px;
             padding-bottom: 40px;
@@ -31,6 +31,7 @@
             font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 20px;
+            color:pink;
         }
 
         .instruction-card {
@@ -97,7 +98,7 @@
             </div>
         </div>
 
-        <h4 class="section-title">How We Earn From This App?</h4>
+        <h4 class="section-title">How We Earn From This Web App?</h4>
         <div class="instruction-card">
             <div class="instructions">
                 <ul>
