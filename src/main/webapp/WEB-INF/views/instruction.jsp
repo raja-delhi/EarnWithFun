@@ -37,7 +37,7 @@
             background-color: black; /* White background for content cards */
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow to make the cards stand out */
-            padding: 20px;
+            padding: 10px;
             margin-bottom: 30px;
         }
 
@@ -74,7 +74,6 @@
         }
 
         .instruction-card ul {
-            margin-left: 20px;
             list-style-type: disc;
         }
 
